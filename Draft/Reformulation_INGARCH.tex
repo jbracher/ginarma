@@ -5,134 +5,245 @@
 \usepackage{amssymb}
 \usepackage{natbib}
 \usepackage{url}
+\usepackage{graphicx}
 
 \begin{document}
 
-\title{An alternative formulation and proof of geometric ergodicity for the Poisson INGARCH(1, 1) model}
+\title{A thinning-based formulation and proof of geometric ergodicity for the some CP-INGARCH(1, 1) models}
+\author{Johannes Bracher}
 
 \maketitle
 
+\newcommand{\juv}{J}
 
-\section{Alternative formulation}
+\begin{abstract}
+We propose a thinning-based alternative formulation of the Poisson and certain compound Poisson INGARCH(1, 1) models which allows for an intuitive interpretation and simple proof of geometric ergodicity.
+\end{abstract}
 
-The INGARCH(1, 1) model is defined as
-\begin{align*}
-X_t \mid \text{past} & \sim \text{Pois}(\lambda_t)\\
-\lambda_t & = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1}
-\end{align*}
-with $\lambda_0, X_0$ fixed.
+\section{An alternative formulation of the Poisson INGARCH(1, 1) model}
+\label{sec:alternative_formulation}
 
-An alternative definition is
-\begin{align*}
-S_t & = R_t + \kappa \star X_{t - 1}\\
-X_t & = S_t - R_t + I_t,\\
-R_t & = \beta \circ S_{t}.\\
-\end{align*}
-Here, the immigrations $I_t$ are defined as
-$$
-I_t \stackrel{\text{iid}}{\sim} \text{Pois}(\tau).
-$$
-while the operators $\circ$ and $\star$ denote binomial and Poisson thinning, respectively. To initialize the process we fix $X_t$ and $\lambda_0 > ...$ and sepcify
-$$
-R_0 \sim \text{Pois}\left(\frac{1 - \phi}{\phi} \times \lambda_0 - \tau \right)
-$$
-
-The parameters $\tau, \phi, \kappa$ are linked to those of the original formulation as follows:
-
-$$
-<add>
-$$
-
-An interpretation is the following:
-$$
-<add>
-$$
-
-\section{An alternative proof of geometric ergodicity and implications on maximum likelihood estimation}
-
-The joint process $(M_t, X_t)$ is a discrete first-order Markov chain with support $\mathbb{N}_0^2$. As $X_{t + 1} + M_{t + 1} \geq M_{1}$, not all states of the Markov chain can be reached from all other states in just one step. However, is it easy to see that this is possible within two steps. E.g., a possibility to move from $(s_t, m_t, x_t)$ to $(s_{t + 2}, m_{t + 2}, x_{t + 1})$ in two steps is the sequence of events
-\begin{align*}
-M_t & = s_t\\
-I_{t + 1} & = s_{t + 2}\\
-\end{align*}
-implying
-\begin{align*}
-X_{t + 1} = s_{t + 2}\\
-S_{t + 1} = 0\\
-M_{t + 1} = 0
-\end{align*}
-followed by
-\begin{align*}
-B_{t + 1} = s_{t + 2}.
-\end{align*}
-This in turn implies
-$$
-S_{t + 2} = s_{t + 2}
-$$
-and allows us to also reach
-\begin{align*}
-X_{t + 2} = x_{t + 2}\\
-M_{t + 2} = m_{t + 2}.
-\end{align*}
-As this obviously has a non-zero probability, the Doeblin condition (\url{https://encyclopediaofmath.org/wiki/Markov_chain,_ergodic}) applies. Consequently, geometric ergodicity of the Markov chain $(S_t, M_t, X_t)$ holds.
-
-Existence of three derivatives of the log likelihood function is shown by Fokianos et al. Then Jensen and Rahbek's law of large numbers for geometrically ergodic processes implies normality of the maximum likelihood estimators.
-
-
-\subsection{A thinning-based formulation of the INGARCH(1, 1) model}
-\label{appendix:ingarch}
-
-We demonstrate that $\{X_t, t = 1, 2, \dots\}$ with
+The Poisson INGARCH(1, 1) model \cite{Ferland2006, Fokianos2009} is one of the most widely used count time series models. It is defined as a process $\{X_t, t \in \mathbb{N}\}$ with
 \begin{align}
-X_t & = M_t + I_t\label{eq:X_ingarch}\\
-S_t & = S_{t - 1} - M_{t - 1} + B_{t - 1} \label{eq:S_ingarch}
+X_t \mid X_{t - 1}, \dots, X_0, \lambda_0 & \sim \text{Pois}(\lambda_t)\label{eq:X_t_original}\\
+\lambda_t & = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1} \label{eq:lambda_t}
+\end{align}
+The parameters are constrained to $\nu > 0, \alpha, \beta \geq 0$ while initial values $\lambda_0 \geq \nu$ and $X_0 \in \mathbb{N}_0$ are assumed to be fixed.
+
+We here provide an alternative representation of this process which allows for an intuitive interpretation and straightforward proof of geometric ergodicity. It is given by
+\begin{align}
+X_t & = \juv_t - R_t + I_t,\label{eq:X_t}\\
+\juv_t & = R_{t - 1} + B_{t - 1}\label{eq:juv_t}
 \end{align}
 where
 \begin{align}
-M_t & = \phi \circ S_t\\
-B_t & = \kappa \star X_t\\
-I_t & \stackrel{\text{iid}}{\sim} \text{Pois}(\tau)
+R_t & = \xi \circ \juv_{t}\label{eq:R_t}\\
+B_t & = \kappa \star X_t \label{eq:B_t}
 \end{align}
-is an INGARCH(1, 1) process (with a little particularity, as we shall see in the end). To initialize the process we assume $S_1 = B_{0}; \ \ B_{0} \sim \text{Pois}(\gamma), \gamma > 0$ which implies
+and $\kappa \geq 0, \xi \in (0, 1]$. The sequence $I_t$ consists of independent Poisson random variables with rate $\tau > 0$. The operators $\circ$ and $\star$ denote binomial and Poisson thinning, respectively, meaning that
+\begin{align*}
+\pi \circ Y & = \sum_{i = 1}^Y Z_i \ \ \ \text{with} \ \ \ Z_i \stackrel{\text{ind}}{\sim} \text{Bin}(1, \pi), \\
+\pi \star Y & = \sum_{i = 1}^Y Z_i \ \ \ \text{with} \ \ \ Z_i \stackrel{\text{ind}}{\sim} \text{Pois}(\pi).
+\end{align*}
+To initialize the process we fix $X_0 \in \mathbb{N}_0, \eta > 0$ and specify
 $$
-X_1 \sim \text{Pois}(\phi\gamma).
+R_0 \sim \text{Pois}\left(\eta \right).
 $$
+The proof for the equivalence of the two processes can be found in Appendix \ref{appendix:proof}. The parameters $\nu, \alpha, \beta, \lambda_0$ of the original formulation \eqref{eq:X_t_original}--\eqref{eq:lambda_t} can be recovered as follows:
+\begin{align*}
+\nu = \tau(1 - \xi);\ \
+\alpha = \kappa(1 - \xi);\ \
+\beta & = \xi; \ \
+\lambda_0 = \tau + \frac{1 - \xi}{\xi} \times \eta.
+\end{align*}
 
-We formulate our arguments using a population interpretation of the process, similar to the one from Section \ref{sec:model_definition} / Figure \ref{fig:interpretation}:
+
+The re-formulation of the INGARCH(1, 1) model allows for the following interpretation:
 \begin{itemize}
-\item $S_t$ is the number of juvenile females at time $t$. At each $t$ juveniles transition to fertility with probability $\phi$ (they then enter into $X_t$) and otherwise stay juvenile (move on to $S_{t + 1}$). The number of transitions to fertility in time $t$ is given by $M_t$.
-\item $X_t$ is the number of fertile females at time $t$. Females stay fertile for one time period and can each have one or several offspring, their number following a $\text{Pois}(\kappa)$ distribution. Consequently, for the total number of births $B_t$ in time $t$ we have $B_t \mid X_t \sim \text{Pois}(\kappa X_t)$ for $t  =1, 2, \dots$. Females born in $t$ enter into $S_{t + 1}$. The process is initialized by the $B_0$ individuals born into $S_1$.
-\item At each time $t$ there is a number $I_t$ of fertile immigrants, independently following a $\text{Pois}(\tau)$ distribution.
+\item $X_t$ is the number of fertile females in a population of animals. They only remain fertile for one time period and produce a Poisson distributed number of female offspring (with rate $\kappa$ per female). These offspring, denoted by $B_t$ (\textit{births}) enter into $\juv_{t + 1}$.
+\item $\juv_t$ is the number of \textit{juvenile} females which are not fertile yet. At each time $t$, juveniles can transition to the fertile state with probability $1 - \xi$; they then enter $X_t$. Otherwise, i.e.\ with probability $\xi$, they remain juvenile and transition to $\juv_{t + 1}$. The number of these \textit{remaining} juveniles is denoted by $R_t$. Juvenile females do not die or otherwise leave the population before reaching fertility.
+\item At each time $t$ there is a $\text{Pois}(\tau)$ distributed number $I_t$ of fertile female \textit{immigrants} into the population.
 \end{itemize}
-Now denote by $B_{t, d}$ the number of females born in $t$ and turning fertile in $t + d$, so that $B_t = \sum_{d = 1}^{\infty} B_{t, d}$ holds. The probability that a female born in $t$ becomes fertile in $t + d$ is $(1 - \phi)^d\phi$. From the splitting property of the Poisson distribution (\citealt{Kingman1993}, p.53) it then follows that for a given $t$ and $d = 1, 2, \dots$
-$$
-B_{t, d} \mid X_t \stackrel{\text{ind}}{\sim} \text{Pois}((1 - \phi)^{d - 1}\phi\kappa X_t).
-$$
-The definition of the $B_{t, d}$ implies that
-$$
-X_t = I_t + \sum_{d = 1}^{t} B_{t - d, d}.
-$$
-Given $X_{t - 1}, \dots, X_1$, the $B_{t - 1, 1},\dots, B_{1, t - 1}, B_{0, t}$ are independent of each other and also of $I_t$ (this is because at each time $t - d$ and given $X_t$, $B_{t - d, d}$ is independent of all $B_{t - d, g}, g < d$ which have already had an impact on the further course of the process). For $t = 2, 3, \dots$ the convolution property of the Poisson distribution then implies
-\begin{align*}
-X_ t \mid X_{t - 1}, \dots, X_1 & \sim \text{Pois}(\lambda_t)\\
-\lambda_t & = \tau \ \ \ + \ \ \ \sum_{d = 1}^{t - 1} \kappa\phi(1 - \phi)^{d - 1}X_{t - d} \ \ \ + \ \ \ (1 - \phi)^{t - 1}\phi\gamma.
-\end{align*}
-The last term here represents $\mathbb{E}(B_{0, t})$, i.e.\ the expected number of females born into the initial $S_1$ which become fertile in $t$. Now set $\nu = \tau/\phi, \alpha = \phi\kappa, \beta = 1 - \phi$. We can then write
-\begin{align*}
-\lambda_t & = \frac{\nu}{1 - \beta} \ \ \ + \ \ \ \sum_{d = 1}^{t - 1}\alpha\beta^{d - 1}X_{t - d} \ \ \ + \ \ \ \beta^{t - 1} (1 - \beta)\gamma\\
-& = \nu + \beta \cdot \frac{\nu}{1 - \beta} \ \ \ + \ \ \ \alpha X_{t - 1} + \beta \cdot \sum_{d = 1}^{t - 2} \alpha\beta^{d - 1} X_{t - 1 - d}  \ \ \ + \ \ \ \beta \cdot \beta^{t - 2} (1 - \beta)\gamma\\
-\end{align*}
-For $t = 3, 4, \dots$ this implies
-$$
-\lambda_t = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1}.
-$$
-For $t = 2$ we resort to a little trick: we set $\lambda_1 = (1 - \beta)\gamma + \nu/(1 - \beta)$, despite the fact that $\mathbb{E}(X_1) = (1 - \beta)\gamma$. We then get
-\begin{align*}
-\mathbb{E}(X_2 \mid X_1) = \lambda_2 & = \nu + \beta \cdot \frac{\nu}{1 - \beta} + \alpha X_1 + \beta(1 - \beta)\gamma\\
-& = \nu + \alpha X_1 + \beta \underbrace{\left[(1 - \beta)\gamma + \frac{\nu}{1 - \beta}\right]}_{\:= \lambda_1}
-\end{align*}
+A visualization of this process is shown in Figure \ref{fig:ingarch_flowchart}.
 
-The process $\{X_t\}$ is thus an INGARCH(1, 1) process, with the particularity that $X_1 \sim\text{Pois}(\lambda_1 - \nu/(1 - \beta))$ instead of $X_1 \sim\text{Pois}(\lambda_1)$.
+\begin{figure}[h!]
+\includegraphics[scale = 0.8]{figure/flowchart_ingarch.pdf}
+\caption{Visualization of the INGARCH(1, 1) formulation \eqref{eq:X_t}--\eqref{eq:R_t}  as a flow chart.}
+\label{fig:ingarch_flowchart}
+\end{figure}
 
+\section{Extension to compound Poisson INGARCH(1, 1) models}
+
+Define a model where past observations only impact ``first step'' of compounding procedure so that we can add a step after juveniles became fertile. Xu NBINGARCH is part of this class and geometric ergodicity has not been proven.
+
+\section{Geometric ergodicity}
+
+Geometric ergodicity is an interesting property of count time series models as it can often be used to establish normality of conditional maximum likelihood estimators. Such an argument has been presented for the Poisson INGARCH(1, 1) model by Fokianos et al \cite{Fokianos2009}, who demonstrated geometric ergodicity of the joint process $\{(\lambda_t, X_t)\}$ by considering perturbed processes. Other proofs of ergodicity of the same model have been given in the following works. Neumann \citep{Neumann2011} provides a contractive condition for ergodicity of a more general model class which includes non-linear autoregressive models, but also the Poisson INGARCH(1, 1). Even broader classes which are not limited to the conditional Poisson distribution as in \eqref{eq:X_t_original} have been considered by Douc et al \citep{Douc2013} and Davis and Liu \cite{Davis2016}. Goncalves et al \cite{Goncalves2015} established geometric ergodicity of higher-order INGARCH models.
+
+All of the mentioned proofs can be described as technically involved. As noted by Neumann \cite{Neumann2011}, the main difficulty lies in the fact that the ``innovations'' $X_t$ in \eqref{eq:X_t_original} are discrete, while the condtional mean process $\{\lambda_t\}$ from \eqref{eq:lambda_t} takes continuous values. Our re-formulation \eqref{eq:juv_t}--\eqref{eq:R_t} does not involve any continuous-valued process, making it rather straightforward to establish geometric ergodicity.
+
+We start by noting that $\{\juv_t\}$ can be written as
+\begin{align*}
+\juv_t = R_t + \kappa \star (\juv_t - R_t) + \kappa \star I_t.
+\end{align*}
+Here, $R_t = \xi \circ \juv_t$ are the remaining juveniles from $ \juv_{t - 1}$, $\kappa \star (\juv_t - R_t)$ are offspring of  females who became fertile in $t$, and $\kappa \star I_t$ are offspring of immigrated females. As each member of $\juv_{t - 1}$ can either remain juvenile itself or generate a Poisson distributed number of new juveniles, we can also re-write this recursion as
+$$
+\juv_t = \sum_{i = 1}^{\juv_{t - 1}} Z_{t, i} \ \ + \ \ I^*_t
+$$
+where
+\begin{align}
+Z_{t, i} & \stackrel{\text{ind}}{\sim} \begin{cases}
+1 & \text{with probability } \xi\\
+\text{Pois}(\kappa) & \text{with probability } 1 - \xi.
+\label{eq:Z_t_i}
+\end{cases}\\
+I^*_t & = \kappa\star I_t \nonumber
+\end{align}
+Thus, $\{\juv_t\}$ is a Galton-Watson branching process where the offspring distribution \eqref{eq:Z_t_i} is a one-inflated Poisson distribution. The immigrations $I^*_t$ are generated by two subsequent Poisson sampling steps and thus follow a Poisson Poisson compound or Neyman type A distribution with parameters $\kappa$ and $\tau$ \cite{Masse2005}.
+
+Theory on branching processes with immigration, specifically Theorem 1 of Pakes \cite{Pakes1971} then tells us that $\{\juv_t\}$ is geometrically ergodic if
+\begin{itemize}
+\item[(a)] $\mathbb{E}(Z_{i, t}) < 1$
+\item[(b)] $\mathbb{E}[(Z_{i, t} + 1)\log(Z_{i, t} + 1)] < \infty$
+\item[(c)] $\mathbb{E}(I^*_t) < \infty$
+\end{itemize}
+Condition (a) obviously holds if $\kappa < 1$. For condition (b) note that $\mathbb{E}[(Z_{i, t} + 1)\log(Z_{i, t} + 1)] < \mathbb{E}(Z_{i, t}^2) < \infty$ as $Z_{i, t}$ comes from a mixture of two distributions which both have finite variance. Condition (c) holds as $\mathbb{E}(I^*_t) = \kappa\tau < \infty$.
+
+
+As in Fokianos et al \cite{Fokianos2009}, Proposition 1 from Meitz and Saikkonen \cite{Meitz2008} can then be used to show that this geometric ergodicity is also inherited by the joint process $\{(\juv_t, R_t, X_t, B_t)\}$. %, see Appendix \ref{appendix:proof_meitz}.
+Even though it is in principle sufficient to initialize the process with $R_0$ and $B_0$ as in Section \ref{sec:alternative_formulation}, we now assume that the process $\{(\juv_t, R_r, X_t, B_t)\}$ is initialized by a vector $(j_0, r_0, x_0, b_0)$. Geometric ergodicity of $\{\juv_t\}$ is then inherited by $\{(\juv_t, R_t, X_t, B_t)\}$ if the two following conditions need are met (Assumption 1 in \cite{Meitz2008}):
+
+\begin{enumerate}
+\item Given $(\juv_u, R_u, X_u, B_u), 0 \leq u < t$ and $\juv_t$, $(R_t, X_t, B_t)$ depends only on $\juv_t$. It is straightforward to see from the model definition \eqref{eq:juv_t}--\eqref{eq:B_t} or Figure \ref{fig:ingarch_flowchart} that this is fulfilled.
+\item There is an $n \geq 1$ such that for all $t > n$, the generation mechanism of $\juv_t \ \mid \ \juv_0 = j_0, R_0 = r_0, X_0 = x_0, B_0 = b_0$ has the same structure as that of $\juv_t \ \mid \ \juv_n = \tilde{j}_n$, where $\tilde{j}_n$ is some function of $(j_0, r_0, x_0, b_0)$. As $(j_0, r_0, x_0, b_0)$ only impacts the further course of the process $\{\juv_t\}$ through $\juv_1 = b_0 + m_0$, this is the case for $n = 1$ and $\tilde{s}_1 = b_0 + r_0$.
+\end{enumerate}
+
+This proves geometric ergodicity of the joint process $\{(\juv_t, R_t, X_t, B_t\}$.
+
+
+
+% Also check infinitely divisible studd in Pakes (no, trivial)
+
+
+%Show ergodicity of S via branching process with immigration.
+%
+%\textbf{Link to Weiss' paper with bridge between inar and inarch? $\juv_t$ No.}
+%
+%Geometric ergodicity of the process $(\lambda_t, X_t)$ of the INGARCH(1, 1) model as defined in \eqref{eq:X_t}--\eqref{eq:R_t} has been demonstrated by several authors. Fokianos et al \cite{Fokianos2009} use a 
+%
+%The joint process $(R_t, X_t)$ is a discrete first-order Markov chain with support $\mathbb{N}_0^2$. As $X_{t + 1} + R_{t + 1} \geq R_{t}$, not all states of the Markov chain can be reached from all other states in just one step. However, this is possible within two steps. E.g., a possibility to move from $(m_t, x_t)$ at time $t$ to $(m_{t + 2}, x_{t + 1})$ in two steps is the sequence of events
+%$$
+%R_t = \juv_t;\ \
+%I_{t + 1} = m_{t + 2} + x_{t + 2}
+%$$
+%implying
+%$$
+%X_{t + 1} = m_{t + 2} + x_{t + 1};\ \ \juv_{t + 1} = 0;\ \ R_{t + 1} = 0
+%$$
+%followed by
+%\begin{align*}
+%B_{t + 1} = m_{t + 2} + x_{t + 1}.
+%\end{align*}
+%This in turn implies
+%$$
+%\juv_{t + 2} = \juv_{t + 2} + x_{t + 1}
+%$$
+%which allows us to also reach
+%$$
+%R_{t + 2} = m_{t + 2};\ \
+%X_{t + 2} = x_{t + 2}
+%$$
+%As this sequence of events has a non-zero probability, the Doeblin condition \cite{Zubkov2011} is fulfilled and implies geometric ergodicity of the Markov chain $(R_t, X_t)$.
+%
+%% Existence of three derivatives of the log likelihood function is shown by Fokianos et al. Then Jensen and Rahbek's law of large numbers for geometrically ergodic processes implies normality of the maximum likelihood estimators.
+
+\appendix
+\section{Proof of equivalence of the two INGARCH(1, 1) formulations}
+\label{appendix:proof}
+
+We demonstrate that the process $\{X_t, t = 1, 2, \dots\}$ as defined in \eqref{eq:juv_t}--\eqref{eq:R_t} is equivalent to the INGARCH(1, 1) process \eqref{eq:X_t_original}--\eqref{eq:lambda_t}. To this end we introduce the following additional notation:
+$$
+M_t = \juv_t - R_t
+$$
+In the population interpretation of the process from Section \ref{sec:alternative_formulation}, $M_t$ is the number of individuals transitioning to fertility at time $t$ (\textit{maturizations}). 
+%\begin{itemize}
+%\item $\juv_t$ is the number of juvenile females at time $t$.
+%\item $M_t$ is the number of juvenile females transitioning to the fertile state at $t$ (i.e.\ moving from $\juv_t$ to $X_t$ rather than $\juv_{t + 1})$
+%\item $R_t$ is the number of juvenile females from time $t$ which remain juvenile, i.e.\ transition to $\juv_{t + 1}$.
+%\item $X_t$ is the number of fertile females at time $t$.
+%\item $B_t$ is the number of offspring which the $X_t$ fertile individuals from time $t$ produce. These enter into $\juv_{t + 1}.$
+%\item $I_t$ is the number of fertile female immigrants at time $t$.
+%\end{itemize}
+
+Now we decompose the term $B_t$ further by when these offspring born in $t$ will become fertile. We denote by $B_t^{(i)}$ the number of females born at time $t$ and turning fertile at time $t + i$. The same decomposition is introduced for $R_0$, i.e.\ the initial number of juvenile individuals, so that $R^{(i)}_0$ denotes the number of such juveniles turning fertile at time $i$. This implies
+\begin{align*}
+B_t & = \sum_{i = 1}^\infty B_t^{(i)}\\
+R_0 & = \sum_{i = 1}^\infty R_0^{(i)}\\
+M_t & = \sum_{i = 1}^{t} B_{t - i}^{(i)} \ \ + \ \ R_0^{(t)}
+% R_t & = \sum_{i = 1}^t \sum_{j > i} B_{t - i}^{(j)} \ \ + \ \ \sum_{j > t} R_0^{(j)}.
+\end{align*}
+An individual born at time $t$ has a probability of $\xi^{i - 1}(1 - \xi)$ to become fertile at time $t + i$ and thus be part of $B_t^{(i)}$. The Poisson splitting property \cite{Kingman1993} then implies that given $X_t$, the $B_t^{(i)}$ are independently Poisson distributed,
+$$
+B_t^{(i)} \mid X_t, X_{t - 1}, \dots, X_0 \stackrel{\text{ind}}{\sim} \text{Pois}(\xi^{i - 1}[1 - \xi]\kappa X_t). % ; \ \ B_t^{(i)} \perp B_t^{(j)} \mid X_t, i \neq j.
+$$
+Given $X_t$, $B_t^{(i)}$ does not have any impact on the further course of the process $\{X_t\}$ until time $t + i$, so that moreover we have
+$$
+B_t^{(i)} \perp B_u^{(j)} \mid X_t, X_u
+$$
+for $t < u < t + i$.
+
+We can now re-write
+$$
+X_t = I_t \ \ + \ \ \sum_{i = 1}^{t} B_{t - i}^{(i)} \ \ + \ \ R_0^{(t)}
+$$
+and note that in analogy to the above argument, $R_0^{(t)}$ is Poisson distributed with rate $\eta\xi^{t - 1}(1 - \xi)$ and independent of all $X_t$ and $B_t^{(i)}$ up to $t - 1$. Conditioned on $X_{t - 1}, \dots, X_0, \eta$, we thus have that $X_t$ is a sum of independent Poisson random variables. This implies
+$$
+X_t \mid X_{t - 1}, \dots, X_0, \eta \sim \text{Pois}(\lambda_t)
+$$
+with
+$$
+\lambda_t = \tau \ \ + \ \ \sum_{i = 1}^t \xi^{i - 1}(1 - \xi)\kappa X_{t - i} \ \ + \ \ \xi^{t - 1}(1 - \xi)\eta.
+$$
+The conditional expectation $\lambda_t$ can be re-written as
+\begin{align*}
+\lambda_t & = \tau(1 - \xi) + (1 - \xi)\kappa X_{t - 1} + \xi \left[\nu +   \sum_{i = 2}^t \xi^{i - 1}\xi\kappa X_{t - i}  + \xi^{t - 2}(1 - \xi)\eta\right]\\
+& = \tau(1 - \xi) + (1 - \xi)\kappa X_{t - 1} + \xi \lambda_{t - 1}.
+\end{align*}
+This is the form an INGARCH(1, 1) model. We conclude by considering the initialization of the process, where we have
+$$
+\lambda_1 = \tau(1 - \xi) + (1 - \xi)\kappa X_0 + \xi\left(\nu + \frac{1 - \xi}{\xi} \times \eta \right),
+$$
+meaning that we have to set
+$$
+\lambda_0 = \tau + \frac{1 - \xi}{\xi} \times \eta.
+$$
+
+%\section{Proof of geometric ergodicity of $\{\juv_t\}$ following Pakes}
+%\label{appendix:proof_pakes}
+%
+%Theorem 1 of Pakes \cite{Pakes1971} tells us that $\{\juv_t\}$ is geometrically ergodic if $\kappa < 1$ and
+%
+%\begin{align*}
+%\mathbb{E}[(Z_{i, t} + 1)\log(Z_{i, t} + 1)] & < \infty\\
+%\mathbb{E}(I^*_t) < \infty
+%\end{align*}
+%
+%As $\mathbb{E}(Y_t) = \kappa\tau$. the first condition obviously holds. For the second condition note that $\mathbb{E}[(Z_{i, t} + 1)\log(Z_{i, t} + 1)] < \mathbb{E}(Z_{i, t}^2) < \infty$ as $Z_{i, t}$ comes from a mixture of two distributions which both have finite variance. 
+
+% \section{Proof of geometric ergodicity of $\{(\juv_t, R_t, X_t, B_t)\}$ following Meitz and Saikkonen}
+% \label{appendix:proof_meitz}
+
+% \textbf{MAybe set $R_0 = 0$ to avoid some technical difficulties?}
+
+%Even though it is in principle sufficient to choose initial distributions for $R_0$ and $B_0$ as in Section \ref{sec:alternative_formulation}, we now assume that the process $\{(\juv_t, R_r, X_t, B_t)\}$ is initialized by a vector $(\juv_0, r_0, x_0, b_0)$. Proposition 1 of Meitz and Saikkonen \citep{Meitz2008} can then be employed to show that the geometric ergodicity of $\{\juv_t\}$ is inherited by $\{(\juv_t, R_t, X_t, B_t)\}$. The two following conditions need to be met (Assumption 1 in \cite{Meitz2008}):
+%
+%\begin{enumerate}
+%\item Given $(\juv_u, R_u, X_u, B_u), 0 \leq u < t$ and $\juv_t$, $(R_t, X_t, B_t)$ depends only on $\juv_t$. It is straightforward to see from the model definition \eqref{eq:juv_t}--\eqref{eq:B_t} or Figure \ref{fig:ingarch_flowchart} that this is fulfilled.
+%\item There is an $n > 1$ such that for all $t > n$, the generation mechanism of $\juv_t \ \mid \ (\juv_0, R_0, X_0, B_0, t) = (\juv_0, r_0, x_0, b_0)$ has the same structure as that of $\juv_t \ \mid \ \juv_n = \tilde{s}_n$, where $\tilde{s}_n$ is some function of $(\juv_0, r_0, x_0, b_0)$. As $(\juv_0, r_0, x_0, b_0)$ only impacts the further course of the process $\{\juv_t\}$ through $\juv_1 = b_0 + m_0$, this is the case for $n = 1$ and $\tilde{s}_1 = b_0 + m_0$.
+%\end{enumerate}
+
+
+\bibliographystyle{plain}
+\bibliography{bib_ingarch.bib}
 
 \end{document}
