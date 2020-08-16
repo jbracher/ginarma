@@ -9,7 +9,7 @@
 
 \begin{document}
 
-\title{A thinning-based formulation and proof of geometric ergodicity for the some CP-INGARCH(1, 1) models}
+\title{Thinning-based representation and geometric ergodicity of a class of CP-INGARCH(1, 1) models}
 \author{Johannes Bracher}
 
 \maketitle
@@ -17,20 +17,50 @@
 \newcommand{\juv}{J}
 
 \begin{abstract}
-We propose a thinning-based alternative formulation of the Poisson and certain compound Poisson INGARCH(1, 1) models which allows for an intuitive interpretation and simple proof of geometric ergodicity.
+We propose a thinning-based alternative formulation of the Poisson and certain compound Poisson INGARCH(1, 1) models which allows for an intuitive interpretation and straightforward proof of geometric ergodicity. The latter is based on properties of an embedded Galton-Watson branching process with immigration.
 \end{abstract}
 
-\section{An alternative formulation of the Poisson INGARCH(1, 1) model}
+\section{Poisson and compound Poisson INGARCH(1, 1) models}
 \label{sec:alternative_formulation}
 
 The Poisson INGARCH(1, 1) model \cite{Ferland2006, Fokianos2009} is one of the most widely used count time series models. It is defined as a process $\{X_t, t \in \mathbb{N}\}$ with
 \begin{align}
 X_t \mid X_{t - 1}, \dots, X_0, \lambda_0 & \sim \text{Pois}(\lambda_t)\label{eq:X_t_original}\\
-\lambda_t & = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1} \label{eq:lambda_t}
+\lambda_t & = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1}. \label{eq:lambda_t}
 \end{align}
 The parameters are constrained to $\nu > 0, \alpha, \beta \geq 0$ while initial values $\lambda_0 \geq \nu$ and $X_0 \in \mathbb{N}_0$ are assumed to be fixed.
 
-We here provide an alternative representation of this process which allows for an intuitive interpretation and straightforward proof of geometric ergodicity. It is given by
+Numerous extensions and variations of this basic model have been suggested, notably using conditional distributions other than the Poisson. A rather broad class, extensively discussed in \cite{Goncalves2015}, are \textit{compound Poisson} INGARCH models. These replace the Poisson distribution in \eqref{eq:X_t_original} by a compound Poisson distribution. A random varible $Y$ is said to follow a (discrete) compound Poisson distribution \cite[Chapter 3]{Feller1968} if it can be written as a sum 
+$$
+Y = \sum_{i = 1}^N Z_i
+$$
+where $N$ follows a Poisson distribution and the summands are identically and independently distributed
+$$
+Z_1, \dots, Z_N \stackrel{\text{iid}}{\sim} G(\psi)
+$$
+with support $\mathbb{N}_0$. In the following we assume that their law $G$, also called the \textit{secondary distribution}, is parameterized by a single parameter $\psi$.
+
+In this work we are concerned with processes $\{X_t, t \in \mathbb{N}\}$ of the form
+\begin{align*}
+X_t \ \mid \ X_{t - 1}, X_{t - 2}, \dots, X_0, \lambda_0 & \sim F(\lambda_t, \psi)\\
+\lambda_t & = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1},
+\end{align*}
+where the conditional distribution $F$ is a compound Poisson distribution parameterized by its mean $\lambda_t$ and an additional parameter $\psi$. The latter parameterizes the secondary distribution of the compound Poisson, which as a consequence does \textit{not} depend on $t$.
+
+Due to this restriction, our model class is somewhat more restrictive than the one discussed in \citep{Goncalves2015}, but still contains a number of well-known models from the literature:
+
+\begin{itemize}
+\item NB-DINARCH
+\item Neyman Type A
+\item Hermite?
+\item GP-INGARCH
+\end{itemize}
+
+NB-INGARCH not part.
+
+\section{A thinning-based representation of CP-INGARCH(1, 1) models}
+
+We here provide an alternative representation of this process which allows for an intuitive interpretation. It is given by
 \begin{align}
 X_t & = \juv_t - R_t + I_t,\label{eq:X_t}\\
 \juv_t & = R_{t - 1} + B_{t - 1}\label{eq:juv_t}
@@ -72,9 +102,7 @@ A visualization of this process is shown in Figure \ref{fig:ingarch_flowchart}.
 \label{fig:ingarch_flowchart}
 \end{figure}
 
-\section{Extension to compound Poisson INGARCH(1, 1) models}
 
-Define a model where past observations only impact ``first step'' of compounding procedure so that we can add a step after juveniles became fertile. Xu NBINGARCH is part of this class and geometric ergodicity has not been proven.
 
 \section{Geometric ergodicity}
 
