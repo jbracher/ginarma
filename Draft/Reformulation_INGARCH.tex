@@ -21,7 +21,7 @@ Computational Statistics Group, Heidelberg Institute for Theoretical Studies}
 
 
 \begin{abstract}
-We propose a new thinning-based formulation of the Poisson and certain compound Poisson (CP) INGARCH(1, 1) models which allows for an intuitive interpretation and the application of branching processes theory to derive stochastic properties. Notably, it is straightforward to show that under mild conditions the CP-INGARCH(1, 1) model is geometrically ergodic while all moments of the limiting-stationary distribution are finite. Moreover we point out how a Markov chain approach can be used to approximate the limiting-stationary distribution with arbitrary precision.
+We propose a thinning-based formulation of the Poisson and certain compound Poisson (CP) INGARCH(1, 1) models which allows for an intuitive interpretation and the application of branching processes theory to derive stochastic properties. Notably, it is straightforward to show that under mild conditions the CP-INGARCH(1, 1) model is geometrically ergodic while all moments of the limiting-stationary distribution are finite. Moreover we point out how a Markov chain approach can be used to approximate the limiting-stationary distribution with arbitrary precision.
 \end{abstract}
 
 \begin{keyword}
@@ -198,7 +198,7 @@ As $\{X_t\}$ is ergodic, the limits
 $$
 p_i = \lim_{t \rightarrow \infty} \text{Pr}(X_t = i \ \mid R_0 = r_0, L_0 = l_0)
 $$
-exist and are independent of the initialization of the process. However, even in the Poisson case no closed form for the $p_i$ is known. For INARCH(1) models, i.e. the special case $\beta = 0$ of the INGARCH(1, 1), a Markov chain approach can serve to approximate the $p_i$ with arbitrary precision \cite{Weiss2010}. This is based on the fact that the INARCH(1) is a discrete first-order Markov chain so that
+exist and are independent of the initialization of the process (in the following we therefore suppress the condition on $r_0, l_0$ in the notation). However, even in the Poisson case no closed form for the $p_i$ is known. For INARCH(1) models, i.e. the special case $\beta = 0$ of the INGARCH(1, 1), a Markov chain approach can serve to approximate the $p_i$ with arbitrary precision \cite{Weiss2010}. This is based on the fact that the INARCH(1) is a discrete first-order Markov chain so that
 $$
 \text{Pr}(X_t = i) = \sum_{j = 0}^\infty p_{j|i} \times \text{Pr}(X_{t - 1} = j).
 $$
@@ -206,7 +206,7 @@ Here, $p_{j|i} = \text{Pr}(X_t = i \ | \ X_{t - 1} = j) $ is the transition prob
 $$
 p_i \approx \text{Pr}(X_T = i),
 $$
-which can be computed recursively using
+where $\text{Pr}(X_T = i)$ can in turn be approximated by recursively computing
 $$
 \text{Pr}(X_t = i) \approx \sum_{j = 0}^M p_{j|i} \times \text{Pr}(X_{t - 1} = j).
 $$
