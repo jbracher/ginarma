@@ -45,7 +45,7 @@ Numerous variations of this model with conditional distributions other than the 
 $$
 Y = \sum_{i = 1}^N Z_i, \ \ \ Z_1, \dots, Z_N \stackrel{\text{iid}}{\sim}, G(\psi)
 $$
-where $N$ follows a Poisson distribution. In the following we assume that $G(\psi)$, also called the \textit{secondary distribution}, is parameterized by a single parameter $\psi$ and has support $\mathbb{N}_0$. Its mean $\mu_\psi$ and variance $\sigma^2_\psi$ are assumed to be finite. The CP-INGARCH(1, 1) model is then defined as a process $\{X_t, t \in \mathbb{N}\}$ with % N_{t - 1}, N_{t - 2}, \dots, N_0,
+where $N$ follows a Poisson distribution. In the following we assume that $G(\psi)$, also called the \textit{secondary distribution}, is parameterized by a single parameter $\psi$ and has support $\mathbb{N}_0$. Its mean $\mu_\psi$ and variance $\sigma^2_\psi$ are assumed to be finite. Using notation from Weiss et al \cite[Sec. 2]{Weiss2017}, the CP-INGARCH(1, 1) model is defined as a process $\{X_t, t \in \mathbb{N}\}$ with % N_{t - 1}, N_{t - 2}, \dots, N_0,
 \begin{align}
 N_t \ \mid \ X_{t - 1}, \dots, X_0, \lambda_0 & \sim \text{Pois}(\lambda_t/\mu_\psi) \label{eq:N_CP_original}\\
 X_t & = \sum_{i = 1}^{N_t} Z_{i, t} \ \ \text{where} \ \  Z_{i, t} \stackrel{\text{iid}}{\sim} G(\psi)\label{eq:X_CP_original}\\
@@ -139,13 +139,13 @@ The new representation of the CP-INGARCH(1, 1) models establishes a link to bran
 
 \subsection{Geometric ergodicity}
 
-The Poisson INGARCH(1, 1) model has been shown to be geometrically ergodic by Fokianos et al \cite{Fokianos2009}, who considered an approximation by a sequence of perturbed processes. Ergodicity of various generalizations has been adressed by several authors \citep{Davis2016, Douc2013, Neumann2011}. Goncalves et al \citep{Goncalves2015} cover ergodicity (but not geometric ergodicity) of CP-INGARCH models. A proof of geometric ergodicity of the GP-INGARCH(1, 1) model has been sketched by Zhu \citep{Zhu2012}. %  Other proofs of (geometric) ergodicity of INGARCH models have been given in the following works. Neumann \citep{Neumann2011} provides a contractive condition for ergodicity of a more general model class which includes non-linear autoregressive models, but also the Poisson INGARCH(1, 1). Zhu \citep{Zhu2012} states that the same technique can also be used to establish geomtric ergodicity of the GP-INGARCH(1, 1) model. Ergodicity of broader classes which are not limited to a conditional Poisson or generalized Poisson distribution have been considered by Douc et al \citep{Douc2013} and Davis and Liu \cite{Davis2016}. Goncalves et al \cite{Goncalves2015} established ergodicity (but not geometric ergodicity) of CP-INGARCH models. %, including higher-order models. % Multivariate Poisson INGARCH models have been analyzed by Fokianos et al \cite{Fokianos2020}.% However, to our best knowledge, geometric ergodicity has so far only been established for the Poisson INGARCH(1,1) model.\todo{Add Fokianos multivariate}
+The Poisson INGARCH(1, 1) model has been shown to be geometrically ergodic by Fokianos et al \cite{Fokianos2009}, who considered an approximation by a sequence of perturbed processes and Neumann \cite{Neumann2011} who provides a contractive condition. Ergodicity of various generalizations has been adressed by several authors \citep{Davis2016, Douc2013, Neumann2011}. Goncalves et al \citep{Goncalves2015} cover ergodicity (but not geometric ergodicity) of CP-INGARCH models. A proof of geometric ergodicity of the GP-INGARCH(1, 1) model along the lines of \cite{Neumann2011} has been sketched by Zhu \citep{Zhu2012}. %  Other proofs of (geometric) ergodicity of INGARCH models have been given in the following works. Neumann \citep{Neumann2011} provides a contractive condition for ergodicity of a more general model class which includes non-linear autoregressive models, but also the Poisson INGARCH(1, 1). Zhu \citep{Zhu2012} states that the same technique can also be used to establish geomtric ergodicity of the GP-INGARCH(1, 1) model. Ergodicity of broader classes which are not limited to a conditional Poisson or generalized Poisson distribution have been considered by Douc et al \citep{Douc2013} and Davis and Liu \cite{Davis2016}. Goncalves et al \cite{Goncalves2015} established ergodicity (but not geometric ergodicity) of CP-INGARCH models. %, including higher-order models. % Multivariate Poisson INGARCH models have been analyzed by Fokianos et al \cite{Fokianos2020}.% However, to our best knowledge, geometric ergodicity has so far only been established for the Poisson INGARCH(1,1) model.\todo{Add Fokianos multivariate}
 
-All of the mentioned proofs can be described as technically involved. As noted by Neumann \cite{Neumann2011}, the difficulty lies in the fact that the $X_t$ in \eqref{eq:X_t_original} are discrete, while the condtional mean process $\{\lambda_t\}$ from \eqref{eq:lambda_t} is real-valued. The re-formulation \eqref{eq:juv_t}--\eqref{eq:R_t} involves exclusively integer-valued processes, and allows us to exploit results from branching process theory. Plugging equations \eqref{eq:X_t} and \eqref{eq:L_t} into \eqref{eq:juv_t}, $\{\juv_t\}$ can be written as
+All of the mentioned proofs can be described as technically involved. As noted by Neumann \cite{Neumann2011}, the difficulty lies in the fact that the $X_t$ in \eqref{eq:X_t_original} are discrete, while the condtional mean process $\{\lambda_t\}$ from \eqref{eq:lambda_t} is real-valued. The re-formulation \eqref{eq:juv_t}--\eqref{eq:R_t} involves exclusively integer-valued processes, and allows us to exploit results from branching process theory. Plugging equations \eqref{eq:L_t} and \eqref{eq:X_t} into \eqref{eq:juv_t}, $\{\juv_t\}$ can be written as
 \begin{align}
 \juv_t = R_{t - 1} + \kappa \star (\psi *_G H_{t - 1}) + \kappa \star (\psi *_G I_{t - 1}). \label{eq:recursion_S}
 \end{align}
-Here, $\kappa \star (\psi *_G I_{t - 1})$ represents clusters laid by immigrated females. The term  $R_{t - 1} = \beta \circ \juv_{t - 1}$ contains clusters remaining from $ \juv_{t - 1}$, while $\kappa \star (\psi *_G H_{t - 1}) = \kappa \star \{\psi *_G (S_{t - 1} - R_{t - 1})\}$ are new clusters laid by ``native'' (i.e., not immigrated) females at time $t$. Using the same decomposition, we note that each cluster from $\juv_{t - 1}$ can either remain in the stock itself or hatch and generate a $G(\psi)$ distributed number of new females, which in turn each add a $\text{Pois}(\kappa)$-distributed number of clusters to the stock. We can thus write recursion \eqref{eq:recursion_S} as
+Here, $\kappa \star (\psi *_G I_{t - 1})$ represents clusters laid by immigrated females. The term  $R_{t - 1} = S_t - H_t \stackrel{d}{=} \beta \circ \juv_{t - 1}$ contains clusters remaining from $ \juv_{t - 1}$, while $\kappa \star (\psi *_G H_{t - 1}) = \kappa \star \{\psi *_G (S_{t - 1} - R_{t - 1})\}$ are new clusters laid by ``native'' (i.e., not immigrated) females at time $t$. Using the same decomposition, we note that each cluster from $\juv_{t - 1}$ can either remain in the stock itself or hatch and generate a $G(\psi)$ distributed number of new females, which in turn each add a $\text{Pois}(\kappa)$-distributed number of clusters to the stock. We can thus write recursion \eqref{eq:recursion_S} as
 $$
 \juv_t = \sum_{i = 1}^{\juv_{t - 1}} A_{t, i} \ \ + \ \ I^*_t.
 $$
@@ -159,7 +159,7 @@ A_{t, i} & = \begin{cases}
 I^*_t & = \kappa\star (\psi *_G I_{t - 1}). \label{eq:I_star}
 \end{align}
 Thus, $\{\juv_t\}$ is a Galton-Watson branching process where the offspring distribution \eqref{eq:Z_t_i} is a specific one-inflated compound distribution. %, specifically, $A_{t, i}$ is a $G(\psi)$-stopped sum of Poisson random variables. 
-The immigration distribution \eqref{eq:I_star} is a compound Poisson distribution where the secondary distribution is itself a Poisson mixture. % This follows from the fact that given $I_t$,  %are generated by two compounding steps. % and thus follow a Poisson Poisson compound or Neyman type A distribution with parameters $\kappa$ and $\tau$ \cite{Masse2005}.
+The immigration distribution \eqref{eq:I_star} is a compound Poisson distribution where the secondary distribution is itself a compound distribution. % This follows from the fact that given $I_t$,  %are generated by two compounding steps. % and thus follow a Poisson Poisson compound or Neyman type A distribution with parameters $\kappa$ and $\tau$ \cite{Masse2005}.
 
 Theory on branching processes with immigration, specifically Theorem 1 from Pakes \cite{Pakes1971} tells us that $\{\juv_t\}$ is geometrically ergodic if (a) $\mathbb{E}(A_{i, t}) < 1$, (b) $\mathbb{E}[(A_{i, t} + 1)\log(A_{i, t} + 1)] < \infty$, (c) $\mathbb{E}(I^*_t) < \infty$. These conditions are easily verified for $\{S_t\}$ provided that $\kappa\mu_\psi < 1$ and, as previously assumed, $\mu_I, \sigma^2_I < \infty$.
 %\begin{itemize}
@@ -192,6 +192,10 @@ It is known that if the offspring and immigration distributions of a subcritical
 \end{itemize}
 Consequently, the limiting-stationary distribution of $\{S_t\}$ has finite moments up to order $r$ if this is the case for the secondary distribution $G(\psi)$ (while $\kappa\mu_G < 1$). The same arguments imply that finiteness of moments translates to $H_t = (1 - \beta) \circ S_t$, $\psi *_G H_t$ and ultimately $X_t = \psi *_G I_t + \psi *_G H_t$.
 
+\subsection{Consistency and asymptotic normality of moment estimators}
+
+Use same argument as in Weiss and Schweer 2016, exploiting Ibragimov 1962. Derive stationary mean, variance, acf for (1, 1) case, should be straightforward. Maybe even try getting the elements of the covariance matrix.
+
 \subsection{Approximating the limiting-stationary distribution}
 
 As $\{X_t\}$ is ergodic, the limits
@@ -215,7 +219,7 @@ This method, however, is not directly applicable to the INGARCH(1, 1) model \eqr
 $$
 p^{(S)}_i \approx \text{Pr}(S_T = i) \ \ \text{and} \ \ \text{Pr}(S_t = i) \approx \sum_{j = 0}^M p^{(S)}_{j|i} \times \text{Pr}(S_{t - 1} = j).
 $$
-Subsequently one can then compute
+Subsequently one can then compute an approximatin of the limiting stationary distribution of $X_t$ as
 $$
 p_i = \sum_{k = 0}^M p_k^{(S)} \times \text{Pr}(X_t = i \ \mid \ S_t = k).
 $$
@@ -259,6 +263,29 @@ $$
 % We have provided an alternative representation of the compound \todo{to be extended} Poisson INGARCH(1, 1) model and used it to obtain several properties of the process. Notably, the fact that the process is geometrically ergodic could be useful for studies of the behaviour of conditional maximum likelihood estimators along the lines of \cite{Fokianos2009} and \cite{Zhu2012}. % This question has not yet been addressed as existing studies are limited to conditional least squares (CLS) estimators \cite{Silva2016} and Poisson quasi-maximum likelihood estimators \cite{AhmadXXX}.
 
 % Mention that CLS estimator is normal according to Cardoso da Silva. PQML is normal according to Ahmad and Francq.
+
+\section{Moment-based estimation}
+
+Limiting stationary properties: Set $\xi = \alpha + \beta$ and denoting the conditional dispersion index of $X_t \ \mid \ \lambda_t$ by
+$$
+\delta = \frac{\text{Var}(X_t \ \mid \ \lambda_t)}{\lambda_t} = \frac{\sigma^2_\psi + \mu_\psi^2}{\mu_\psi}.
+$$
+Then:
+$$
+\mu = \frac{\nu}{1 - \xi}, \ \ \sigma^2 = \frac{1 - \xi^2 + \alpha^2}{1 - \xi^2} \cdot \delta\mu, \ \ \rho(d) = \alpha\cdot \frac{1 - \beta\xi}{1 - \xi^2 + \alpha^2}\cdot \xi^{d - 1}
+$$
+
+Moment estimators:
+\begin{align*}
+\hat{\xi} & = \frac{\hat{\rho}(2)}{\hat{\rho}(1)}\\
+\hat{\nu} & = \hat{\mu}\cdot(1 - \hat{\xi})\\
+\hat{\alpha} & = \frac{(1 - \hat{\xi}^2) - \sqrt{(1 - \hat{\xi}^2) \cdot [1 - \hat{\xi}^2 - 4\hat\rho(1)\cdot\{\hat\rho(1) - \hat{\xi})\}]}}{2\{\hat\rho(1) - \hat{\xi}\}}\\
+\hat{\beta} & = \hat\xi - \hat\alpha\\
+\hat{\delta} & = \frac{\hat\sigma^2}{\hat\mu} \cdot \frac{1 - \hat\xi^2}{1 - \hat\xi^2 + \hat\alpha^2}
+\end{align*}
+
+
+For Poisson case one might derive the precise expressions.
 
 \appendix
 \section{Equivalence of the two INGARCH(1, 1) formulations}
