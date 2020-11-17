@@ -191,10 +191,10 @@ It is known that if the offspring and immigration distributions of a subcritical
 \item Similar arguments imply that if $G(\psi)$ has a finite $r$-th moment, this is also the case for $\psi *_G I_{t - 1}$ and in a second step the immigration process $I^*_t = \kappa \star(\psi *_G I_{t - 1})$ from equation \eqref{eq:I_star}.
 \end{itemize}
 Consequently, the limiting-stationary distribution of $\{S_t\}$ has finite moments up to order $r$ if this is the case for the secondary distribution $G(\psi)$ (while $\kappa\mu_G < 1$). The same arguments imply that finiteness of moments translates to $H_t = (1 - \beta) \circ S_t$, $\psi *_G H_t$ and ultimately $X_t = \psi *_G I_t + \psi *_G H_t$.
-
-\subsection{Consistency and asymptotic normality of moment estimators}
-
-Use same argument as in Weiss and Schweer 2016, exploiting Ibragimov 1962. Derive stationary mean, variance, acf for (1, 1) case, should be straightforward. Maybe even try getting the elements of the covariance matrix.
+%
+%\subsection{Consistency and asymptotic normality of moment estimators}
+%
+%Use same argument as in Weiss and Schweer 2016, exploiting Ibragimov 1962. Derive stationary mean, variance, acf for (1, 1) case, should be straightforward. Maybe even try getting the elements of the covariance matrix.
 
 \subsection{Approximating the limiting-stationary distribution}
 
@@ -226,36 +226,6 @@ $$
 % While it is somewhat tedious to compute the transition probabilities $p^{(S)}_{j|i}$ of $\{S_t\}$ as well as the probabilities $\text{Pr}(X_t = i \ \mid \ S_t = k)$ linking $\{S_t\}$ and $\{X_t\}$, this approach allows to evaluate the $p_t$ with arbitrary precision.
 
 
-%Show ergodicity of S via branching process with immigration.
-%
-%\textbf{Link to Weiss' paper with bridge between inar and inarch? $\juv_t$ No.}
-%
-%Geometric ergodicity of the process $(\lambda_t, X_t)$ of the INGARCH(1, 1) model as defined in \eqref{eq:X_t}--\eqref{eq:R_t} has been demonstrated by several authors. Fokianos et al \cite{Fokianos2009} use a 
-%
-%The joint process $(R_t, X_t)$ is a discrete first-order Markov chain with support $\mathbb{N}_0^2$. As $X_{t + 1} + R_{t + 1} \geq R_{t}$, not all states of the Markov chain can be reached from all other states in just one step. However, this is possible within two steps. E.g., a possibility to move from $(m_t, x_t)$ at time $t$ to $(m_{t + 2}, x_{t + 1})$ in two steps is the sequence of events
-%$$
-%R_t = \juv_t;\ \
-%I_{t + 1} = m_{t + 2} + x_{t + 2}
-%$$
-%implying
-%$$
-%X_{t + 1} = m_{t + 2} + x_{t + 1};\ \ \juv_{t + 1} = 0;\ \ R_{t + 1} = 0
-%$$
-%followed by
-%\begin{align*}
-%L_{t + 1} = m_{t + 2} + x_{t + 1}.
-%\end{align*}
-%This in turn implies
-%$$
-%\juv_{t + 2} = \juv_{t + 2} + x_{t + 1}
-%$$
-%which allows us to also reach
-%$$
-%R_{t + 2} = m_{t + 2};\ \
-%X_{t + 2} = x_{t + 2}
-%$$
-%As this sequence of events has a non-zero probability, the Doeblin condition \cite{Zubkov2011} is fulfilled and implies geometric ergodicity of the Markov chain $(R_t, X_t)$.
-%
 %% Existence of three derivatives of the log likelihood function is shown by Fokianos et al. Then Jensen and Rahbek's law of large numbers for geometrically ergodic processes implies normality of the maximum likelihood estimators.
 
 % \section{Discussion}
@@ -264,28 +234,28 @@ $$
 
 % Mention that CLS estimator is normal according to Cardoso da Silva. PQML is normal according to Ahmad and Francq.
 
-\section{Moment-based estimation}
-
-Limiting stationary properties: Set $\xi = \alpha + \beta$ and denoting the conditional dispersion index of $X_t \ \mid \ \lambda_t$ by
-$$
-\delta = \frac{\text{Var}(X_t \ \mid \ \lambda_t)}{\lambda_t} = \frac{\sigma^2_\psi + \mu_\psi^2}{\mu_\psi}.
-$$
-Then:
-$$
-\mu = \frac{\nu}{1 - \xi}, \ \ \sigma^2 = \frac{1 - \xi^2 + \alpha^2}{1 - \xi^2} \cdot \delta\mu, \ \ \rho(d) = \alpha\cdot \frac{1 - \beta\xi}{1 - \xi^2 + \alpha^2}\cdot \xi^{d - 1}
-$$
-
-Moment estimators:
-\begin{align*}
-\hat{\xi} & = \frac{\hat{\rho}(2)}{\hat{\rho}(1)}\\
-\hat{\nu} & = \hat{\mu}\cdot(1 - \hat{\xi})\\
-\hat{\alpha} & = \frac{(1 - \hat{\xi}^2) - \sqrt{(1 - \hat{\xi}^2) \cdot [1 - \hat{\xi}^2 - 4\hat\rho(1)\cdot\{\hat\rho(1) - \hat{\xi})\}]}}{2\{\hat\rho(1) - \hat{\xi}\}}\\
-\hat{\beta} & = \hat\xi - \hat\alpha\\
-\hat{\delta} & = \frac{\hat\sigma^2}{\hat\mu} \cdot \frac{1 - \hat\xi^2}{1 - \hat\xi^2 + \hat\alpha^2}
-\end{align*}
-
-
-For Poisson case one might derive the precise expressions.
+%\section{Moment-based estimation}
+%
+%Limiting stationary properties: Set $\xi = \alpha + \beta$ and denoting the conditional dispersion index of $X_t \ \mid \ \lambda_t$ by
+%$$
+%\delta = \frac{\text{Var}(X_t \ \mid \ \lambda_t)}{\lambda_t} = \frac{\sigma^2_\psi + \mu_\psi^2}{\mu_\psi}.
+%$$
+%Then:
+%$$
+%\mu = \frac{\nu}{1 - \xi}, \ \ \sigma^2 = \frac{1 - \xi^2 + \alpha^2}{1 - \xi^2} \cdot \delta\mu, \ \ \rho(d) = \alpha\cdot \frac{1 - \beta\xi}{1 - \xi^2 + \alpha^2}\cdot \xi^{d - 1}
+%$$
+%
+%Moment estimators:
+%\begin{align*}
+%\hat{\xi} & = \frac{\hat{\rho}(2)}{\hat{\rho}(1)}\\
+%\hat{\nu} & = \hat{\mu}\cdot(1 - \hat{\xi})\\
+%\hat{\alpha} & = \frac{(1 - \hat{\xi}^2) - \sqrt{(1 - \hat{\xi}^2) \cdot [1 - \hat{\xi}^2 - 4\hat\rho(1)\cdot\{\hat\rho(1) - \hat{\xi})\}]}}{2\{\hat\rho(1) - \hat{\xi}\}}\\
+%\hat{\beta} & = \hat\xi - \hat\alpha\\
+%\hat{\delta} & = \frac{\hat\sigma^2}{\hat\mu} \cdot \frac{1 - \hat\xi^2}{1 - \hat\xi^2 + \hat\alpha^2}
+%\end{align*}
+%
+%
+%For Poisson case one might derive the precise expressions.
 
 \appendix
 \section{Equivalence of the two INGARCH(1, 1) formulations}
