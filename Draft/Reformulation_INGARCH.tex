@@ -1,4 +1,6 @@
-\documentclass[review]{elsarticle}
+% \documentclass[review]{elsarticle}
+
+\documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -7,28 +9,31 @@
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{todonotes}
+\usepackage[left=2.5cm,right=2.5cm, top = 2.8cm, bottom = 2.8cm]{geometry}
+
 
 \begin{document}
 
 \title{A new thinning-based representation of the compound Poisson INGARCH(1, 1) model}
 \author{Johannes Bracher}
-\address{Chair of Statistics and Econometrics, Karlsruhe Institute of Technology, \\ % Bl\"ucherstra{\ss}e 17, 76185 Karlsruhe\\
-Computational Statistics Group, Heidelberg Institute for Theoretical Studies}
+% \address{Chair of Statistics and Econometrics, Karlsruhe Institute of Technology, \\ % Bl\"ucherstra{\ss}e 17, 76185 Karlsruhe\\
+% Computational Statistics Group, Heidelberg Institute for Theoretical Studies}
 
 
 \newcommand{\juv}{S}
 
+\maketitle
 
 
 \begin{abstract}
 We propose a thinning-based formulation of the Poisson and certain compound Poisson (CP) INGARCH(1, 1) models which allows for an intuitive interpretation and the application of branching process theory to derive stochastic properties. Notably, it is straightforward to show that under mild conditions the CP-INGARCH(1, 1) model is geometrically ergodic while all moments of the limiting-stationary distribution are finite. Moreover we point out how a Markov chain approach can be used to approximate the limiting-stationary distribution with arbitrary precision.
 \end{abstract}
 
-\begin{keyword}
-branching process, compound distribution, count time series, geometric ergodicity, integer-valued GARCH
-\end{keyword}
+% \begin{keyword}
+% branching process, compound distribution, count time series, geometric ergodicity, integer-valued GARCH
+% \end{keyword}
 
-\maketitle
+% \maketitle
 
 
 \section{Poisson and compound Poisson INGARCH(1, 1) models}
@@ -51,7 +56,7 @@ N_t \ \mid \ X_{t - 1}, \dots, X_0, \lambda_0 & \sim \text{Pois}(\lambda_t/\mu_\
 X_t & = \sum_{i = 1}^{N_t} Z_{i, t} \ \ \text{where} \ \  Z_{i, t} \stackrel{\text{iid}}{\sim} G(\psi)\label{eq:X_CP_original}\\
 \lambda_t & = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1},\label{eq:lambda_CP_original}
 \end{align}
-where $\lambda_0$ and $X_0$ are again fixed. Conditional on the past, $X_t$ follows a compound Poisson distribution with mean $\lambda_t$ under this definition. Note that in \eqref{eq:N_CP_original}, the condition is also on $N_{t - 1}, \dots, N_1$, but we suppressed this to shorten notation. This formulation is somewhat more restrictive than the class discussed in \citep{Goncalves2015} where $\psi_t$ is allowed to depend on the past of the process, too. It nonetheless contains a number of well-known models \cite[Observation 2]{Goncalves2015}:
+where $\lambda_0$ and $X_0$ are again fixed. Conditional on the past, $X_t$ follows a compound Poisson distribution with mean $\lambda_t$ under this definition. Note that in \eqref{eq:N_CP_original}, the condition is also on $N_{t - 1}, \dots, N_1$, but we suppressed this to shorten notation. This formulation is somewhat more restrictive than the class discussed in \citep{Goncalves2015} where the parameter $\psi_t$ of the seondary distribution is allowed to depend on the past of the process. It nonetheless contains a number of well-known models \cite[Observation 2]{Goncalves2015}:
 
 \begin{itemize}
 \item When choosing $G(\psi)$ such that $\text{Pr}(Z_{i,t} = 1) = 1$ we recover the Poisson INGARCH(1, 1) model.
@@ -123,6 +128,7 @@ Formulation \eqref{eq:X_t}--\eqref{eq:L_t} may seem involved, but has an intuiti
 \end{itemize}
 
 \begin{figure}[h!]
+\center
 \includegraphics[scale = 0.8]{figure/flowchart_ingarch.pdf}
 \caption{Visualization of the CP-INGARCH(1, 1) formulation \eqref{eq:X_t}--\eqref{eq:R_t}. Solid lines represent results of binomial thinning, dashed lines Poisson thinning, double lines thinning with $*_G$.}
 \label{fig:ingarch_flowchart}
@@ -139,23 +145,24 @@ The new representation of the CP-INGARCH(1, 1) models establishes a link to bran
 
 \subsection{Geometric ergodicity}
 
-The Poisson INGARCH(1, 1) model has been shown to be geometrically ergodic by Fokianos et al \cite{Fokianos2009}, who considered an approximation by a sequence of perturbed processes and Neumann \cite{Neumann2011} who provides a contractive condition. Ergodicity of various generalizations has been adressed by several authors \citep{Davis2016, Douc2013, Neumann2011}. Goncalves et al \citep{Goncalves2015} cover ergodicity (but not geometric ergodicity) of CP-INGARCH models. A proof of geometric ergodicity of the GP-INGARCH(1, 1) model along the lines of \cite{Neumann2011} has been sketched by Zhu \citep{Zhu2012}. %  Other proofs of (geometric) ergodicity of INGARCH models have been given in the following works. Neumann \citep{Neumann2011} provides a contractive condition for ergodicity of a more general model class which includes non-linear autoregressive models, but also the Poisson INGARCH(1, 1). Zhu \citep{Zhu2012} states that the same technique can also be used to establish geomtric ergodicity of the GP-INGARCH(1, 1) model. Ergodicity of broader classes which are not limited to a conditional Poisson or generalized Poisson distribution have been considered by Douc et al \citep{Douc2013} and Davis and Liu \cite{Davis2016}. Goncalves et al \cite{Goncalves2015} established ergodicity (but not geometric ergodicity) of CP-INGARCH models. %, including higher-order models. % Multivariate Poisson INGARCH models have been analyzed by Fokianos et al \cite{Fokianos2020}.% However, to our best knowledge, geometric ergodicity has so far only been established for the Poisson INGARCH(1,1) model.\todo{Add Fokianos multivariate}
+The Poisson INGARCH(1, 1) model has been shown to be geometrically ergodic by Fokianos et al \cite{Fokianos2009}, who considered an approximation by a sequence of perturbed processes, and Neumann \cite{Neumann2011} who provides a contractive condition. Ergodicity of various generalizations has been adressed by several authors \citep{Davis2016, Douc2013, Neumann2011}. Goncalves et al \citep{Goncalves2015} cover ergodicity (but not geometric ergodicity) of CP-INGARCH models. A proof of geometric ergodicity of the GP-INGARCH(1, 1) model along the lines of \cite{Neumann2011} has been sketched by Zhu \citep{Zhu2012}. %  Other proofs of (geometric) ergodicity of INGARCH models have been given in the following works. Neumann \citep{Neumann2011} provides a contractive condition for ergodicity of a more general model class which includes non-linear autoregressive models, but also the Poisson INGARCH(1, 1). Zhu \citep{Zhu2012} states that the same technique can also be used to establish geomtric ergodicity of the GP-INGARCH(1, 1) model. Ergodicity of broader classes which are not limited to a conditional Poisson or generalized Poisson distribution have been considered by Douc et al \citep{Douc2013} and Davis and Liu \cite{Davis2016}. Goncalves et al \cite{Goncalves2015} established ergodicity (but not geometric ergodicity) of CP-INGARCH models. %, including higher-order models. % Multivariate Poisson INGARCH models have been analyzed by Fokianos et al \cite{Fokianos2020}.% However, to our best knowledge, geometric ergodicity has so far only been established for the Poisson INGARCH(1,1) model.\todo{Add Fokianos multivariate}
 
 All of the mentioned arguments can be described as technically involved. As noted by Neumann \cite{Neumann2011}, the difficulty lies in the fact that the $X_t$ in \eqref{eq:X_t_original} are discrete, while the condtional mean process $\{\lambda_t\}$ from \eqref{eq:lambda_t} is real-valued. The re-formulation \eqref{eq:juv_t}--\eqref{eq:R_t} involves exclusively integer-valued processes, and allows us to exploit results from branching process theory. Plugging equations \eqref{eq:L_t} and \eqref{eq:X_t} into \eqref{eq:juv_t}, $\{\juv_t\}$ can be written as
 \begin{align}
 \juv_t = R_{t - 1} + \kappa \star (\psi *_G H_{t - 1}) + \kappa \star (\psi *_G I_{t - 1}). \label{eq:recursion_S}
 \end{align}
-Here, $\kappa \star (\psi *_G I_{t - 1})$ represents clusters laid by immigrated females. The term  $R_{t - 1} = S_t - H_t \stackrel{d}{=} \beta \circ \juv_{t - 1}$ contains clusters remaining from $ \juv_{t - 1}$, while $\kappa \star (\psi *_G H_{t - 1}) = \kappa \star \{\psi *_G (S_{t - 1} - R_{t - 1})\}$ are new clusters laid by ``native'' (i.e., not immigrated) females at time $t$. Using the same decomposition, we note that each cluster from $\juv_{t - 1}$ can either remain in the stock itself or hatch and generate a $G(\psi)$ distributed number of new females, which in turn each add a $\text{Pois}(\kappa)$-distributed number of clusters to the stock. We can thus write recursion \eqref{eq:recursion_S} as
+Here, $\kappa \star (\psi *_G I_{t - 1})$ represents clusters laid by immigrated females. The term  $R_{t - 1} = S_t - H_t \stackrel{d}{=} \beta \circ \juv_{t - 1}$ contains clusters remaining from $ \juv_{t - 1}$, while $\kappa \star (\psi *_G H_{t - 1}) = \kappa \star \{\psi *_G (S_{t - 1} - R_{t - 1})\}$ are new clusters laid by ``native'' females which themselves had hatched from the stock at time $t - 1$. Using the same decomposition, we note that each cluster from $\juv_{t - 1}$ can either remain in the stock itself or hatch and generate a $G(\psi)$ distributed number of new females, which in turn each add a $\text{Pois}(\kappa)$-distributed number of clusters to the stock. We can thus write recursion \eqref{eq:recursion_S} as
 $$
 \juv_t = \sum_{i = 1}^{\juv_{t - 1}} A_{t, i} \ \ + \ \ I^*_t.
 $$
 Here, $A_{t, i}$ is the number of clusters the $i$-th cluster from $S_t$ contributes to $S_{t + 1}$ and $I^*_t$ are clusters contributed by the immigrants $I_{t - 1}$:
 \begin{align}
 A_{t, i} & = \begin{cases}
-1 & \text{with probability } \beta\\
-\kappa \star (\psi *_G 1) & \text{with probability } 1 - \beta, \text{independently for each } i
+1 & \text{with probability } \beta \ \ \ \ \ \ \ (\rightarrow \text{contribution to } R_{t - 1}) \\
+\kappa \star (\psi *_G 1) & \text{with probability } 1 - \beta \ \ (\rightarrow \text{ contribution to } \kappa \star (\psi *_G H_{t - 1})),
 \label{eq:Z_t_i}
 \end{cases}\\
+& \ \ \ \ \ \ \text{independently for each } i\\
 I^*_t & = \kappa\star (\psi *_G I_{t - 1}). \label{eq:I_star}
 \end{align}
 Thus, $\{\juv_t\}$ is a Galton-Watson branching process where the offspring distribution \eqref{eq:Z_t_i} is a specific one-inflated compound distribution. %, specifically, $A_{t, i}$ is a $G(\psi)$-stopped sum of Poisson random variables. 
@@ -176,7 +183,7 @@ Even though it is in principle sufficient to initialize the process with $R_0$ a
 
 \begin{enumerate}
 % \item Given $(\juv_u, R_u, H_u, X_u, L_u), u < t$ and $\juv_t$, $(R_t, H_t, X_t, L_t)$ depends only on $\juv_t$. This is straightforward to see from equations \eqref{eq:juv_t}--\eqref{eq:L_t} or Figure \ref{fig:ingarch_flowchart}.
-\item Given $S_t$, $(R_t, H_t, X_t, L_t)$ is independent of all $\juv_u, R_u, H_u, X_u, L_u, u < t$.
+\item Given $S_t$, $(R_t, H_t, X_t, L_t)$ is independent of all $\juv_u, R_u, H_u, X_u, L_u, u < t$. It is straightforward to see from equations \eqref{eq:juv_t}--\eqref{eq:L_t} or Figure \ref{fig:ingarch_flowchart} that this is the case.
 \item There is an $n \geq 1$ such that for all $t > n$, the generation mechanism of $\juv_t \ \mid \ \juv_0 = s_0, R_0 = r_0, H_0 = h_0, X_0 = x_0, L_0 = l_0$ has the same structure as that of $\juv_t \ \mid \ \juv_n = \tilde{s}_n$, where $\tilde{s}_n$ is some function of $(s_0, r_0, h_0, x_0, l_0)$. As $(s_0, r_0, h_0, x_0, l_0)$ only impacts the further course of the process $\{\juv_t\}$ through $\juv_1 = l_0 + r_0$, this is the case for $n = 1$. % and $\tilde{s}_1 = l_0 + r_0$.
 \end{enumerate}
 % This proves geometric ergodicity of the joint process $\{(\juv_t, R_t, X_t, L_t\}$ if $\kappa\mu_\psi < 1$ (and $\sigma_\psi^2 < \infty$, as assumed since Section \ref{sec:original_formulation}).
@@ -213,14 +220,15 @@ p_i \approx \text{Pr}(X_T = i),
 $$
 where $\text{Pr}(X_T = i)$ can in turn be approximated by recursively computing
 $$
-\text{Pr}(X_t = i) \approx \sum_{j = 0}^M p_{j|i} \times \text{Pr}(X_{t - 1} = j).
+\text{Pr}(X_t = i) \approx \sum_{j = 0}^M p_{j|i} \times \text{Pr}(X_{t - 1} = j),
 $$
+with some suitable initialization (e.g. starting close to the expected values).
 
 This method, however, is not directly applicable to the INGARCH(1, 1) model \eqref{eq:N_CP_original}--\eqref{eq:lambda_CP_original} as $\{X_t\}$ is not a first-order Markov chain. Application to the joint process $\{(X_T, \lambda_t)\}$, which is a first-order Markov chain, is not feasible as $\lambda_t$ has a continuous support. Formulation \eqref{eq:X_t}--\eqref{eq:L_t}, however, enables us to apply the approximation
 $$
 p^{(S)}_i \approx \text{Pr}(S_T = i) \ \ \text{and} \ \ \text{Pr}(S_t = i) \approx \sum_{j = 0}^M p^{(S)}_{j|i} \times \text{Pr}(S_{t - 1} = j)
 $$
-to the discrete Markov chain $\{S_t\}$. Subsequently one can then compute an approximatin of the limiting stationary distribution of $X_t$ as
+to the discrete Markov chain $\{S_t\}$. Subsequently one can compute an approximatin of the limiting stationary distribution of $X_t$ as
 $$
 p_i = \sum_{k = 0}^M p_k^{(S)} \times \text{Pr}(X_t = i \ \mid \ S_t = k).
 $$
@@ -263,22 +271,28 @@ $$
 \label{appendix:proof}
 
 We demonstrate that the process $\{X_t, t \in \mathbb{N}_0\}$ from \eqref{eq:juv_t}--\eqref{eq:R_t} is equivalent to the INGARCH(1, 1) process \eqref{eq:X_t_original}--\eqref{eq:lambda_t}. We start by decomposing $L_t, t \in \mathbb{N}_0$ and $R_0$ by when the respective clusters will hatch. We denote by $L_t^{(i)}$ the number of clusters laid at time $t$ and hatching at $t + i$ and by $R^{(i)}_0$ the number of clusters initially in the stock and hatching at time $i$. This implies
-\begin{align*}
-L_t & = \sum_{i = 1}^\infty L_t^{(i)}, \ \ \ 
+\begin{equation}
+L_t = \sum_{i = 1}^\infty L_t^{(i)}, \ \ \ 
 R_0 = \sum_{i = 1}^\infty R_0^{(i)}, \ \ \ 
 H_t = \sum_{i = 1}^{t} L_{t - i}^{(i)} \ \ + \ \ R_0^{(t)}.
 % R_t & = \sum_{i = 1}^t \sum_{j > i} L_{t - i}^{(j)} \ \ + \ \ \sum_{j > t} R_0^{(j)}.
-\end{align*}
-A cluster laid at time $t$ has a probability of $\beta^{i - 1}(1 - \beta)$ to hatch at time $t + i, i = 1, 2, \dots$, and thus be part of $L_t^{(i)}$. The Poisson splitting property \cite{Kingman1993} then implies that given $X_t$, the $L_t^{(i)}$ are independently Poisson distributed,
+\label{eq:sums}
+\end{equation}
+A cluster laid at time $t$ has a probability of $\beta^{i - 1}(1 - \beta)$ to hatch at time $t + i, i = 1, 2, \dots$, and thus be part of $L_t^{(i)}$. The Poisson splitting property \cite{Kingman1993} then implies that given $X_t$ the $L_t^{(i)}$ are independently Poisson distributed,
 $$
-L_t^{(i)} \mid X_t, X_{t - 1}, \dots, X_0 \stackrel{\text{ind}}{\sim} \text{Pois}(\beta^{i - 1}[1 - \beta]\kappa X_t). % ; \ \ L_t^{(i)} \perp L_t^{(j)} \mid X_t, i \neq j.
+L_t^{(i)} \mid X_t \stackrel{\text{ind}}{\sim} \text{Pois}(\beta^{i - 1}[1 - \beta]\kappa X_t). % ; \ \ L_t^{(i)} \perp L_t^{(j)} \mid X_t, i \neq j.
 $$
-Given $X_t$, $L_t^{(i)}$ does not have any impact on the further course of the process $\{X_t\}$ until time $t + i$, so that for $t < u < t + i$ we moreover have $L_t^{(i)} \perp L_u^{(j)} \mid X_t, X_u$. We can now re-write
+We note that given $X_t$, $L_t^{(i)}$ does not have any impact on the further course of the process $\{X_t\}$ until time $t + i$. Also, given $X_t$, $L_t^{(i)}$ is independent of the past. We can thus extend the condition in the above and write
+$$
+L_t^{(i)} \mid X_{t + i}, X_{t + i - 1}, \dots, X_0 \stackrel{\text{ind}}{\sim} \text{Pois}(\beta^{i - 1}[1 - \beta]\kappa X_t). % ; \ \ L_t^{(i)} \perp L_t^{(j)} \mid X_t, i \neq j
+$$
+Moreover it is clear that $L_t^{(i)} \perp L_u^{(j)} \mid X_t, X_u$ for $t < u < t + i$. Now consider
 \begin{align}
-X_t & = \psi *_G I_t \ \ + \ \ \psi *_G\left(\sum_{i = 1}^{t} L_{t - i}^{(i)} \ \ + \ \ R_0^{(t)}\right)\nonumber \\
-& = \psi *_G \underbrace{\left( I_t \ \ + \ \ \sum_{i = 1}^{t} L_{t - i}^{(i)} \ \ + \ \ R_0^{(t)}\right)}_{\text{denote this by } N_t}. \label{eq:introduce_N_T}
+% X_t & = \psi *_G I_t \ \ + \ \ \psi *_G\left(\sum_{i = 1}^{t} L_{t - i}^{(i)} \ \ + \ \ R_0^{(t)}\right)\nonumber \\
+X_t & = \psi *_G \underbrace{\left( I_t \ \ + \ \ \overbrace{\sum_{i = 1}^{t} L_{t - i}^{(i)} \ \ + \ \ R_0^{(t)}}^{= H_t}\right)}_{\text{denote this by } N_t}, \label{eq:introduce_N_T}
 \end{align}
-Moreover we note that in analogy to the above argument, $R_0^{(t)}$ is Poisson distributed with rate $\eta\beta^{t - 1}(1 - \beta)$ and independent of all $X_t$ and $L_t^{(i)}$ up to $t - 1$. Conditioned on $X_{t - 1}, \dots, X_0, \eta$, we thus have that the term $N_t$ introduced in equation \eqref{eq:introduce_N_T} is a sum of independent Poisson random variables. This implies
+where we substituted $H_t$ using equation \eqref{eq:sums}.
+We note that in analogy to the above argument, $R_0^{(t)}$ is Poisson distributed with rate $\eta\beta^{t - 1}(1 - \beta)$ and independent of all $X_t$ and $L_t^{(i)}$ up to $t - 1$. Conditioned on $X_{t - 1}, \dots, X_0, \eta$, we thus have that the term $N_t$ introduced in equation \eqref{eq:introduce_N_T} is a sum of independent Poisson random variables. This implies
 $$
 N_t \mid X_{t - 1}, \dots, X_0, \eta \sim \text{Pois}(\lambda_t)
 $$
