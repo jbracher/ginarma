@@ -12,10 +12,16 @@
 \usepackage[left=2.5cm,right=2.5cm, top = 2.8cm, bottom = 2.8cm]{geometry}
 
 
+% \usepackage{draftwatermark}
+% \SetWatermarkText{draft}
+% \SetWatermarkScale{3}
+
 \begin{document}
 
-\title{A thinning-based representation of INGARCH models}
-\author{Johannes Bracher}
+\title{Thinning-based representation of INGARCH models, with an intepretation as stochastic epidemic processes}
+\author{Johannes Bracher\\
+Chair of Statistics and Econometrics, Karlsruhe Institute of Technology, \\ % Bl\"ucherstra{\ss}e 17, 76185 Karlsruhe\\
+Computational Statistics Group, Heidelberg Institute for Theoretical Studies}
 % \address{Chair of Statistics and Econometrics, Karlsruhe Institute of Technology, \\ % Bl\"ucherstra{\ss}e 17, 76185 Karlsruhe\\
 % Computational Statistics Group, Heidelberg Institute for Theoretical Studies}
 
@@ -26,14 +32,20 @@
 
 
 \begin{abstract}
-We propose thinning-based formulations of the Poisson and certain compound Poisson (CP) INGARCH models. This approaches them to the INAR model class, which is equally thinning-based, and allows for the application of branching process theory to derive stochastic properties. Notably, it is straightforward to show that under mild conditions the CP-INGARCH(1, 1) model is geometrically ergodic while all moments of the limiting-stationary distribution are finite. The new representation also provides an interpretation of INGARCH models as a stochastic epidemic processes, specifically a simplified discrete-time SEIR (susceptible-exposed-infectious-removed) model.
+A thinning-based representation of the Poisson and certain compound Poisson (CP) INGARCH models is proposed. This approaches them to the INAR model class, which is equally thinning-based, and allows for the application of branching process theory to derive stochastic properties. Notably, it is straightforward to show that under mild conditions the CP-INGARCH(1, 1) model is geometrically ergodic while all moments of the limiting-stationary distribution are finite. Moreover, the new representation provides an interpretation of INGARCH models as a stochastic epidemic process, specifically a simplified discrete-time SEIR (susceptible-exposed-infectious-removed) model.
 \end{abstract}
+
+\bigskip
+
+\begin{center}
+\textbf{This is a preprint and has not been subject to peer-review.}
+\end{center}
 
 % \begin{keyword}
 % branching process, compound distribution, count time series, geometric ergodicity, integer-valued GARCH
 % \end{keyword}
 
-% \maketitle
+\maketitle
 
 \section{Count autoregression based on thinnings and generalized linear regression}
 \label{sec:intro}
@@ -46,12 +58,12 @@ The basic Poisson INAR(1) model $\{X_t, t \in \mathbb{Z}\}$ \citep{McKenzie1985,
 $$
 X_t = I_t + \kappa \circ X_{t - 1},
 $$
-where $\{I_t\}$ is a sequence of independent Poisson random variables with rate $\nu$. This basic model has been extended in a multitude of ways \cite{Scotto2015}. The INGARCH class \cite{Ferland2006, Fokianos2009}, on the other hand, adopts the idea of generalized linear regression models (GLMs). Its simplest instance, the Poisson INARCH(1) model, is defined as a process $\{X_t, t \in \mathbb{N}\}$ with
+where $0 \leq \kappa \leq 1$ and $\{I_t\}$ is a sequence of independent Poisson random variables with rate $\nu = 0$. This model has been extended in a multitude of ways \cite{Scotto2015}. The INGARCH class \cite{Ferland2006, Fokianos2009}, on the other hand, adopts the idea of generalized linear regression models (GLMs). Its simplest instance, the Poisson INARCH(1) model, is defined as a process $\{X_t, t \in \mathbb{N}_0\}$ with
 \begin{align*}
 X_t \mid X_{t - 1}, \dots, X_0 & \sim \text{Pois}(\lambda_t)\\
-\lambda_t & = \nu + \alpha X_{t - 1}
+\lambda_t & = \nu + \alpha X_{t - 1},
 \end{align*}
-and a fixed starting value $X_0$. The GLM-based perspective, too, has sparked extensive research \citep{Fokianos2016}. It has been noted that the INARCH(1) model can also be written as \citep{Weiss2015}
+$\nu > 0, \alpha \geq 0$, and a fixed starting value $X_0$. The GLM-based perspective, too, has spawned extensive research \citep{Fokianos2016}. It has been noted that the INARCH(1) model can also be written as \citep{Weiss2015}
 $$
 X_t = I_t + \kappa \star X_{t- 1}
 $$
@@ -69,13 +81,13 @@ Occasionally, also more complex INGARCH models have been represented via thinnin
 The most common extension of the Poisson INARCH(1) model is the Poisson INGARCH(1, 1) model \cite{Ferland2006, Fokianos2009}. It is defined as a process $\{X_t, t \in \mathbb{N}_0\}$ with
 \begin{align}
 X_t \mid X_{t - 1}, \dots, X_0, \lambda_0 & \sim \text{Pois}(\lambda_t)\label{eq:X_t_original}\\
-\lambda_t & = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1}. \label{eq:lambda_t}
+\lambda_t & = \nu + \alpha X_{t - 1} + \beta \lambda_{t - 1} \label{eq:lambda_t}
 \end{align}
-Here we assume $\nu > 0, \alpha > 0$ and $0 \leq \beta < 1$. Note that the latter is somewhat more restrictive than most definitions from the literature where $\alpha = 0$ and $\beta \geq 1$ are usually allowed. The initial values $\lambda_0 \geq \nu$ and $X_0 \in \mathbb{N}_0$ are assumed to be fixed as in \cite{Fokianos2009} (note that other authors, like \citep{Ferland2006}, use index set $t \in \mathbb{Z}$). More generally, to define the Poisson INGARCH($p$, $q$) model, equation \eqref{eq:lambda_t} is replaced by
+where $\nu > 0, \alpha > 0$ and $0 \leq \beta < 1$. Note that this is somewhat more restrictive than most definitions from the literature where $\alpha = 0$ and $\beta \geq 1$ are usually allowed. The initial values $\lambda_0 \geq \nu$ and $X_0 \in \mathbb{N}_0$ are assumed to be fixed as in \cite{Fokianos2009} (note that other authors, like \citep{Ferland2006}, use index set $t \in \mathbb{Z}$ and thus do not require an initialization). More generally, to define the Poisson INGARCH($p$, $q$) model, equation \eqref{eq:lambda_t} is replaced by
 \begin{equation}
 \lambda_t = \nu + \sum_{i = 1}^p \alpha_i X_{t - i} + \sum_{j = 1}^q \beta_j \lambda_{t - j},\label{eq:lambda_t_pq}
 \end{equation}
-and additional initial values $\lambda_{1 - q}, \dots, \lambda_0 \geq \nu$ and $X_{1 - p}, \dots, X_0 \in \mathbb{N}_0$ are fixed.
+and additional initial values $\lambda_{1 - q}, \dots, \lambda_0 \geq \nu$ and $X_{1 - p}, \dots, X_0 \in \mathbb{N}_0$ are fixed. We assume $\alpha_i > 0, i = 1, \dots, p$ and $\beta_j \geq 0, j = 1, \dots, q$  with $\sum_{j = 1}^q \beta_j < 1$.
 
 Numerous variations of model \eqref{eq:X_t_original}--\eqref{eq:lambda_t} with conditional distributions other than the Poisson have been suggested (see \cite{Weiss2018} for an overview). A broad class are \textit{compound Poisson} INGARCH models \cite{Goncalves2015, Silva2016}. A random variable $Y$ is said to follow a compound Poisson distribution \cite[Chapter 3]{Feller1968} if it can be written as a randomly stopped sum 
 $$
@@ -101,7 +113,8 @@ This formulation is somewhat more restrictive than the class discussed in \citep
 % r_t = \frac{\lambda_t(1 - \psi)}{\psi}, \ \ p = 1 - \psi.
 % $$
 % This corresponds to
-leads to a generalization of the NB-DINARCH \cite{Xu2012} to an INGARCH(1, 1) model (Example 4.2.1 in \cite{Weiss2018}). %, see also Observation 2 in \cite{Goncalves2015} and Example 4.2.1 in \cite{Weiss2018} .
+% leads to a generalization of the negative biomial DINARCH \cite{Xu2012} to an INGARCH(1, 1) model (Example 4.2.1 in \cite{Weiss2018}).
+leads to a negative biomial INGARCH(1, 1) model (\cite{Xu2012}; Example 4.2.1 in \cite{Weiss2018}). %, see also Observation 2 in \cite{Goncalves2015} and Example 4.2.1 in \cite{Weiss2018} .
 \item The Neyman Type A INGARCH model \cite{Goncalves2015a} results when setting $G(\psi)$ to a Poisson distribution. %$\text{Pois}(\psi)$ distribution. The conditional distribution of $X_t$ given the past is then \todo{re-check parameterization of Neyman Type A}
 % $$
 % X_t  \ \mid \ X_{t - 1}, X_{t - 2}, \dots, X_0, \lambda_0 \sim \text{NeymanTypeA}(\lambda_t/\psi, \psi).
@@ -134,7 +147,7 @@ where $\kappa > 0$ and $0 \leq \beta < 1$. Here, $\{I_t\}$ consists of independe
 % \end{align*}
 To initialize the process we fix $X_0 \in \mathbb{N}_0, \eta > 0$ and specify $E_0 \sim \text{Pois}\left(\eta \right)$.
 
-It can be shown that $\{X_t\}$ as defined in equation \eqref{eq:X_t_thinning_Poisson}--\eqref{eq:L_t} is a Poisson INGARCH(1, 1) process as given in \eqref{eq:X_t_original}--\eqref{eq:lambda_t}, see Appendix \ref{subsec:derivation_poisson11} for the derivation. The parameter $\beta$ is shared across the two formulations while the remaining parameters of the original formulation can be recovered as
+It can be shown that $\{X_t\}$ as defined in equation \eqref{eq:X_t_thinning_Poisson}--\eqref{eq:L_t} is a Poisson INGARCH(1, 1) process as given in \eqref{eq:X_t_original}--\eqref{eq:lambda_t}, see Appendix \ref{subsec:derivation_poisson11} for the derivation. The parameter $\beta$ is shared across the two formulations, meaning that the INARCH(1) model corresponds to $\beta = 0$. The remaining parameters of the original formulation can be recovered as
 $
 \nu = (1 - \beta)\tau$ and $ \ \
 \alpha = (1 - \beta)\kappa.
@@ -143,7 +156,7 @@ $
 $
 Concerning the initialization, equivalence is achieved by setting $\lambda_0 = \tau + (1 - \beta) \times \eta$.
 
-To facilitate verbal description and generalizations in the following sections, we introduce two auxiliary processes
+To facilitate verbal description and generalizations in the following sections, we introduce two auxiliary processes,
 \begin{align}
 A_t & = E_t - L_t \label{eq:A_t}\\
 C_t & = \kappa \star X_t \label{eq:C_t},
@@ -153,25 +166,26 @@ which allow us to re-write equations \eqref{eq:X_t_thinning_Poisson} and \eqref{
 X_t & = I_t + A_t\label{eq:X_t_v2}\\
 E_t & = L_{t - 1} + C_{t - 1}.\label{eq:juv_t_v2}
 \end{align}
-Note that a related model where the Poisson thinning in equations \eqref{eq:E_t_thinning_Poisson}/\eqref{eq:C_t} is replaced by a binomial thinning has been introduced in \cite{Bracher2019}.
 
-We can now frame the Poisson INGARCH(1, 1) process \eqref{eq:L_t}--\eqref{eq:juv_t_v2} as a simple model for the spread of an infectious disease. A visualization is provided in Figure \ref{fig:ingarch_flowchart_poisson}.
+The Poisson INGARCH(1, 1) process \eqref{eq:L_t}--\eqref{eq:juv_t_v2} can be interpreted as a simple model for the spread of an infectious disease. A visualization is provided in Figure \ref{fig:ingarch_flowchart_poisson}.
 
 \begin{figure}
 \center
-\includegraphics[scale=0.85]{figure/flowchart_ingarch_poisson_SEIR.pdf}
-\caption{Visualization of the Poisson INGARCH(1, 1) formulation \eqref{eq:L_t}--\eqref{eq:juv_t_v2} as a flow chart. Solid lines represent results of binomial thinning, dashed lines Poisson thinning or immigration. Note that the two solid arrows starting at $E_t$ do not represent independent binomial thinnings as by construction  $L_t + A_t = E_t$.}
+\includegraphics[scale=0.8]{figure/flowchart_ingarch_poisson_SEIR.pdf}
+\caption{Interpretation of the Poisson INGARCH(1, 1) formulation \eqref{eq:L_t}--\eqref{eq:juv_t_v2} as a stochastic epidemic process. Solid lines represent results of binomial thinning, dashed lines Poisson thinning or immigration. Note that the two solid arrows starting at $E_t$ do not represent independent binomial thinnings as by construction  $L_t + A_t = E_t$.}
 \label{fig:ingarch_flowchart_poisson}
 \end{figure}
 
 \begin{enumerate}
-\item $X_t$ is the number of individuals who are infectious with a given disease at time $t$. Each of these stays infectious for one time period and \textit{contaminates} a $\text{Pois}(\kappa)$-distributed number $C_t = \kappa \star X_t$ of other individuals, exposing them to the disease.
-\item These individuals enter into an \textit{exposed pool} at the following time point $t + 1$ (exposed meaning that they have contracted the disease, but are not infectious yet). The total number of exposed persons present in the population at time $t + 1$ is denoted by $\juv_{t + 1}$.
-\item At each time $t$, each of the $E_t$ exposed individuals in this pool can either remain there (with probability $\beta$) or advance to infectiousness, thus being removed from the pool (with probability $1 - \beta$). The exposed individuals \textit{left} from time $t$ are denoted by $L_t = \beta \circ E_t$ and form part of $E_{t + 1}$. This construction implies that the latent period (time from exposure to infectiousness) is $\text{Geom}(1- \beta)$ distributed.
+\item $X_t$ is the number of individuals who are infectious with a given disease at time $t$. Each of these individuals stays infectious for one time period and \textit{contaminates} a $\text{Pois}(\kappa)$-distributed number $C_t = \kappa \star X_t$ of other individuals, exposing them to the disease.
+\item Contaminated individuals enter into an \textit{exposed pool} at the following time point $t + 1$ (exposed meaning that they have contracted the disease, but are not infectious yet). The total number of exposed individuals present in the population at time $t + 1$ is denoted by $\juv_{t + 1}$.
+\item At each time $t$, each of the $E_t$ exposed individuals can either remain in the exposed pool (with probability $\beta$) or advance to infectiousness, thus being removed from the pool (with probability $1 - \beta$). The exposed individuals \textit{left} from time $t$ are denoted by $L_t = \beta \circ E_t$ and form part of $E_{t + 1}$. This construction implies that the latent period (time from contamination to infectiousness) is $\text{Geom}(1- \beta)$ distributed (see equation \eqref{eq:geom_distr}).
 \item If an exposed individual from $E_t$ \textit{advances} to the infectious stage, it enters into $X_t$. The number of such individuals is denoted by $A_t = E_t - L_t$.
 \item At each time $t$, a $\text{Pois}(\tau)$ distributed number $I_t$ of individuals become infectious due to external sources (\textit{imports}).
 \end{enumerate}
-This is similar to the mechanism of the so-called SEIR (susceptible-exposed-infectious-removed) model commonly used in epidemiology (see e.g. \citep{Britton2019} for a textbook introduction). The INGARCH mechanism is simpler in that it models only the exposed and infectious groups explicitly, but not the susceptible and recovered/immunized. Consequently, it also ignores that any real population would be finite in size. The model will thus not capture the non-linear effects arising in the SEIR model due to the depletion of the susceptible population. For rare diseases in a large population, however, it may be a reasonable approximation; see \citep{Bauer2018} for a related argument linking the SIR (susceptible-infectious-removed) and the INARCH(1) model.
+This is similar to the mechanism of the so-called SEIR (susceptible-exposed-infectious-removed) model commonly used in epidemiology (see e.g. \citep{Britton2019} for a textbook introduction). The INGARCH mechanism is simpler in that it models only the exposed and infectious groups explicitly, but not the susceptible and recovered/immunized. Consequently, it also ignores that any real population would be finite in size. The model will thus not capture the non-linear effects arising in the SEIR model due to the depletion of the susceptible population. For rare diseases in a large population or diseases with short-lived immunity (which can be described by an SEIS model, susceptible-exposed-infectious-susceptible), it may nonetheless be a reasonable approximation; see \citep{Bauer2018} for a related argument linking the SIR (susceptible-infectious-removed) and the INARCH(1) model.
+
+Note that a related model where the Poisson thinning in equations \eqref{eq:E_t_thinning_Poisson}/\eqref{eq:C_t} is replaced by a binomial thinning has been introduced in \cite{Bracher2019}.
 
 \subsection{The Poisson INGARCH($p$, $q$) model}
 \label{subsec:poissonpq}
@@ -186,20 +200,20 @@ where
 C_{t, i} & = \kappa_i \star X_t\\
 (L_{t, 1}, \dots, L_{t, q}, A_t) \ \mid \ E_t & \sim \text{Mult}\left(E_t; \beta_1, \dots, \beta_q, 1 - \sum_{j = 1}^q \beta_j\right)\label{eq:L_t_mult}
 \end{align}
-and $\kappa_i, \beta_j > 0, \sum_{j = 1}^q \beta_j < 1$. For the initialization we fix $X_{1 - p}, \dots, X_0$ and set $E_{m} \sim \text{Pois}(\eta_m)$ for $m = 1 - q, \dots, 0$. Again, the parameters $\beta_{1}, \dots, \beta_q$ are the same as in the original formulation \eqref{eq:lambda_t_pq}. The remaining parameters can be obtained as $\nu = \tau \times \left(1 - \sum_{j = 1}^q\beta_j \right)$ and $\alpha_i = \kappa_i \times \left(1 - \sum_{j = 1}^q\beta_j \right)$. For the initialization, one needs to set $\lambda_m = \tau + (1 - \sum_{j = 1}^q\beta_s) \times \eta_m, m = 1 - q, \dots, 0$.
+and $\kappa_i, \beta_j > 0, \sum_{j = 1}^q \beta_j < 1$. For the initialization we fix $X_{1 - p}, \dots, X_0$ and set $E_{m} \sim \text{Pois}(\eta_m)$ with $\eta_m > 0$ for $m = 1 - q, \dots, 0$. Again, the parameters $\beta_{1}, \dots, \beta_q$ are the same as in the original formulation \eqref{eq:lambda_t_pq}. The remaining parameters can be obtained as $\nu = \left(1 - \sum_{j = 1}^q\beta_j \right) \times \tau$ and $\alpha_i = \left(1 - \sum_{j = 1}^q\beta_j \right) \times \kappa_i$. For the initialization, one needs to set $\lambda_m = \tau + (1 - \sum_{j = 1}^q\beta_j) \times \eta_m, m = 1 - q, \dots, 0$.
 
 In terms of the interpretation from the previous section the extension has the following implications. A visualization can be found in Figure \ref{fig:ingarch_flowchart_poisson_pq}.
 \begin{itemize}
-\item $X_t$ now is the number of individuals who became \textit{newly} infectious at time $t$ (in epidemiological terms it describes incident rather than prevalent cases).
-\item The individuals in $X_t$ cannot only expose others to the disease immediately, thus sending them to $E_{t + 1}$, but also in the $p - 1$ subsequent time periods, then sending them to one of $E_{t + 2}, \dots, E_{t + p}$. The number of such exposed individuals entering into $E_{t + i}$ is $C_{t, i} = \kappa_i \star X_t$. The vector $(\kappa_1, \dots, \kappa_q)$ describes the infectivity profile over the $p$ time points of contagiousness.
-\item In the exposed pool, individuals can ``skip'' time periods and move forward up to $q$ periods in one step. The number of exposed individuals moving from $E_t$ directly to $E_{t + j}$ is denoted by $L_{t, j}$. It is straightforward to show that the latent period then follows a compound geometric distribution (with compounding order $q$) rather than just a geometric.
+\item $X_t$ now is the number of individuals who became \textit{newly} infectious at time $t$ (in epidemiological terms it describes \textit{incident} rather than \textit{prevalent} cases).
+\item The individuals in $X_t$ cannot only expose others to the disease immediately, thus sending them to $E_{t + 1}$, but also in the $p - 1$ subsequent time periods, then sending them to one of $E_{t + 2}, \dots, E_{t + p}$. The number of such exposed individuals entering into $E_{t + i}$ is $C_{t, i} = \kappa_i \star X_t$. The vector $(\kappa_1, \dots, \kappa_q)$ thus describes the infectivity profile over the $p$ time points of contagiousness.
+\item In the exposed pool, individuals can ``skip'' time periods and move forward up to $q$ periods in one step. The number of exposed individuals moving from $E_t$ directly to $E_{t + j}$ is denoted by $L_{t, j}$. It is straightforward to show that the latent period then follows a compound geometric distribution (with a categorical distribution with support $\{1, \dots, q\}$ as the secondary distribution) rather than just a geometric. % compounding order $q$
 \end{itemize}
-Formulation \eqref{eq:L_t_mult} implies $A_t + \sum_{j = 1}^q L_{t, j} = E_t,$ meaning that the $E_t$ exposed individuals can take a variety of paths, but none is lost or added to the system as a whole in this step. Note that a similar construction is used in the INAR($p$) model as defined by Alzaid and Al-Osh \cite{Alzaid1990}.
+Formulation \eqref{eq:L_t_mult} implies $A_t + \sum_{j = 1}^q L_{t, j} = E_t,$ meaning that the $E_t$ exposed individuals can take a variety of paths, but none is lost or added to the system as a whole in step \eqref{eq:L_t_mult}. Note that a similar construction is used in the INAR($p$) model as defined by Alzaid and Al-Osh \cite{Alzaid1990}.
 
 \begin{figure}[h!]
 \center
 \includegraphics[scale = 0.8]{figure/flowchart_ingarch_poisson_pq_SEIR.pdf}
-\caption{Visualization of a Poisson INGARCH(2, 2) model as a flow chart. Solid lines represent results of multinomial thinning, dashed lines Poisson thinning. Note that the three solid arrows starting at $E_t$ do not represent independent thinnings as they are linked by the multinomial distribution and necessarily $L_{t, 1} + L_{t, 2} + A_t = E_t$.}
+\caption{Interpretation of a Poisson INGARCH(2, 2) model as a stochastic epidemic process. Solid lines represent results of multinomial thinning, dashed lines Poisson thinning or imports. Note that the three solid arrows starting at $E_t$ do not represent independent thinnings as they are linked by the multinomial distribution and necessarily $L_{t, 1} + L_{t, 2} + A_t = E_t$.}
 \label{fig:ingarch_flowchart_poisson_pq}
 
 \end{figure}
@@ -232,14 +246,14 @@ Concerning the initialization, equivalence is achieved by setting $\lambda_0 = \
 The interpretation provided in Section \ref{subsec:poisson11} can be adapted as follows, see also Figure \ref{fig:ingarch_flowchart}:
 \begin{itemize}
 \item In the extended model $E_t$ does not represent exposed individuals, but clusters of exposed individuals. The number of individuals per cluster follows a $G(\psi)$ distribution, and all members of a cluster become infectious simultaneously.
-\item Import consist of a $\text{Pois}(\psi)$-distributed number $I_t$ of clusters, each of which releases a $G(\psi)$-distributed number of infectives into $X_t$.
+\item Imports consist of a $\text{Pois}(\psi)$-distributed number $I_t$ of clusters, each of which releases a $G(\psi)$-distributed number of infectives into $X_t$.
 \end{itemize}
-The biological analogy is obviously somewhat stretched here as in real life one would not expect all members of a cluster to become infectious at the same time. Note that the extension to the compound Poisson setting translates directly to higher-order models as discussed in the previous section, but we omit details.
+The biological analogy is somewhat stretched here as in real life one would not expect all members of a cluster to become infectious at the same time. Note that the extension to the compound Poisson setting translates directly to higher-order models as discussed in the previous section, but we omit details.
 
 \begin{figure}[h!]
 \center
 \includegraphics[scale = 0.8]{figure/flowchart_ingarch_cp_SEIR.pdf}
-\caption{Visualization of the CP-INGARCH(1, 1) formulation \eqref{eq:L_t}--\eqref{eq:juv_t_v2} as a flow chart. Solid lines represent results of binomial thinning, dashed lines Poisson thinning, double lines thinning with $*_G$. Note that the two solid arrows starting at $E_t$ do not represent independent binomial thinnings as by construction  $L_t + A_t = E_t$.}
+\caption{Interpretation of the CP-INGARCH(1, 1) formulation \eqref{eq:L_t}--\eqref{eq:juv_t_v2} as a stochastic epidemic process. Solid lines represent results of binomial thinning, dashed lines Poisson thinning, double lines thinning with $*_G$. Note that the two solid arrows starting at $E_t$ do not represent independent binomial thinnings as by construction  $L_t + A_t = E_t$.}
 \label{fig:ingarch_flowchart}
 \end{figure}
 
@@ -278,7 +292,7 @@ $$
 Thus, $\{\juv_t\}$ is a Galton-Watson branching process where the offspring distribution \eqref{eq:Z_t_i} is a specific one-inflated compound distribution. %, specifically, $A_{t, i}$ is a $G(\psi)$-stopped sum of Poisson random variables. 
 The immigration distribution \eqref{eq:I_star} is defined by two compounding steps. % This follows from the fact that given $I_t$,  %are generated by two compounding steps. % and thus follow a Poisson Poisson compound or Neyman type A distribution with parameters $\kappa$ and $\tau$ \cite{Masse2005}.
 
-Theory on branching processes with immigration, specifically Theorem 1 from Pakes \cite{Pakes1971} tells us that $\{\juv_t\}$ is geometrically ergodic if (a) $\mathbb{E}(B_{k, t}) < 1$, (b) $\mathbb{E}[(B_{k, t} + 1)\log(B_{k, t} + 1)] < \infty$, (c) $\mathbb{E}(I^*_t) < \infty$. These conditions are easily verified for $\{E_t\}$ provided that $\kappa\mu_\psi < 1$ and, as previously assumed, $\sigma^2_\psi < \infty$.
+Theory on branching processes with immigration, specifically Theorem 1 from Pakes \cite{Pakes1971} tells us that $\{\juv_t\}$ is geometrically ergodic if (a) $\mathbb{E}(B_{k, t}) < 1$, (b) $\mathbb{E}[(B_{k, t})\log(B_{k, t}) \ \mid \ B_{k, t} \geq 1] < \infty$, (c) $\mathbb{E}(I^*_t) < \infty$. These conditions are easily verified for $\{E_t\}$ provided that $\kappa\mu_\psi < 1$ and, as previously assumed, $\sigma^2_\psi < \infty$.
 %\begin{itemize}
 %\item[(a)] $\mathbb{E}(A_{i, t}) < 1$,
 %\item[(b)] $\mathbb{E}[(A_{i, t} + 1)\log(A_{i, t} + 1)] < \infty$,
@@ -289,7 +303,7 @@ Theory on branching processes with immigration, specifically Theorem 1 from Pake
 % (For completeness we note that $\text{Var}[\kappa \star (\psi *_G 1)] = \mathbb{E}[\text{Var}\{\kappa \star (\psi *_G 1)\} \ \mid \ \psi *_G 1] + \text{Var}[\mathbb{E}\{\kappa \star (\psi *_G 1)\}  \ \mid \ \psi *_G 1] = \kappa\mu_\psi $)
 
 As in Fokianos et al \cite{Fokianos2009}, Proposition 1 from Meitz and Saikkonen \cite{Meitz2008} can then be used to show that geometric ergodicity of $\{E_t\}$ is inherited by the joint process $\{(\juv_t, L_t, A_t, X_t, C_t)\}$. %, see Appendix \ref{appendix:proof_meitz}.
-Even though it is in principle sufficient to initialize the process with $E_0$ and $X_0$ as in Section \ref{subsec:compound}, we now assume that $\{(\juv_t, L_t, A_t, X_t, C_t)\}$ is initialized by a vector $(e_0, l_0, a_0, x_0, c_0)$ with $l_0 + a_0 = e_0, x_0 \geq a_0$. Geometric ergodicity of the joint process is then established by verifying two conditions (Assumption 1 in \cite{Meitz2008}):
+Even though it is in principle sufficient to initialize the process with $E_0$ and $X_0$ as in Section \ref{subsec:compound}, we now assume that $\{(\juv_t, L_t, A_t, X_t, C_t)\}$ is initialized by a vector $(e_0, l_0, a_0, x_0, c_0)$ with all elements from $\mathbb{N}_0$ and $l_0 + a_0 = e_0, x_0 \geq a_0$. Geometric ergodicity of the joint process is then established by verifying two conditions (Assumption 1 in \cite{Meitz2008}):
 
 \begin{enumerate}
 % \item Given $(\juv_u, L_u, A_u, X_u, C_u), u < t$ and $\juv_t$, $(L_t, A_t, X_t, C_t)$ depends only on $\juv_t$. This is straightforward to see from equations \eqref{eq:juv_t}--\eqref{eq:C_t} or Figure \ref{fig:ingarch_flowchart}.
@@ -300,13 +314,13 @@ Even though it is in principle sufficient to initialize the process with $E_0$ a
 
 \subsection{Existence of higher moments}
 
-Existence of higher-order moments of CP-INGARCH(1, 1) models with time-constant $\psi$ has been proven in \cite{Silva2016}, but the proof is quite involved. Representation \eqref{eq:L_t_CP}--\eqref{eq:juv_t_CP} allows again for a more condensed argument. It is known that if the offspring and immigration distributions of a subcritical Galton-Watson branching process have finite $r$-th moments, this is also the case for the limiting-stationary distribution \cite[Sec. 4]{Lange1981}. Both conditions are fulfilled for $\{E_t\}$ if the $r$-th moment of $G(\psi)$ is finite and $\kappa\mu_G < 1$:
+Existence of higher-order moments of CP-INGARCH(1, 1) models with time-constant $\psi$ has been proven in \cite{Silva2016}, but the proof is quite involved. Representation \eqref{eq:L_t_CP}--\eqref{eq:juv_t_CP} allows again for a more condensed argument. It is known that if the offspring and immigration distributions of a subcritical Galton-Watson branching process have finite $r$-th moments, this is also the case for the limiting-stationary distribution \cite[Sec. 4]{Lange1981}. Both conditions are fulfilled for $\{E_t\}$ if the $r$-th moment of $G(\psi)$ is finite and $\kappa\mu_\psi < 1$:
 
 \begin{itemize}
 \item A randomly stopped sum $Y = \sum_{i = 1}^N Z_i$ of i.i.d. random variables $Z_i$ has finite $r$-th moments if $N$ and the $Z_i$ have finite $r$-th moments \cite[Theorem 5.2]{Gut2009}. The Poisson distribution has finite moments of any order. Thus, if the $r$-th moment of $G(\psi)$ is finite, this also holds for $\kappa \star (\psi *_G 1)$ and thus the offspring distribution from \eqref{eq:Z_t_i}.
 \item Similar arguments imply that if $G(\psi)$ has a finite $r$-th moment, this is also the case for $\psi *_G I_{t - 1}$ and in a second step the immigration process $I^*_t = \kappa \star(\psi *_G I_{t - 1})$ from equation \eqref{eq:I_star}.
 \end{itemize}
-Consequently, the limiting-stationary distribution of $\{E_t\}$ has finite moments up to order $r$ if this is the case for the secondary distribution $G(\psi)$ (while $\kappa\mu_G < 1$). It is then straightforward to show that finiteness of moments translates to $A_t = (1 - \beta) \circ E_t$, $\psi *_G A_t$ and ultimately $X_t = \psi *_G I_t + \psi *_G A_t$.
+Consequently, the limiting-stationary distribution of $\{E_t\}$ has finite moments up to order $r$ if this is the case for the secondary distribution $G(\psi)$ (while $\kappa\mu_\psi < 1$). It is then straightforward to show that finiteness of moments translates to $A_t = (1 - \beta) \circ E_t$, $\psi *_G A_t$ and ultimately $X_t = \psi *_G I_t + \psi *_G A_t$.
 %
 %\subsection{Consistency and asymptotic normality of moment estimators}
 %
@@ -316,9 +330,9 @@ Consequently, the limiting-stationary distribution of $\{E_t\}$ has finite momen
 
 As the CP-INGARCH(1, 1) process $\{X_t\}$ is ergodic, the limits % \todo{Add example with computation times? Distinction of h-step ahead distributions and using matrix inverse; possibly check setting like $\alpha = 0.2, \beta = 0.75$.}
 $$
-p_i = \lim_{t \rightarrow \infty} \text{Pr}(X_t = i \ X_0 = x_0)
+p_i = \lim_{t \rightarrow \infty} \text{Pr}(X_t = i \ \mid (e_0, l_0, a_0, x_0, c_0))
 $$
-exist and are independent of the initialization of the process (in the following we therefore suppress the condition on $x_0$ in the notation). However, even in the Poisson case no closed form for the $p_i$ is known. For the INARCH(1) model, a Markov chain approach can serve to approximate the $p_i$ with arbitrary precision \cite{Weiss2010}. This is based on the fact that the INARCH(1) is a discrete first-order Markov chain so that
+exist and are independent of the initialization of the process (in the following we therefore suppress the condition in the notation). However, even in the Poisson case no closed form for the $p_i$ is known. For the INARCH(1) model, a Markov chain approach can serve to approximate the $p_i$ with arbitrary precision \cite{Weiss2010}. This is based on the fact that the INARCH(1) is a discrete first-order Markov chain so that
 $$
 \text{Pr}(X_t = i) = \sum_{j = 0}^\infty p_{j|i} \times \text{Pr}(X_{t - 1} = j).
 $$
@@ -336,7 +350,7 @@ This method, however, is not directly applicable to the INGARCH(1, 1) model \eqr
 $$
 p^{(E)}_i \approx \text{Pr}(E_T = i) \ \ \text{and} \ \ \text{Pr}(E_t = i) \approx \sum_{j = 0}^M p^{(E)}_{j|i} \times \text{Pr}(E_{t - 1} = j)
 $$
-with large $T$ and $M$ to the discrete-valued Markov chain $\{E_t\}$. The computation of the transition probabilities $p_{j|i}$ is slightly tedious, but without conceptual difficulty. Subsequently one can compute an approximation of the limiting stationary distribution of $X_t$ as
+with large $T$ and $M$ to the discrete-valued Markov chain $\{E_t\}$. The computation of the transition probabilities $p_{j|i}$ based on recursion \eqref{eq:recursion_S} is slightly tedious, but without conceptual difficulty. Subsequently one can compute an approximation of the limiting stationary distribution of $X_t$ as
 $$
 p_i = \sum_{k = 0}^M p_k^{(E)} \times \text{Pr}(X_t = i \ \mid \ E_t = k).
 $$
@@ -388,18 +402,22 @@ We demonstrate that the process $\{X_t, t \in \mathbb{N}_0\}$ from \eqref{eq:L_t
 % C_t = \sum_{i = 1}^\infty C_t^{(i)}, \ \ \ 
 % L_0 = \sum_{i = 1}^\infty L_0^{(i)}, \ \ \ 
 A_t = \sum_{i = 1}^{t} C_{t - i}^{(i)} \ \ + \ \ E_0^{(t)}.
-% L_t & = \sum_{i = 1}^t \sum_{j > i} C_{t - i}^{(j)} \ \ + \ \ \sum_{j > t} L_0^{(j)}.
+% L_t & = \sum_{i = 1}^t \sum_{j > i} C_{t - i}^{(j)} \ \ + \ \ \sum_{j > t} L_0^{(j)}
 \label{eq:sums}
 \end{equation}
-A person contaminated by an infective from time $t$ (entering the exposed pool at time $t + 1$) has a probability of $\beta^{i - 1}(1 - \beta)$ to become infectious at time $t + i, i = 1, 2, \dots$, and thus be part of $C_t^{(i)}$ (it has to remain in the exposed pool $i - 1$ times and then turn infectious). The Poisson splitting property \cite{Kingman1993} then implies that given $X_t$, the $C_t^{(i)}$ are independently Poisson distributed,
+for $ t \geq 1$. A person contaminated by an infective from time $t$ (entering the exposed pool at time $t + 1$) has a probability of 
+\begin{equation}
+\beta^{i - 1}(1 - \beta)\label{eq:geom_distr}
+\end{equation}
+to become infectious at time $t + i, i = 1, 2, \dots$, and thus be part of $C_t^{(i)}$ (it has to remain in the exposed pool $i - 1$ times and then turn infectious). The Poisson splitting property \cite{Kingman1993} then implies that given $X_t$, the $C_t^{(i)}, i =1, 2, \dots$ are independently Poisson distributed,
 $$
-C_t^{(i)} \mid X_t \stackrel{\text{ind}}{\sim} \text{Pois}(\beta^{i - 1}[1 - \beta]\kappa X_t). % ; \ \ C_t^{(i)} \perp C_t^{(j)} \mid X_t, i \neq j.
+C_t^{(i)} \mid X_t \stackrel{\text{ind}}{\sim} \text{Pois}(\beta^{i - 1}[1 - \beta]\kappa X_t), i =1, 2, \dots % ; \ \ C_t^{(i)} \perp C_t^{(j)} \mid X_t, i \neq j.
 $$
-We note that given $X_t$, $C_t^{(i)}$ does not have any impact on the further course of the process $\{X_t\}$ until time $t + i$. Also, given $X_t$, $C_t^{(i)}$ is independent of the past of $\{X_t\}$. We can thus extend the condition in the above and write
+We note that given $X_t$, $C_t^{(i)}$ does not have any impact on the further course of the process $\{X_t\}$ until time $t + i$. Also, given $X_t$, $C_t^{(i)}$ is independent of all preceding values $X_{t - 1}, X_{t - 2}, X_0$. We can thus extend the condition in the above and write
 \begin{equation}
 C_t^{(i)} \mid X_{t + i - 1}, \dots, X_0 \sim \text{Pois}(\beta^{i - 1}[1 - \beta]\kappa X_t). \label{eq:conditional_Cti} % ; \ \ C_t^{(i)} \perp C_t^{(j)} \mid X_t, i \neq j
 \end{equation}
-Moreover, again because, given $X_t$, $C_t^{(i)}$ only impacts the further process from $t + i$ onwards, it is clear that $C_t^{(i)} \perp C_u^{(j)} \mid X_t, X_u$ for $t < u < t + i$.
+Moreover, again because, given $X_t$, $C_t^{(i)}$ only impacts the further process from $t + i$ onwards, it is clear that $C_t^{(i)} \perp C_u^{(j)} \mid X_{t + i - 1}, X_{t + i - 2}, \dots, X_0$ if $u < t + i$.
 
 Now consider %\todo{there seems to be a slight switch in what index $t$ represents}
 \begin{align}
@@ -424,7 +442,7 @@ for $t \geq 2$. This is the form a Poisson INGARCH(1, 1) model. We conclude by c
 \lambda_1 = \mathbb{E}(X_1 \ \mid \ X_0) & = \tau + (1 - \beta)\kappa X_0 + \beta(1 - \beta)\eta\\
 & =  (1 - \beta)\tau + (1 - \beta)\kappa X_0 + \beta  \left\{\tau + (1 - \beta) \times \eta \right\},
 \end{align*}
-meaning that we have to set $\lambda_0 =\tau + (1 - \beta) \times \eta$.
+meaning that we have to set $\lambda_0 =\tau + (1 - \beta) \times \eta$ for initialization. The proofs for the INGARCH($p, q$) and CP-INGARCH(1, 1) models follow the same structure and have been moved to the Supplementary Material for space reasons. 
 
 %\subsection{V2}
 %
@@ -527,21 +545,26 @@ meaning that we have to set $\lambda_0 =\tau + (1 - \beta) \times \eta$.
 
 % The proof follows the same steps as in Section \ref{subsec:derivation_poisson11}, but is somewhat lengthy due to the more complex recursive relationships. It has therefore been moved to the Supplementary Material.
 
-The proofs for the INGARCH($p, q$) and CP-INGARCH(1, 1) models follow the same general structure and have been moved to the Supplementary Material for space reasons. 
+
+\section*{Acknowledgements}
+
+I would like to thank Konstantinos Fokianos and Christian Wei{\ss} for helpful discussions.
 
 
 % \section*{References}
+{
+\footnotesize
 \bibliographystyle{plain}
 \bibliography{bib_ingarch.bib}
+}
+% \newpage
 
-\newpage
 
-
-\section{Supplementary material for \textit{A thinning-based representation of INGARCH models}}
+\section{Supplementary material} % for \textit{A thinning-based representation of INGARCH models}}
 
 \subsection{Demonstration of equivalence for the INGARCH($p, q$) model}
 
-We use an argument similar to the one from Section \ref{subsec:derivation_poisson11} to demonstrate that the classical formulation \eqref{eq:X_t_original}, \eqref{eq:lambda_t_pq} of the INGARCH($p, q$) model and the thinning-based version \eqref{eq:Xt_thinning_pq}--\eqref{eq:L_t_mult} are equivalent. Again we denote by $C_t^{(i)}, i = 1, 2, \dots$ the number of persons exposed by infectives from time $t$ and becoming themselves infectious at $t + i$. Extending on the notation from the Poisson INGARCH(1, 1) case, we denote by $E^{(i)}_m, m = 1 - q, \dots, 0, i = 1, 2, \dots$ the number of individuals entering the exposed pool via the initialization at time $m$ and turning infectious at time $m + i$. Generalizing equation \eqref{eq:decomposition_Xt} we then have
+We use an argument similar to the one from Section \ref{subsec:derivation_poisson11} to demonstrate that the classical formulation \eqref{eq:X_t_original}, \eqref{eq:lambda_t_pq} of the INGARCH($p, q$) model and the thinning-based version \eqref{eq:Xt_thinning_pq}--\eqref{eq:L_t_mult} are equivalent. Again we denote by $C_t^{(i)}, i = 1, 2, \dots$ the number of persons contaminated by infectives from time $t$ and becoming themselves infectious at $t + i$. Extending on the notation from the Poisson INGARCH(1, 1) case, we denote by $E^{(i)}_m, m = 1 - q, \dots, 0, i = 1, 2, \dots$ the number of individuals entering the exposed pool via the initialization at time $m$ and turning infectious at time $m + i$. Generalizing equation \eqref{eq:decomposition_Xt} we then have
 $$
 X_t = I_t \ \ + \ \ \underbrace{\sum_{i = 1}^{t + p - 1} C_{t - i}^{(i)} \ \ + \ \ \sum_{m = 1 - q}^0 E_m^{(t - m)}}_{= A_t},
 $$
@@ -604,7 +627,7 @@ where
 $$
 \nu = \left(1 - \sum_{l = 1}^q \beta_l\right) \times \tau, \ \ \ \alpha_k = \left(1 - \sum_{l = 1}^q \beta_l\right) \times \kappa_k, k = 1, \dots, p.
 $$
-This is the form of a Poisson INGARCH($p, q$) model as defined in equation \eqref{eq:lambda_t_pq}. Concerning the initialization, it can be shown that one needs to set $\lambda_s = (1 - \sum_{j = 1}^q\beta_j) \times \eta_s, s = 1 - q, \dots, 0$. This can be done using essentially the same argument as in Section \ref{subsec:derivation_poisson11}, but we omit the somewhat lengthy details.
+This is the form of a Poisson INGARCH($p, q$) model as defined in equation \eqref{eq:lambda_t_pq}. Concerning the initialization, it can be shown that one needs to set $\lambda_m = (1 - \sum_{j = 1}^q\beta_j) \times \eta_m, m = 1 - q, \dots, 0$. This can be done using essentially the same argument as in Section \ref{subsec:derivation_poisson11}, but we omit the somewhat lengthy details.
 
 \subsection{Compound Poisson INGARCH(1, 1)}
 
