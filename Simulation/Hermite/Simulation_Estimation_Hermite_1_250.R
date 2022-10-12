@@ -1,4 +1,4 @@
-# setwd("/home/johannes/Documents/Projects/general_inarma/R/Hermite")
+# setwd("/home/johannes/Documents/Projects/ingarch/Simulation/Hermite")
 
 s <- 1
 lgt <- 250
