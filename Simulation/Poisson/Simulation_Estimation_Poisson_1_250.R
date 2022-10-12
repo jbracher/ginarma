@@ -1,4 +1,4 @@
-# setwd("/home/johannes/Documents/Projects/General_INARMA/R/Poisson")
+# setwd("/home/johannes/Documents/Projects/ingarch/Simulation/Poisson")
 
 s <- 1
 lgt <- 250
