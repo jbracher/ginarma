@@ -1,4 +1,4 @@
-# setwd("/home/johannes/Documents/underreporting/General_INARMA/R/Hermite")
+# setwd("/home/johannes/Documents/Projects/ingarch/Simulation/NegBin")
 
 s <- 2
 lgt <- 1000
