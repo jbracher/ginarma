@@ -40,7 +40,7 @@ Computational Statistics Group, Heidelberg Institute for Theoretical Studies}
 
 
 \begin{abstract}
-The INAR (integer-valued autoregressive) and INGARCH (integer-valued GARCH) classes are the most commonly employed approaches for count time series modelling, but have been studied in largely distinct strains of literature. In this paper, a general model class unifying INAR and INGARCH models is introduced and its stochastic properties are studied. The starting point for the new class is given by a novel thinning-based representation of compound-Poisson INGARCH processes, which is subsequently generalized. Particular attention is given to a generalization of the INAR($p$) model which parallels the extension of the INARCH($p$) to the INGARCH($p$, $q$) model. Models from the class have a natural interpretation as stochastic epidemic processes. In terms of this interpretation, the different model parameters steer (i) the offspring distribution for new infections per infective, (ii) a compounding distribution representing clustering of infections, (iii) the distribution of imported new cases, (iv) the infectivity profile and (v) the distribution of the latent period (time from infection until infectiveness). Different instances of the class, including both established and newly introduced models, are compared in a real-data application on infectious disease counts from German routine surveillance. 
+The INAR (integer-valued autoregressive) and INGARCH (integer-valued GARCH) classes are among the most commonly employed approaches for count time series modelling, but have been studied in largely distinct strains of literature. In this paper, a general model class unifying INAR and INGARCH models is introduced and its stochastic properties are studied. The starting point for the new class is given by a novel thinning-based representation of compound-Poisson INGARCH processes, which is subsequently generalized. Particular attention is given to a generalization of the INAR($p$) model which parallels the extension of the INARCH($p$) to the INGARCH($p$, $q$) model. Models from the class have a natural interpretation as stochastic epidemic processes. In terms of this interpretation, the different model parameters steer (i) the offspring distribution for new infections per infective, (ii) a compounding distribution representing clustering of infections, (iii) the distribution of imported new cases, (iv) the infectivity profile and (v) the distribution of the latent period (time from infection until infectiveness). Different instances of the class, including both established and newly introduced models, are compared in a real-data application on infectious disease counts from German routine surveillance. 
 \end{abstract}
 
 \bigskip
@@ -60,7 +60,7 @@ The INAR (integer-valued autoregressive) and INGARCH (integer-valued GARCH) clas
 
 Count time series arise in numerous contexts spanning from traffic studies \cite{Quddus2008} to epidemiology \cite{Bracher2022}. While numerous modelling approaches for such data exist \cite{Davis2021}, the INAR (interger-valued autoregressive) and INGARCH (integer-valued generalized autoregressive conditional heteroscedasticity) classes are arguably among the most influential ones. The INAR class is built on the idea of thinning operations \citep{Steutel1979}, most commonly the binomial thinning operator $\circ$, which is given by
 $$
-\alpha \circ N = \sum_{i = 1}^N Z_i \ \ \ \text{with} \ \ \ Z_i \stackrel{\text{iid}}{\sim} \text{Bin}(1, \alpha).
+\alpha \circ N = \sum_{i = 1}^N Z_i \ \ \ \text{with} \ \ \ Z_i \stackrel{\text{iid}}{\sim} \text{Bern}(\alpha).
 $$
 The basic Poisson INAR(1) model $\{X_t, t \in \mathbb{Z}\}$ \citep{McKenzie1985, Al-Osh1987} is defined as
 \begin{equation}
@@ -79,17 +79,17 @@ with $I_t \stackrel{\text{iid}}{\sim} \text{Pois}(\nu)$ as in the INAR(1) model 
 $$
 \alpha \star N = \sum_{i = 1}^N Z_i \ \ \ \text{with} \ \ \ Z_i \stackrel{\text{iid}}{\sim} \text{Pois}(\alpha),
 $$
-where we also allow for the degenerate Poisson distribution with rate $\alpha = 0$ and all probability mass on 0. Both models can be interpreted as simple stochastic epidemic processed: each of the $X_t$ individuals who are infective at time $t$ causes on average $\alpha$ new infections, the \textit{offspring distribution} being a Bernoulli($\alpha$) in the INAR and a Pois($\alpha$) in the INARCH case. Additionally, there is a Poisson distributed \textit{import} of cases $I_t$ caused by sources outside of the considered population.
+where we also allow for the degenerate Poisson distribution with rate $\alpha = 0$ (i.e., all probability mass on 0). Both the INAR(1) and INARCH(1) models can be interpreted as simple stochastic epidemic processed; each of the $X_t$ individuals who are infective at time $t$ causes on average $\alpha$ new infections, the \textit{offspring distribution} being a Bernoulli in the INAR and a Poisson in the INARCH case. Additionally, there is a Poisson distributed \textit{import} of cases $I_t$ caused by sources outside of the considered population.
 
 The INAR and INGARCH models have up to date been treated in two largely distinct strains of literature. This is somewhat surprising given that the original construction of the INGARCH(1, 1) model is based on a ``cascade of thinning operations'' \citep[p.927]{Ferland2006}, placing it conceptually close to the INAR class. However, such arguments have only been revisited quite rarely \citep{Lu2021}. The present paper aims to close the gap between the INAR and INGARCH worlds by establishing an overarching class of linear count time series models. Specifically, the contribution is threefold:
 \begin{itemize}
 \item We provide a parsimonious thinning-based representation of a broad class of INGARCH models, including higher-order and compound Poisson \cite{Goncalves2015} models. This representation extends the aforementioned interpretation as a stochastic epidemic process in a natural way, introducing an ``exposed'' state where  individuals are already infected, but not yet infectious.
-\item This novel represenation is generalized to a broad class of linear count time series models. In terms of the epidemiological interpretation, the instances of this class are characterized by the offspring distribution for new infections, a compounding distribution representing clustering of infections, and the distribution of imported new cases. In higher-order models, the mean structure of the model steers the infectivity profile and distribution of the latent period (time from infection until infectiveness).
+\item This novel represenation is generalized to a broad class of linear count time series models. In terms of the epidemiological interpretation, the instances of this class are characterized by the offspring distribution for new infections, a compounding distribution representing clustering of infections, and the distribution of imported new cases. % In higher-order models, the mean structure of the model steers the infectivity profile and distribution of the latent period (time from infection until infectiveness).
 \item As an important special case, a generalization of the INAR($p$) model which parallels the extension of the INARCH($p$) to the INGARCH($p, q$) model is studied. This model, which we refer to as INARMA($p, q$), turns out to have various appealing stochastic properties.
 \end{itemize}
 
 
-The rest of the article is structured as follows. In Section \ref{sec:defintions}, we set the scene by providing more general model definitions, specifically of higher-order and compound Poisson \cite{Schweer2014, Goncalves2015} models from the INAR and INGARCH classes. In Section \ref{sec:alternative_formulation}, the new thinning-based representation of various INGARCH models is developed, which in Section \ref{sec:general_definition} is extended to the general form of the proposed model class. Additionally, some stochastic properties are obtained. Section \ref{sec:extension_inar} is concerned with the extension of the INAR(1) to the INARMA(1, 1) model. An algorithm for likelihood evaluation is presented and the resulting maximum likelihood estimation scheme is assessed in a simulation study. In Section \ref{sec:real_data}, various instances of the general model class, including both established models like the INGARCH(1, 1) and new ones like the INARMA(1, 1) are applied to time series from routine surveillance of infectious diseases in Germany. Section \ref{sec:discussion} concludes with a discussion.
+The rest of the article is structured as follows. In Section \ref{sec:defintions}, we set the scene by providing more general model definitions, specifically of higher-order and compound Poisson \cite{Schweer2014, Goncalves2015} models from the INAR and INGARCH classes. In Section \ref{sec:alternative_formulation}, the new thinning-based representation of various INGARCH models is developed, which in Section \ref{sec:general_definition} is extended to the general form of the proposed model class. Additionally, some stochastic properties are obtained. Section \ref{sec:extension_inar} is concerned with the extension of the INAR(1) to the INARMA(1, 1) model. An algorithm for likelihood evaluation as well as equations for moment-based estimation are presented, and the resulting estimators are assessed in a simulation study. In Section \ref{sec:real_data}, various instances of the general model class, including both established models like the INGARCH(1, 1) and new ones like the INARMA(1, 1) are applied to time series from routine surveillance of infectious diseases in Germany. Section \ref{sec:discussion} concludes with a discussion.
 
 
 \section{Compound Poisson INAR and INGARCH models}
@@ -101,22 +101,26 @@ In both the INAR and INGARCH class, compound Poisson (CP) distributions are comm
 $$
 Y = \sum_{i = 1}^N Z_i, \ \ \ Z_1, \dots, Z_N \stackrel{\text{iid}}{\sim} G(\psi),
 $$
-where $N$ follows a Poisson distribution. Throughout this article we assume that $G(\psi)$, which we refer to as the \textit{cluster distribution}, is parameterized by a single parameter $\psi$ and has support $\mathbb{N}_0$. Its mean $\mu_\psi$ and variance $\sigma^2_\psi$ are assumed to be finite.
+where $N$ follows a Poisson distribution. Throughout this article we assume that $G(\psi)$, which we refer to as the \textit{cluster distribution}, has support $\mathbb{N}_0$ and is parameterized by a single parameter $\psi$. For simplicity we identify this parameter with the mean of $G$ and introduce the shorthand
+\begin{equation}
+\psi * N = \sum_{i = 1}^N Z_i, \ \ \ Z_1, \dots, Z_N \stackrel{\text{iid}}{\sim} G(\psi). \label{eq:def_compund_thinning}
+\end{equation}
+The variance of the cluster distribution is denoted by $\sigma^2_\psi$, and both $\psi$ and $\sigma^2_\psi$ are assumed to be finite.
 
-Two examples of compound Poisson distributions which will be used in the remainder of the article are the Hermite and negative binomial distributions. A random variable $Y$ is said to be Hermite distributed if it can be written as $Y = A_1 + 2A_2$ where $A_1$ and $A_2$ independently follow Poisson distributions with rates $\lambda_1$ and $\lambda_2$, respectively. In slight variation of \cite{Gupta1974} we parametrize the distribution by its mean $\mu = \lambda_1 + 2\lambda_2$ and a dispersion parameter\footnote{\cite{Gupta1974} use $d = 1 + \psi$ as the dispersion parameter, which corresponds to the index of dispersion.} $\psi = 2\lambda_2/(\lambda_1 + 2\lambda_2) \in [0, 1]$. Under this parameterization the probability mass function is
+Two examples of compound Poisson distributions which will be used in the remainder of the article are the Hermite and negative binomial distributions. A random variable $Y$ is said to be Hermite distributed if it can be written as $Y = A_1 + 2A_2$ where $A_1$ and $A_2$ independently follow Poisson distributions with rates $\lambda_1$ and $\lambda_2$, respectively. In slight variation of \cite{Gupta1974} we parametrize the distribution by its mean $\mu = \lambda_1 + 2\lambda_2$ and a dispersion parameter\footnote{\cite{Gupta1974} use $d = 1 + \theta$ as the dispersion parameter, which corresponds to the index of dispersion.} $\theta = 2\lambda_2/(\lambda_1 + 2\lambda_2) \in [0, 1]$. Under this parameterization the probability mass function is
 $$
-\text{Pr}(Y = y) = \exp\left[\mu\left(-1 + \frac{\psi}{2}\right)\right] \mu^y(1 - \psi)^y \sum_{j = 0}^{[y/2]} \frac{\psi^j}{2^j\mu^j(1 - \psi)^{2j}(y - 2j)!j!}, y = 0, 1, 2, \dots
+\text{Pr}(Y = y) = \exp\left[\mu\left(-1 + \frac{\theta}{2}\right)\right] \mu^y(1 - \theta)^y \sum_{j = 0}^{[y/2]} \frac{\theta^j}{2^j\mu^j(1 - \theta)^{2j}(y - 2j)!j!}, y = 0, 1, 2, \dots
 $$
 % $$
 % \text{Pr}(Z = z) = \exp(-a_1 + a_2) \cdot \sum_{j = 0}^{[z/2]} \frac{a_1^{z - 2j}a_2^j}{(z - 2j)!j!}
 % $$
-where $[y/2]$ is the integer part of $y/2$. The variance under this parameterization is given by $\text{Var}(Y) = (1 + \psi)\mu$. To represent the Hermite distribution as a compound Poisson, one needs to set $\mathbb{E}(N) = \lambda_1 + \lambda_2$ while the cluster distribution is given by $\text{Pr}(Z_i = 1) = \lambda_1/(\lambda_1 + \lambda_2)$ and $\text{Pr}(Z_i = 2) = \lambda_2/(\lambda_1 + \lambda_2)$.
+where $[y/2]$ is the integer part of $y/2$. The variance is given by $\text{Var}(Y) = (1 + \theta)\mu$. To represent the Hermite distribution as a compound Poisson, one needs to set $\mathbb{E}(N) = \lambda_1 + \lambda_2$ while the cluster distribution is given by $\text{Pr}(Z_i = 1) = \lambda_1/(\lambda_1 + \lambda_2)$ and $\text{Pr}(Z_i = 2) = \lambda_2/(\lambda_1 + \lambda_2)$.
 
-For the negative binomial distribution we likewise use a parameterizations via its mean and a dispersion parameter $\psi$, given by
+For the negative binomial distribution we likewise use a parameterizations via its mean $\mu$ and a dispersion parameter $\theta$, given by
 $$
-\text{Pr}(Y = y) = \frac{\Gamma(\psi^{-1} + y)}{y!\Gamma(\psi^{-1})} \left(\frac{\psi^{-1}}{\psi^{-1} + \mu}\right)^{\psi^{-1}} \left(\frac{\mu}{\psi^{-1} + \mu}\right)^y.
+\text{Pr}(Y = y) = \frac{\Gamma(\theta^{-1} + y)}{y!\Gamma(\theta^{-1})} \left(\frac{\theta^{-1}}{\theta^{-1} + \mu}\right)^{\theta^{-1}} \left(\frac{\mu}{\theta^{-1} + \mu}\right)^y.
 $$
-Under this parameterization, the variance is given by $\text{Var}(Y) = \mu + \psi\mu^2$. The negative binomial distribution is equivalent to a compound Poisson with a logarithmic cluster distribution (Example 4.2.1 in \cite{Weiss2018}); see Supplementary remark \ref{XYZ} for details.\todo{already derived in example\_NB.R} % \todo{there seems to be an incoherence in terms of the NB parameterization}
+Under this parameterization, the variance is given by $\text{Var}(Y) = \mu + \theta\mu^2$. The negative binomial distribution is equivalent to a compound Poisson with a logarithmic cluster distribution (Example 4.2.1 in \cite{Weiss2018}); see Supplementary remark \ref{XYZ} for details.\todo{already derived in example\_NB.R} % \todo{there seems to be an incoherence in terms of the NB parameterization}
 
 \subsection{Model definitions}
 
@@ -126,7 +130,7 @@ N_t \ \mid \ X_{t - 1}, \dots, X_0, \lambda_0 & \sim \text{Pois}(\lambda_t/\mu_\
 X_t & = \sum_{i = 1}^{N_t} Z_{i, t} \ \ \text{where} \ \  Z_{i, t} \stackrel{\text{iid}}{\sim} G(\psi)\label{eq:X_CP_original}\\
 \lambda_t & = \nu + \sum_{i = 1}^p \alpha_i X_{t - i} + \sum_{j = 1}^q \beta_j \lambda_{t - j}.\label{eq:lambda_CP_original}
 \end{align}
-Here, the initial values $\lambda_{1 - q}, \dots, \lambda_0 \geq \nu$ and $X_{1 - p}, \dots, X_0 \in \mathbb{N}_0$ are again fixed and we assume $\alpha_i \geq 0, i = 1, \dots, p$ and $\beta_j \geq 0, j = 1, \dots, q$  with $\sum_{j = 1}^q \beta_j < 1$. Conditional on the past, $X_t$ then follows a compound Poisson distribution with mean $\lambda_t$. Note that this formulation is somewhat more restrictive than the class discussed in \citep{Goncalves2015} where the parameter $\psi_t$ of the cluster distribution can depend on $\lambda_t$. It nonetheless contains a number of well-known models \cite[Observation 2]{Goncalves2015}, including the negative binomial (\cite{Xu2012, Weiss2018}, see also Supplemtary Remark \ref{XYZ}), generalized Poisson \cite{Zhu2012} and Neyman Type A \cite{Goncalves2015a} INGARCH models (which arise for logarithmic, Borel and Poisson cluster distributions, respectively).
+Here, the initial values $\lambda_{1 - q}, \dots, \lambda_0 \geq \nu$ and $X_{1 - p}, \dots, X_0 \in \mathbb{N}_0$ are again fixed and we assume $\alpha_i \geq 0, i = 1, \dots, p$ and $\beta_j \geq 0, j = 1, \dots, q$  with $\sum_{j = 1}^q \beta_j < 1$. Conditional on the past, $X_t$ then follows a compound Poisson distribution with mean $\lambda_t$. Note that this formulation is somewhat more restrictive than the class discussed in \citep{Goncalves2015} where the parameter $\psi_t$ of the cluster distribution can depend on $\lambda_t$. It nonetheless contains a number of well-known models \cite[Observation 2]{Goncalves2015}, including the negative binomial (\cite{Xu2012, Weiss2018}, see also Supplemtary Remark \ref{XYZ}), generalized Poisson \cite{Zhu2012} and Neyman Type A \cite{Goncalves2015a} INGARCH models. These arise for logarithmic, Borel and Poisson cluster distributions, respectively.
 
 %\begin{itemize}
 %% \item When choosing $G(\psi)$ such that $\text{Pr}(Z_{i,t} = 1) = 1$ we recover the Poisson INGARCH(1, 1) model.
@@ -187,7 +191,7 @@ The Poisson INGARCH(1, 1) model \eqref{eq:ingarch11} can alternatively be repres
 \begin{align}
 X_t & = I_t + \underbrace{A_t}_{=\ E_t - L_t} \label{eq:X_t_thinning_Poisson}\\
 E_t & = \underbrace{L_{t - 1}}_{=\ \beta \circ E_t} \ + \underbrace{C_{t - 1}}_{=\ \kappa \star X_{t - 1}}\label{eq:E_t_thinning_Poisson}% \\
-% L_t & = \beta \circ E_t \label{eq:L_t}
+% L_t & = \beta \circ E_t, \label{eq:L_t}
 \end{align}
 where $\kappa > 0$ and $0 \leq \beta < 1$ while $\{I_t\}$ consists of independent Poisson random variables with rate $\tau > 0$. To initialize the process we fix $X_0 \in \mathbb{N}_0 , \eta > 0$ and specify $E_0 \sim \text{Pois}(\eta)$. The auxiliary processes $\{A_t\}$, $\{L_t\}$ and $\{C_t\}$, defined under the respective braces, are introduced to facilitate verbal description, subsequent generalizations and the derivation of stochastic properties. The parameter $\beta$ is shared across the two formulations, and the remaining parameters of the original formulation can be recovered as
 $
@@ -222,18 +226,15 @@ This is similar to the mechanism of the so-called SEIS (susceptible-exposed-infe
 
 \includegraphics[scale=0.8]{figure/flowchart_ingarch_poisson_SEIR.pdf}
 
-\medskip
+\vspace{1cm}
 
-\medskip
 
 (b) Poisson INGARCH($p$, $q$) model:
 
 \medskip
 \includegraphics[scale = 0.8]{figure/flowchart_ingarch_poisson_pq_SEIR.pdf}
 
-\medskip
-
-\medskip
+\vspace{1cm}
 
 (c) Compound Poisson INGARCH(1, 1) model:
 
@@ -242,7 +243,12 @@ This is similar to the mechanism of the so-called SEIS (susceptible-exposed-infe
 \medskip
 
 \includegraphics[scale = 0.8]{figure/flowchart_ingarch_cp_SEIR.pdf}
-\caption{Interpretation of INGARCH models as stochastic epidemic processes. (a) The Poisson INGARCH(1, 1) model. (b) The Poisson INGARCH(1, 1) model. (c) The compound Poisson INGARCH(1, 1) model. Solid lines represent results of binomial thinning, dashed lines Poisson thinning or immigration, double lines thinning with $*_G$. Note that the different solid arrows starting at $E_t$ do not represent independent binomial thinnings as by construction  $L_t + A_t = E_t$ (or, in the middle panel, $L_{t, 1} + L_{t, 2} + A_t = E_t$).}
+
+\medskip
+
+\medskip
+
+\caption{Interpretation of INGARCH models as stochastic epidemic processes. (a) The Poisson INGARCH(1, 1) model. (b) The Poisson INGARCH(1, 1) model. (c) The compound Poisson INGARCH(1, 1) model. Solid lines represent results of binomial thinning, dashed lines Poisson thinning or immigration, double lines thinning with a cluster distrbution $G$. Note that the different solid arrows starting at $E_t$ do not represent independent binomial thinnings as by construction  $L_t + A_t = E_t$ (or, in the middle panel, $L_{t, 1} + L_{t, 2} + A_t = E_t$).}
 \label{fig:ingarch_flowchart_poisson}
 \end{figure}
 
@@ -260,7 +266,7 @@ where
 C_{t, i} & = \kappa_i \star X_t\\
 (L_{t, 1}, \dots, L_{t, q}, A_t) \ \mid \ E_t & \sim \text{Mult}\left(E_t; \beta_1, \dots, \beta_q, 1 - \sum_{j = 1}^q \beta_j\right)\label{eq:L_t_mult}
 \end{align}
-and $\kappa_i, \beta_j \geq 0, \sum_{j = 1}^q \beta_j < 1$. For the initialization we fix $X_{1 - p}, \dots, X_0$ and set $E_{m} \sim \text{Pois}(\eta_m)$ with $\eta_m > 0$ for $m = 1 - q, \dots, 0$. Again, the parameters $\beta_{1}, \dots, \beta_q$ are the same as in the original formulation \eqref{eq:lambda_CP_original}. The remaining parameters can be obtained as $\nu = \left(1 - \sum_{j = 1}^q\beta_j \right) \times \tau$ and $\alpha_i = \left(1 - \sum_{j = 1}^q\beta_j \right) \times \kappa_i$. For the initialization, one needs to set $\lambda_m = \tau + (1 - \sum_{j = 1}^q\beta_j) \times \eta_m, m = 1 - q, \dots, 0$. The derivation is provided in Supplement \ref{XXX}.
+and $\kappa_i, \beta_j \geq 0, \sum_{j = 1}^q \beta_j < 1$. For the initialization we fix $X_{1 - p}, \dots, X_0$ and set $E_{m} \stackrel{\text{ind}}{\sim} \text{Pois}(\eta_m)$ with $\eta_m > 0$ for $m = 1 - q, \dots, 0$. Again, the parameters $\beta_{1}, \dots, \beta_q$ are the same as in the original formulation \eqref{eq:lambda_CP_original}. The remaining parameters of the original formulation can be obtained as $\nu = (1 - \sum_{j = 1}^q\beta_j) \times \tau$ and $\alpha_i = (1 - \sum_{j = 1}^q\beta_j) \times \kappa_i$. For the initialization, one needs to set $\lambda_m = \tau + (1 - \sum_{j = 1}^q\beta_j) \times \eta_m, m = 1 - q, \dots, 0$. The derivation is provided in Supplement \ref{XXX}.
 
 \begin{remark}
 In terms of the interpretation from Remark \ref{remark:interpretation} the extension has the following implications (middle panel in Figure \ref{fig:ingarch_flowchart_poisson}):
@@ -286,25 +292,27 @@ In terms of the interpretation from Remark \ref{remark:interpretation} the exten
 
 A compound Poisson INGARCH(1, 1) process as defined in \eqref{eq:N_CP_original}--\eqref{eq:lambda_CP_original} is obtained by extending \eqref{eq:X_t_thinning_Poisson}--\eqref{eq:E_t_thinning_Poisson} to
 \begin{align}
-X_t & = \psi *_G (I_t + A_t)\label{eq:X_t_CP},
+X_t & = \psi * (I_t + A_t)\label{eq:X_t_CP},
 \end{align}
-see Supplement \ref{XXX} for the derivation. The employed operator $*_G$ is defined as
-$$
-\psi *_G N = \sum_{i = 1}^N Z_i \ \ \ \text{ with } \ \ \ Z_i \stackrel{\text{ind}}{\sim} G(\psi)
-$$
-and thus denotes summing over independent samples from a cluster distribution $G(\psi)$. The parameters $\beta$ and $\psi$ as well as the type of the cluster distribution $G$ are shared across the two formulations. The remaining parameters of the original formulation can be recovered as
+where the operator $*$ denotes thinning with a clustering distribution $G$ as defined in equation \eqref{eq:def_compund_thinning}.
+% The employed operator $*$ is defined as
+% $$
+% \psi * N = \sum_{i = 1}^N Z_i \ \ \ \text{ with } \ \ \ Z_i \stackrel{\text{ind}}{\sim} G(\psi)
+% $$
+% and thus denotes summing over independent samples from a cluster distribution $G(\psi)$.
+The parameters $\beta$ and $\psi$ as well as the type of the cluster distribution $G$ are shared across the two formulations. The remaining parameters of the original formulation can be recovered as
 $
 \nu = \mu_\psi(1 - \beta)\tau$ and $ \ \
 \alpha = \mu_\psi(1 - \beta)\kappa.
 %; \ \
 % \lambda_0 = \mu_\psi \left(\tau + \frac{1 - \beta}{\beta} \times \eta\right)
 $
-Concerning the initialization, equivalence is achieved by setting $\lambda_0 = \mu_\psi\times \left\{\tau + (1 - \beta) \times \eta\right\}$. 
+Concerning the initialization, equivalence is achieved by setting $\lambda_0 = \mu_\psi\times \left\{\tau + (1 - \beta) \times \eta\right\}$. The derivation is provided in Supplement \ref{XXX}.
 
 \begin{remark}
 The interpretation from Remark \ref{remark:interpretation} can be adapted as follows (bottom panel of Figure \ref{fig:ingarch_flowchart_poisson}):
 \begin{itemize}
-\item $E_t$ now represents clusters of exposed individuals, each of which contain a $G(\psi)$ distributed number of members which become infectious simultaneously.
+\item $E_t$ now represents clusters of exposed individuals, each of which contain a $G(\psi)$-distributed number of members which become infectious simultaneously.
 \item Imports consist of a $\text{Pois}(\tau)$-distributed number $I_t$ of such clusters.
 \end{itemize}
 % The biological analogy is somewhat stretched here as in real life one would not expect all members of a cluster to become infectious at the same time.
@@ -314,7 +322,7 @@ The extension to the compound Poisson setting translates directly to higher-orde
 %\begin{figure}[h!]
 %\center
 %\includegraphics[scale = 0.8]{figure/flowchart_ingarch_cp_SEIR.pdf}
-%\caption{Interpretation of the CP-INGARCH(1, 1) formulation \eqref{eq:L_t}--\eqref{eq:juv_t_v2} as a stochastic epidemic process. Solid lines represent results of binomial thinning, dashed lines Poisson thinning, double lines thinning with $*_G$. Note that the two solid arrows starting at $E_t$ do not represent independent binomial thinnings as by construction  $L_t + A_t = E_t$.}
+%\caption{Interpretation of the CP-INGARCH(1, 1) formulation \eqref{eq:L_t}--\eqref{eq:juv_t_v2} as a stochastic epidemic process. Solid lines represent results of binomial thinning, dashed lines Poisson thinning, double lines thinning with $*$. Note that the two solid arrows starting at $E_t$ do not represent independent binomial thinnings as by construction  $L_t + A_t = E_t$.}
 %\label{fig:ingarch_flowchart}
 %\end{figure}
 
@@ -327,7 +335,7 @@ The extension to the compound Poisson setting translates directly to higher-orde
 
 The development from the previous section now allows us to define a general model class, where the offspring and import distributions are not necessarily Poisson. It is given by  $\{X_t, t \in \mathbb{N}\}$ with
 \begin{align}
-X_t & = \psi *_G (I_t + A_t)\label{eq:X_general}\\
+X_t & = \psi * (I_t + A_t)\label{eq:X_general}\\
 E_t & = \sum_{j = 1}^q L_{t - j, j} \ \ + \ \ \sum_{i = 1}^p C_{t - i, i}.\label{eq:E_general}
 \end{align}
 Here, $\{I_t\}$ consists of independent realizations from an integer-valued import distribution with mean $\nu$ and finite variance $\sigma^2_\nu$, while as before
@@ -342,7 +350,7 @@ now result from a generic thinning operation $\diamond$ and can be dependent. Sp
 $$
 C_{t, i} = \sum_{j = 1}^{X_t} Z_{t, i, j},
 $$
-where the vectors $\mathbf{Z}_{t, j} = (Z_{t, 1, j}, \dots, Z_{t, p, j})$ independently follow an arbitrary offspring distribution on $\mathbb{N}_0^p$ with $\mathbb{E}(\mathbf{Z}_{t, j}) = (\kappa_1, \dots, \kappa_p)$ and finite variances $\sigma^2_{\kappa, 1}, \dots, \sigma^2_{\kappa, p}$. For the initialization, values of $X_{1 - p}, \dots, X_0$ and $E_{1 - q}, \dots, E_0$ can either be fixed or assigned suitable initialization distributions. % For the compounding distribution $G$ we assume again finite mean $\mu_\psi$ and variance $\sigma^2_\psi$. 
+where the vectors $\mathbf{Z}_{t, j} = (Z_{t, 1, j}, \dots, Z_{t, p, j})$ independently follow an arbitrary offspring distribution on $\mathbb{N}_0^p$ with $\mathbb{E}(\mathbf{Z}_{t, j}) = (\kappa_1, \dots, \kappa_p)$ and finite variances $\sigma^2_{\kappa_1}, \dots, \sigma^2_{\kappa_p}$. For the initialization, values of $X_{1 - p}, \dots, X_0$ and $E_{1 - q}, \dots, E_0$ can either be fixed or assigned suitable initialization distributions. % For the compounding distribution $G$ we assume again finite mean $\mu_\psi$ and variance $\sigma^2_\psi$. 
 Note that this model definition is somewhat over-complex as in practice one would hardly use flexible offspring and import distributions along with an additional compounding distribution. The motivation to include all these building blocks is purely to cover a large number of existing models from the literature.
 
 \textbf{Refer to GINAR($p$), references: Gauthier, Joe}
@@ -359,19 +367,19 @@ E_t = \underbrace{C_t}_{\kappa \ \diamond X_t} + \ \underbrace{L_t}_{\beta \circ
 $$
 the process $\{X_t\}$ can also be written in an autoregressive fashion without the need for the auxiliary process $\{E_t\}$. Specifically, it is given by
 \begin{align*}
-X_t = \psi *_G \left(I_t \ + \ \sum_{i = 1}^t C_{t - i}^{(i)}  \ + \ L_0^{(t)}\right),
+X_t = \psi * \left(I_t \ + \ \sum_{i = 1}^t C_{t - i}^{(i)}  \ + \ L_0^{(t)}\right),
 \end{align*}
 where, in slight abuse of notation,
 \begin{align}
 (C_t^{(1)}, C_t^{(2)}, C_t^{(3)}, \dots) \sim \text{Mult}(\kappa \diamond X_{t}; \{1- \beta\}, \{1 - \beta\}\beta, \{1 - \beta\}\beta^2, \dots).\label{eq:ar_inf}
 \end{align}
-Intuitively, the $\kappa \diamond X_t$ offspring created at time $t$ are distributed across the following time points in a geometric fashion. This mirrors the autoregressive representation of the Poisson INGARCH(1, 1) model provided in \cite{Fokianos2016}. Note that the formulation \eqref{eq:ar_inf} is not technically correct as the multinomial distribution is not defined for an infinite support. A correct, but less easily readable formulation is
+Intuitively, the $\kappa \diamond X_t$ offspring created at time $t$ are distributed across the following time points in a geometric fashion. This mirrors the autoregressive representation of the Poisson INGARCH(1, 1) model provided in \cite{Fokianos2016}. Note that the formulation \eqref{eq:ar_inf} is not technically correct as the multinomial distribution is not defined for an infinite number of categories. A correct, but less easily readable formulation is
 $$
-C_t^{(i)} = \sum_{j = 1}^{\kappa \diamond X_t} \mathbf{1}(D_{t, j} = i), \ \ \ D_{t, j} \stackrel{\text{iid}}{\sim} \text{Geom}(1 - \beta),
+C_t^{(i)} = \sum_{j = 1}^{C_t} \mathbf{1}(D_{t, j} = i), \ \ \ D_{t, j} \stackrel{\text{iid}}{\sim} \text{Geom}(1 - \beta),
 $$
-where $\mathbf{1}$ is the indicator function. In the epidemiological interpreation, $D_{t, j}$ is the latent period of the $j$-th individual infected at time $t$. The term $L_0^{t}$ is defined similarly as
+where $C_t  =\kappa \diamond X_t$ and $\mathbf{1}$ is the indicator function. In the epidemiological interpreation, $D_{t, j}$ is the latent period of the $j$-th individual infected at time $t$. The term $L_0^{t}$ is defined similarly as
 $$
-L_0^{(t)} = \sum_{j = 1}^{L_0} \mathbf{1}(C_j = t), \ \ \ C_{j}^{(t)} \stackrel{\text{iid}}{\sim} \text{Geom}(1 - \beta).
+L_0^{(t)} = \sum_{j = 1}^{L_0} \mathbf{1}(D^*_j = t), \ \ \ D^*_{j} \stackrel{\text{iid}}{\sim} \text{Geom}(1 - \beta).
 $$
 Details on the derivation of this representation can be found in Supplement \ref{XYZ}.
 
@@ -386,11 +394,11 @@ The process $\{E_t\}$ from \eqref{eq:E_general} can be expressed as
 \juv_t = \sum_{k = 1}^{\juv_{t - 1}} B_{k, t - 1} \ \ + \ \ I^*_t.
 \label{eq:galton_watson}
 \end{equation}
-where $I^*_t = \kappa\ \diamond (\psi *_G I_{t - 1})$ and independently for each $k = 1, \dots, E_{t - 1}$
+where $I^*_t = \kappa\ \diamond (\psi * I_{t - 1})$ and independently for each $k = 1, \dots, E_{t - 1}$
 \begin{align}
 B_{k, t - 1} & = \begin{cases}
 1 & \text{with probability } \beta\\ % \ \ \ \ \ \ \  (\text{contribution via } L_{t - 1}) \\
-\kappa \star (\psi *_G 1) & \text{with probability } 1 - \beta. % \ \ (\text{ contribution via } \kappa \star (\psi *_G A_{t - 1})).
+\kappa \star (\psi * 1) & \text{with probability } 1 - \beta. % \ \ (\text{ contribution via } \kappa \star (\psi * A_{t - 1})).
 \label{eq:Z_t_i}
 \end{cases}
 \end{align}
@@ -401,13 +409,13 @@ B_{k, t - 1} & = \begin{cases}
 
 \subsubsection{Geometric ergodicity}
 
-Theorem 1 from Pakes \cite{Pakes1971} can be employed to demonstrate that the Galton-Watson branching process $\{\juv_t\}$ is geometrically ergodic under mild conditions. Using Proposition 1 from Meitz and Saikkonen \cite{Meitz2008}, it can be shown that this also translates to the obsrvable process $\{X_t\}$.
+Theorem 1 from Pakes \cite{Pakes1971} can be employed to demonstrate that the Galton-Watson branching process $\{\juv_t\}$ is geometrically ergodic under mild conditions. Using Proposition 1 from Meitz and Saikkonen \cite{Meitz2008}, it can be shown that this also translates to the observable process $\{X_t\}$.
 
 \begin{proposition}
 Consider the joint process $\{X_t, E_t, A_t, L_t, C_t\}$ from \eqref{eq:X_general}--\eqref{eq:E_general}. If $\kappa\mu_\psi < 1$ and, as previously assumed, $\sigma^2_\nu, \sigma^2_\kappa, \sigma^2_\psi < \infty$ this process is geometrically ergodic.
 \todo{need to make extra step for non-Poissonian offsprings, but easy.}
 \end{proposition}
-Note that this result also implies geometric ergodicity of the Poisson and compound Poisson INGARCH(1, 1) models. Ergodicity of such models has received considerable attention in the literature. For instance, Fokianos et al \cite{Fokianos2009} showed that a perturbed version of the Poisson INGARCH(1, 1) model is geometrically ergodic and Neumann \cite[Theorem 3.1]{Neumann2011} establishes a contractive condition for geometric ergodicity of a more general class of Poisson autoregressive models. Typically, the employed arguments are more involved than what is used in the present work. As noted by Neumann \cite{Neumann2011}, the difficulty lies in the fact that the process $\{X_t\}$ is discrete-valued, while the conditional mean process $\{\lambda_t\}$ is real-valued. The alternative representations \eqref{eq:X_t_thinning_Poisson}--\eqref{eq:E_t_thinning_Poisson} etc. allow us to circumvent this problem as they involve exclusively integer-valued processes and establish a link to branching process theory.
+Note that this result also implies geometric ergodicity of the Poisson and compound Poisson INGARCH(1, 1) models. Ergodicity of such models has received considerable attention in the literature. For instance, Fokianos et al \cite{Fokianos2009} showed that a perturbed version of the Poisson INGARCH(1, 1) model is geometrically ergodic and Neumann \cite[Theorem 3.1]{Neumann2011} established a contractive condition for geometric ergodicity of a more general class of Poisson autoregressive models. Typically, the employed arguments require more technical sophistication than what is used in the present work. As noted by Neumann \cite{Neumann2011}, the difficulty lies in the fact that the process $\{X_t\}$ is discrete-valued, while the conditional mean process $\{\lambda_t\}$ is real-valued. The alternative representations \eqref{eq:X_t_thinning_Poisson}--\eqref{eq:E_t_thinning_Poisson} etc. allow us to circumvent this problem as they involve exclusively integer-valued processes and establish a link to branching process theory.
 
 \subsubsection{Moments of the limiting-stationary distribution}
 \label{subsec:moments_general}
@@ -415,7 +423,7 @@ Note that this result also implies geometric ergodicity of the Poisson and compo
 Combining results from Lange \cite[Sec. 4]{Lange1981} and Gut \cite[Theorem 5.2]{Gut2009}, conditions for finite moments of the limiting-stationary distributions of $\{E_t\}$ and $\{X_t\}$ can be established. Means, variances and autocovariance functions are available in closed, though somewhat involved form. 
 
 \begin{proposition}
-The processes $\{E_t\}$ and $\{X_t\}$  as defined in \eqref{eq:X_general}--\eqref{eq:E_general} have finite limiting-stationary moments up to order $r$ if the same is true for $\{I_t\}$, $\kappa \diamond 1$, $\psi *_G 1$ while $\kappa\mu_\psi < 1$.
+The processes $\{E_t\}$ and $\{X_t\}$  as defined in \eqref{eq:X_general}--\eqref{eq:E_general} have finite limiting-stationary moments up to order $r$ if the same is true for $\{I_t\}$, $\kappa \diamond 1$ and $\psi * 1$ while $\kappa\mu_\psi < 1$.
 \end{proposition}
 
 \begin{lemma}
@@ -427,7 +435,7 @@ respectively. The variances take the form
 \begin{align*}
 \sigma^2_E & = \frac{\sigma^2_\kappa \nu + \sigma^2_\nu\kappa^2 + \mu_E \times (1 - \beta) \times \{\beta (1 - \kappa\mu_\psi)^2 + \sigma^2_\kappa\mu_\psi + \sigma^2_\psi\kappa^2\}}{1 - \beta - (1 - \beta)\kappa\mu_\psi}\\
 \sigma^2_X & = (1 - \beta)\mu_E \sigma^2_\psi + \mu_\psi^2(1 - \beta)\{\beta\mu_E + (1 - \beta)\sigma^2_E\} +
-  \nu\sigma^2_\psi + \sigma^2_I\mu_\psi^2.
+  \nu\sigma^2_\psi + \sigma^2_\tau\mu_\psi^2.
 \end{align*}
 Finally, the autocovariance functions are given by
 \begin{align*}
@@ -447,7 +455,7 @@ These expressions are somewhat unwieldy, but as will be seen in the next section
 
 \subsection{Defining an INARMA($p$, $q$) model}
 
-We now zoom in on a particular instance of the model class \eqref{eq:X_general}--\eqref{eq:E_general} defined in Section \ref{sec:general_definition}, namely an extension of the popular INAR class. This means that we use a Bernouilli offspring distribution and omit the compounding step (i.e., no thinning with $*_G$). The model then becomes
+We now zoom in on a particular instance of the model class \eqref{eq:X_general}--\eqref{eq:E_general} defined in Section \ref{sec:general_definition}, namely an extension of the popular INAR class. This means that we use a Bernouilli offspring distribution and omit the compounding step (i.e., no thinning with $*$). The model then becomes
 \begin{align}
 X_t & = I_t + A_t\label{eq:X_inarma}\\
 E_t & = \sum_{j = 1}^q L_{t - j, j} \ \ + \ \ \sum_{i = 1}^p C_{t - i, i}\label{eq:E_inarma}
@@ -457,14 +465,15 @@ with
 (L_{t, 1}, \dots, L_{t, q}, A_t) \ \mid \ E_t & \sim \textnormal{Mult}\left(E_t; \beta_1, \dots, \beta_q, 1 - \sum_{j = 1}^q \beta_j\right)\\
 (C_{t, 1}, \dots, C_{t, p}) \ \mid \ X_t & \sim \text{Mult}\left(X_t; \beta_1, \dots, \beta_q\right)\label{eq:C_t_inarma}
 \end{align}
-as in equations \eqref{eq:L_t_mult} and \eqref{eq:multinomial_thinning}, repectively. The imports $\{I_t\}$ are independent samples from an arbitrary integer-valued distribution with finite mean $\nu$ and variance $\sigma^2_I$. The intuition for this model is conveyed by panel (b) of Figure \ref{fig:ingarch_flowchart_poisson}, the only difference being the multinomial offspring distribution and generic import distributoin. Note that the special case $p = q = 1$ with Poisson imports has previously been discussed in \cite{Bracher2019}.
+as in equations \eqref{eq:L_t_mult} and \eqref{eq:multinomial_thinning}, repectively. The imports $\{I_t\}$ are independent samples from an arbitrary integer-valued distribution with finite mean $\tau$ and variance $\sigma^2_\tau$. The intuition for this model is conveyed by panel (b) of Figure \ref{fig:ingarch_flowchart_poisson}, the only difference being the multinomial offspring distribution and generic import distributoin. Note that the special case $p = q = 1$ with Poisson imports has previously been discussed in \cite{Bracher2019}.
 
 In the following we will denote this model by the name INARMA($p$, $q$), as it extends the INAR model to an ARMA-like covariance structure. We note, however, that it is by no means identical to the previously suggested INARMA models by McKenzie \cite{McKenzie1988} and Dion \cite{Dion1995}. Notably, for $p = q = 1$, the latter imply an autocorrelation function which decays more quickly than that of the INAR(1) model, while the model discussed here implies a slower decay; see Supplement \ref{XXX} for a brief discussion.
 
 \subsection{Some properties in the case $p = q = 1$}
 
-In the special case $p = q = 1$ the Poisson INARMA(1, 1) model can be written in a quite compact fashion without the need for the auxiliary processes $\{A_t\}, \{L_t\}$ and $\{C_t\}$.% (see Supplement \ref{XYZ} for the short derivation):
+In the special case $p = q = 1$ the Poisson INARMA(1, 1) model can be written in a more compact fashion without the need for the auxiliary processes $\{A_t\}, \{L_t\}$ and $\{C_t\}$.% (see Supplement \ref{XYZ} for the short derivation):
 \begin{remark}
+\label{remark:inarma11}
 If in model \eqref{eq:X_inarma}--\eqref{eq:E_inarma} the import distribution is $I_t \stackrel{\textnormal{iid}}{\sim} \textnormal{Pois}(\tau)$, then a simplified display of the model is given by
 \begin{align}
 X_t & = \underbrace{(1 - \beta) \circ E_t}_{A_t} \ + \ I_t \label{eq:inarma_poisson_simple_X}\\
@@ -496,40 +505,50 @@ This corresponds to an INAR($p$) model as defined by \cite{Alzaid1990}, but with
 In the Poisson case, the limiting-stationary moments of $\{X_t\}$ take a considerably simpler form than in Section \ref{subsec:moments_general}.
 
 \begin{lemma}
+\label{lemma:moments_inarma_11}
 The limiting stationary mean, variance and autocorrelation function of a Poisson INARMA(1, 1) process $\{X_t\}$ are given by
 \begin{align}
 \mu_X & = \frac{\nu}{1 - \kappa}\label{eq:mu_X}\\
-\sigma^2_X & = \frac{\kappa\{1 + \beta\}}{1 + \beta + (1 - \beta)\kappa} \cdot \frac{\mu_I}{1 - \kappa}\label{eq:sigma2_X}  \ \ \ + \ \ \  \left(1 - \frac{\kappa(1 + \beta)}{1 + \beta + (1 - \beta)\kappa}\right) \cdot \frac{\sigma^2_I}{1 - \kappa} \\  % \frac{\sigma^2_I}{1 - \kappa} -
-\gamma_X(d) & = (1 - \beta)\kappa\{\beta + (1 - \beta)\kappa\}^{d - 1} \times\left(1 + \frac{\kappa\beta(\sigma^2_I - \mu_I)}{(1 + \beta) \{(1 - \kappa)\sigma^2_I + \kappa\mu_I\} + (1 - \beta)\kappa\sigma^2_I}\right) \times \sigma^2_X,\label{eq:rho_X}
+\sigma^2_X & = \frac{\kappa\{1 + \beta\}}{1 + \beta + (1 - \beta)\kappa} \cdot \frac{\mu_I}{1 - \kappa}\label{eq:sigma2_X}  \ \ \ + \ \ \  \left(1 - \frac{\kappa(1 + \beta)}{1 + \beta + (1 - \beta)\kappa}\right) \cdot \frac{\sigma^2_\tau}{1 - \kappa} \\  % \frac{\sigma^2_\tau}{1 - \kappa} -
+\gamma_X(d) & = (1 - \beta)\kappa\xi^{d - 1} \times\left(1 + \frac{\kappa\beta(\sigma^2_\tau - \mu_I)}{(1 + \beta) \{(1 - \kappa)\sigma^2_\tau + \kappa\mu_I\} + (1 - \beta)\kappa\sigma^2_\tau}\right) \times \sigma^2_X,\label{eq:rho_X}
 \end{align}
+where we use the shorthand
+\begin{equation}
+\xi = \gamma_X(2)/\gamma_X(1) = \beta + (1 - \beta)\kappa.
+\label{eq:define_xi}
+\end{equation}
 \end{lemma}
 
 % The derivation is provided in Supplement \ref{XYZ}.
 \begin{remark}
-Equation \eqref{eq:sigma2_X} implies that if relative to a Poisson, the innovation distribution $F_I$\todo{Introduce more generally?} is over- or underdispersed, respectively, the same will be the case for the marginal distribution of $\{X_t\}$. From \eqref{eq:rho_X} it follows that for overdispersed (underdispersed) imports, the autocorrelations will be stronger (weaker) than in a model with the same parameters $\beta, \kappa$ and equidispersed, e.g.\ Poisson innovations.
+Equation \eqref{eq:sigma2_X} implies that if relative to a Poisson, if the import distribution is overdispersed ($\sigma^2_\tau > \tau$) or underdispersed ($\sigma^2_\tau < \tau$), respectively, the same will be the case for the marginal distribution of $\{X_t\}$. From \eqref{eq:rho_X} it follows that for overdispersed (underdispersed) imports, the autocorrelations will be stronger (weaker) than in a model with the same parameters $\beta, \kappa$ and equidispersed, e.g.\ Poisson innovations.
 \end{remark}
 
 
 \subsubsection{Properties of the Poisson INARMA(1, 1) model}
 
-The Poisson INARMA(1, 1) model has been discussed in \cite{Bracher2019}, but for completeness some results are repeated. As in the case of Poisson innovations $I_t \stackrel{\text{iid}}{\sim} \text{Pois}(\tau)$ we have $\mu_I = \sigma^2_I = \tau$, the expressions from \eqref{eq:mu_X}--\eqref{eq:rho_X} simplify to 
+The Poisson INARMA(1, 1) model has been discussed in \cite{Bracher2019}, but for completeness some results are repeated. As in the case of Poisson innovations $I_t \stackrel{\text{iid}}{\sim} \text{Pois}(\tau)$ we have $\mu_I = \sigma^2_\tau = \tau$, the expressions from \eqref{eq:mu_X}--\eqref{eq:rho_X} simplify to 
 \begin{equation}
 \mu_X = \sigma^2_X = \frac{\tau}{1 - \kappa}; \ \ \rho_X(d) = (1 - \beta)\kappa\{\beta + (1 - \beta)\kappa\}^{d - 1}.\label{eq:moments_poisson_11}
 \end{equation}
-The $X_t$ are marginally Poisson distributed; moreover, as is the case for the INAR(1) model \cite{Weiss2018a}, for each pair of time points $s, t$ the joint distribution of $(X_s, X_t)$ is a bivariate Poisson distribution:
+The $X_t$ are marginally Poisson distributed; moreover, as is the case for the INAR(1) model \cite{Weiss2018a}, for each pair of time points $s, t$ the joint distribution of $(X_s, X_t)$ is a bivariate Poisson distribution.
 \begin{proposition}
 If $\{X_t\}$ follows a Poisson INARMA(1, 1) proces then for each $t \in \mathbb{N}$ and $d >0$
 \begin{equation}
-(X_t, X_{t + d}) \sim \textnormal{BPois}\{\gamma_X(d, \mu_X - \gamma_X(d), \mu_X - \gamma_X(d)\},\label{eq:bivariate_poisson}
+(X_t, X_{t + d}) \sim \textnormal{BPois}\{\gamma_X(d), \mu_X - \gamma_X(d), \mu_X - \gamma_X(d)\},\label{eq:bivariate_poisson}
 \end{equation}
 where BPois denotes the bivariate Poisson distribution as defined in \cite{Johnson1997}.
 \end{proposition}
+
+\begin{remark}
 The process $\{X_t\}$ is time-reversible and equivalent to a binomially thinned INAR(1) process $\{\tilde{Y}_t\}$, given by\todo{write aut $\xi$}
 \begin{align}
 Y_t & = J_t + \xi \circ Y_{t - 1} \label{eq:equiv_INAR1_Y}\\
-\tilde{Y}_t \mid Y_t & \sim \text{Bin}\{Y_t, (1 - \beta)\kappa/\xi\}\label{eq:equiv_INAR1_Ytilde}
+\tilde{Y}_t \mid Y_t & \sim \textnormal{Bin}\{Y_t, (1 - \beta)\kappa/\xi\}\label{eq:equiv_INAR1_Ytilde}
 \end{align}
-with $J_t \stackrel{\text{iid}}{\sim} \text{Pois}(\tau\xi/\kappa)$; compare \citep{Bracher2019}. This establishes an interesting connection with hidden INAR models for underreported data, as first discussed by \cite{Fernandez-Fontelo2016}. Also, it represents a parallel to the Gaussian ARMA(1, 1) model which likewise has a representation as a mis-measured AR(1) process \citep[Lemma 1]{Staudenmayer2005}. % \textbf{Concerning the process $\{L_t\}$ it can be shown that it is likewise an INARMA(1, 1) process with parameters $\tau_M = \kappa\tau, \phi_M = \phi$ and $\kappa_M = \kappa$} \todo{(see derivation in the appendix?). I think one can even show that $\{B_t\}$ is also INARMA(1, 1) with the same parameters as $L_t$.}% Moreover it should be noted that the Poisson INARMA(1, 1) model is quite closely related to the Poisson INGARCH(1, 1) model, which arises when replacing \eqref{eq:E_inarma} by \citep{Bracher2019a}
+with $J_t \stackrel{\text{iid}}{\sim} \text{Pois}(\tau\xi/\kappa)$; compare \citep{Bracher2019}. This establishes a connection to hidden INAR models for underreported data, as first discussed by \cite{Fernandez-Fontelo2016}. Also, it represents a parallel to the Gaussian ARMA(1, 1) model which likewise has a representation as a mis-measured AR(1) process \citep[Lemma 1]{Staudenmayer2005}.
+\end{remark}
+% \textbf{Concerning the process $\{L_t\}$ it can be shown that it is likewise an INARMA(1, 1) process with parameters $\tau_M = \kappa\tau, \phi_M = \phi$ and $\kappa_M = \kappa$} \todo{(see derivation in the appendix?). I think one can even show that $\{B_t\}$ is also INARMA(1, 1) with the same parameters as $L_t$.}% Moreover it should be noted that the Poisson INARMA(1, 1) model is quite closely related to the Poisson INGARCH(1, 1) model, which arises when replacing \eqref{eq:E_inarma} by \citep{Bracher2019a}
 % $$
 % E_t = E_{t - 1} - L_{t - 1} + \kappa * X_{t - 1}
 % $$
@@ -537,24 +556,24 @@ with $J_t \stackrel{\text{iid}}{\sim} \text{Pois}(\tau\xi/\kappa)$; compare \cit
 
 \subsubsection{Properties of compound Poisson INARMA(1, 1) models}
 
-As the class of compound Poisson distributions is closed to binomial thinning, the import term $\kappa \circ I_{t - 1}$ in \eqref{eq:E_INAR} follows a compound Poisson distribtion whenever $I_t$ does. In this case it follows that $E_t$ and $X_t$ likewise follow a compound Poisson distribution.\todo{ref to Schweer?} An interesting special case arises for the Hermite distribution, which \cite{Fernandez-Fontelo2017} have treated in the context of the INAR($p$) model. % A random variable $Z$ is said to be Hermite distributed if it can be written as $Z = Y_1 + 2Y_2$ where $Y_1$ and $Y_2$ independently follow Poisson distributions with parameters $a_1$ and $a_2$, respectively. In slight variation of \cite{Gupta1974} we parametrize the distribution by its mean $\tau = a_1 + 2a_2$ and a dispersion parameter\footnote{\cite{Gupta1974} use $d = 1 + \psi$ as the dispersion parameter, which corresponds to the index of dispersion.} $\psi = 2a_2/(a_1 + 2a_2) \in [0, 1]$. Under this parameterization the probability mass function is
+As the class of compound Poisson distributions is closed to binomial thinning, the import term $\kappa \circ I_{t - 1}$ in \eqref{eq:E_INAR} follows a compound Poisson distribtion whenever $I_t$ does. In this case it follows that $E_t$ and $X_t$ likewise follow a compound Poisson distribution.\todo{ref to Schweer?} An interesting special case arises for the Hermite distribution, which \cite{Fernandez-Fontelo2017} have treated in the context of the INAR($p$) model. % A random variable $Z$ is said to be Hermite distributed if it can be written as $Z = Y_1 + 2Y_2$ where $Y_1$ and $Y_2$ independently follow Poisson distributions with parameters $a_1$ and $a_2$, respectively. In slight variation of \cite{Gupta1974} we parametrize the distribution by its mean $\tau = a_1 + 2a_2$ and a dispersion parameter\footnote{\cite{Gupta1974} use $d = 1 + \theta$ as the dispersion parameter, which corresponds to the index of dispersion.} $\theta = 2a_2/(a_1 + 2a_2) \in [0, 1]$. Under this parameterization the probability mass function is
 % $$
-% \text{Pr}(Z = z) = \exp\left[\tau\left(-1 + \frac{\psi}{2}\right)\right] \tau^z(1 - \psi)^z \sum_{j = 0}^{[z/2]} \frac{\psi^j}{2^j\tau^j(1 - \psi)^{2j}(z - 2j)!j!}, z = 0, 1, 2, \dots
+% \text{Pr}(Z = z) = \exp\left[\tau\left(-1 + \frac{\theta}{2}\right)\right] \tau^z(1 - \theta)^z \sum_{j = 0}^{[z/2]} \frac{\theta^j}{2^j\tau^j(1 - \theta)^{2j}(z - 2j)!j!}, z = 0, 1, 2, \dots
 % $$
 % $$
 % \text{Pr}(Z = z) = \exp(-a_1 + a_2) \cdot \sum_{j = 0}^{[z/2]} \frac{a_1^{z - 2j}a_2^j}{(z - 2j)!j!}
 % $$
-% where $[z/2]$ is the integer part of $z/2$. The mean and variance are given by $\mathbb{E}(Z) = \lambda$ and $\text{Var}(Z) = (1 + \psi)\lambda$. If we now assume that in model \eqref{eq:inarma_poisson_simple_X}--\eqref{eq:inarma_poisson_simple_E}
+% where $[z/2]$ is the integer part of $z/2$. The mean and variance are given by $\mathbb{E}(Z) = \lambda$ and $\text{Var}(Z) = (1 + \theta)\lambda$. If we now assume that in model \eqref{eq:inarma_poisson_simple_X}--\eqref{eq:inarma_poisson_simple_E}
 
 \begin{remark}
 If in model \eqref{eq:inarma_poisson_simple_X}--\eqref{eq:inarma_poisson_simple_E} the import distribution is given by
 $$
-I_t \stackrel{\textnormal{iid}}{\sim} \textnormal{Herm}(\tau, \psi),
+I_t \stackrel{\textnormal{iid}}{\sim} \textnormal{Herm}(\tau, \theta),
 $$
 then the limiting stationary distribution is
 $$
 X_t \sim \textnormal{Herm}\left(\frac{\tau}{1 - \kappa},
-(1 - \kappa)\times\psi + \kappa\times\frac{\{\beta + (1 - \beta)\kappa\}(1 - \beta)\kappa\psi}{1 + \beta + (1 - \beta)\kappa}
+(1 - \kappa)\times\theta + \kappa\times\frac{\{\beta + (1 - \beta)\kappa\}(1 - \beta)\kappa\theta}{1 + \beta + (1 - \beta)\kappa}
   \right).
 $$
 \end{remark}
@@ -562,7 +581,7 @@ We are currently not aware of any other instances of the model class with simple
 
 \subsection{Properties of Poisson INARMA($p$, $q$) models}
 
-For higher-order models with $p$ or $q > 1$ the model becomes considerably more complex. In the Poisson case, however, some properties can be established. Notably, the process $\{E_t\}$ is still a Poisson INAR process and limiting-stationary moments can be obtained.
+For higher-order models with $p$ or $q > 1$ the model becomes considerably more complex. In the Poisson case, however, some properties can be established. Notably, the process $\{E_t\}$ is still a Poisson INAR process and limiting-stationary second-order properties can be obtained.
 
 \begin{corollary}
 Under model \eqref{eq:X_inarma}--\eqref{eq:C_t_inarma}, the process $\{E_t\}$ is a Poisson INAR$(\max\{p, q\})$ process as defined by \cite{Alzaid1990}. Setting $p = q$ without loss of generality, it is given by
@@ -601,14 +620,15 @@ s_0 = 1, \ \ s_k & = \sum_{l = 1}^k \beta_l s_{k - l} \text{ for } k = 1, 2, \do
 
 %The derivations are provided in Supplement \ref{XXX}.
 
-
 \subsection{Inference in the case $p = q = 1$}
+
+We next introduce two inference approaches for the case $p = q = 1$ and assess their performance in a simulation study.
 
 \subsubsection{An algorithm for likelihood evaluation}
 
 In order to evaluate the likelihood function for processes of type \eqref{eq:X_inarma}--\eqref{eq:E_inarma} we suggest an adapted version of the forward algorithm \textbf{add ref}. Note that a somewhat similar procedure has recently been proposed by \cite{Weiss2019} for the INARMA model by \cite{Dion1995}.
 
-As a first step one needs to choose a sufficiently large support $\mathcal{E} = \{0, 1, \dots, M\}$ which covers the relevant ranges for $\{X_t\}$ and $\{E_t\}$. As $E_t \geq A_t$, $\mathcal{E}$ implies a support for the tuple $(E_t, A_t)$, which is given by $\mathcal{E}^* = \{(0, 0), (1, 0), (1, 1), (2, 0), \dots, (M, M - 1), (M, M)\}$. Moreover we introduce the following shorthands: $\Pr(Y = y \ \mid \ X_{ < t})$ is the probability that the random variable $Y$ takes the value $y$ given that $X_{t - 1} = x_{t - 1}, X_{t - 2} = x_{t - 2}, \dots, X_1 = x_1$; for $t= 1$ this corresponds to the marginal distribution of $Y$. $\Pr(Y = y \ \mid \ X_{ \leq t})$ is defined analogously, but $X_t = x_t$ is also included in the condition.
+As a first step, a sufficiently large support $\mathcal{E} = \{0, 1, \dots, M\}$ needs to be chosen which covers the relevant ranges for $\{X_t\}$ and $\{E_t\}$. As $E_t \geq A_t$, $\mathcal{E}$ implies a support for the tuple $(E_t, A_t)$, which is given by $\mathcal{E}^* = \{(0, 0), (1, 0), (1, 1), (2, 0), \dots, (M, M - 1), (M, M)\}$. Moreover we introduce the following shorthands: $\Pr(Y = y \ \mid \ X_{ < t})$ is the probability that the random variable $Y$ takes the value $y$ given that $X_{t - 1} = x_{t - 1}, X_{t - 2} = x_{t - 2}, \dots, X_1 = x_1$; for $t= 1$ this corresponds to the marginal distribution of $Y$. $\Pr(Y = y \ \mid \ X_{ \leq t})$ is defined analogously, but $X_t = x_t$ is also included in the condition.
 
 The algorithm is initialized by setting $\text{Pr}(E_1 = e_1 \mid X_{< 1}) = \text{Pr}(E_1 = e), e_1 \in \mathcal{E}$ to the stationary distribution of $E_1$ or by pragmatically setting $E_1 \sim \text{Pois}(\eta)$, with $\eta$ estimated along with the actual model parameters. % , obtained either analytically or approximated via a negative binomial distribution with mean and variance corresponding to the stationary distribution of $\{E_t\}$.\todo{check in code; can this cause trouble with comparison to INGARCH?} 
 Then the following steps are iterated for $t = 1, \dots, T$, where $T$ is the length of the observed time series:
@@ -646,30 +666,67 @@ $$
 \end{align*}
 \end{enumerate}
 \end{algorithm}
-The values stored in step 2 of each iteration then allow us to evaluate the likelihood of the observed time series by computing
+The values stored in Step 2 of each iteration then allow us to evaluate the likelihood of the observed time series by computing
 $$
 \Pr(X_1 = x_1, \dots X_t = x_T) = \Pr(X_1 = x_1) \cdot \prod_{t = 2}^T \Pr(X_t = x_t \ \mid \ X_{< t}).
 $$
-Maximization of the log-likelihood is done via numerical optimization, namely using the Nelder-Mead method implemented in the \texttt{R} function \texttt{optim} \citep{RDCT2008}. To ensure convergence several different starting values should be tested. In the likelihood maximization the parameters are handled on suitable transformed scales allowing for unconstrained optimization. For parameters constrained to the unit interval we use logit transformations, for parameters which can take any positive value we use the natural logarithm. Standard errors are estimated via the inverse observed Fisher information with subsequent application of the delta method. Fitted values and Pearson residuals can be obtained based on the probabilities $\Pr(X_t = x_t \ \mid \ X_{< t}), x_t \in \mathcal{E}$. Note that the storage and number of computations required to run the above algorithm increase quadratically in the cardinality $M$ of the chosen support $\mathcal{E}$. It is thus only applicable for time series of low to moderate counts.
+Maximization of the log-likelihood is done via numerical optimization, namely using the Nelder-Mead method implemented in the \texttt{R} function \texttt{optim} \citep{RDCT2008}. To ensure convergence, several different starting values should be tested. In the likelihood maximization the parameters are handled on suitable transformed scales allowing for unconstrained optimization. For parameters constrained to the unit interval we use logit transformations, for parameters which can take any positive value we use the natural logarithm. Standard errors are estimated via the inverse observed Fisher information with subsequent application of the delta method. Fitted values and Pearson residuals can be obtained based on the probabilities $\Pr(X_t = x_t \ \mid \ X_{< t}), x_t \in \mathcal{E}$.
 
-As the likelihood function is not available in closed form, establishing consistency or asymptotic normality of the resulting estimators is not straightforward (a typical proof strategy relying on threefold continuous differentiability of the log-likelihood function). Also, general results on the asymptotics of maximum likelihood estimators seem to be lacking even for INAR models with general import distributions. We therefore focus on simulation studies to assess the finite-sample properties of the proposed estimation approach.
+It should be noted that the storage and number of computations required to run the above algorithm increase quadratically in the cardinality $M$ of the chosen support $\mathcal{E}$. It is thus only applicable for time series of low to moderate counts.
 
-\subsection{Moment-based estimation}
+As the likelihood function is not available in closed form, establishing consistency or asymptotic normality of the resulting estimators is not straightforward (a typical proof strategy relying on threefold continuous differentiability of the log-likelihood function, see e.g., \cite{Fokianos2009}). Indeed, general results on the asymptotics of maximum likelihood estimators seem to be lacking even for simpler INAR models with general import distributions. We therefore focus on simulation studies to assess the finite-sample properties of the proposed estimation approach.
+
+\subsubsection{Moment-based estimation}
 
 %For Poisson case: Check Weiss and Schweer on biases in moment estimators for INAR/INGARCH. And p97 in dissertation Schweer.
 
 % Sketch of what could be doable: Ibragimov theorem allows us to show that sample mean and autocovariances are normally distributed (with variance decaying in $\sqrt{t}$) and consistent. The Delta method implies that the parameter estimates are still normally distributed. Slutsky's theorem implies they are still consistent.
 
-An alternative to maximum-likelihood estimation is moment-based estimation, as discussed for the Poisson INAR(1) and INARCH(1) processes in \cite{Weiss2016}. For the Poisson INARMA(1, 1) process, solving the system of equations \eqref{eq:moments_poisson_11}  for $\tau, \beta$, and $\kappa$ yields the following moment estimators:
+A computationally cheaper alternative to maximum-likelihood estimation is moment-based estimation, as discussed for the Poisson INAR(1) and INARCH(1) processes in \cite{Weiss2016}. For the Poisson INARMA(1, 1) process, solving the system of equations \eqref{eq:moments_poisson_11}  for $\tau, \beta$, and $\kappa$ yields the following moment estimators:
 \begin{equation}
-\hat{\tau} = \frac{\hat{\mu}_X\{\hat{\rho}_X(1) - \hat{\rho}_X(2)\}}{\hat{\rho}_X(1)^2 + \hat{\rho}_X(1) - \hat{\rho}_X(2)}, \ \ \ \hat{\beta} = \frac{\hat{\rho}_X(2)}{\hat{\rho}_X(1)} - \hat{\rho}_X(1), \ \ \ \hat{\kappa} = \frac{\hat{\rho}_X(1)^2}{\hat{\rho}_X(1)^2 + \hat{\rho}_X(1) - \hat{\rho}_X(2)}\label{eq:moment_estimators}
+\hat{\tau} = \frac{\hat{\mu}_X\{\hat{\rho}_X(1) - \hat{\rho}_X(2)\}}{\hat{\rho}_X(1)^2 + \hat{\rho}_X(1) - \hat{\rho}_X(2)}, \ \ \ \hat{\beta} = \frac{\hat{\rho}_X(2)}{\hat{\rho}_X(1)} - \hat{\rho}_X(1), \ \ \ \hat{\kappa} = \frac{\hat{\rho}_X(1)^2}{\hat{\rho}_X(1)^2 + \hat{\rho}_X(1) - \hat{\rho}_X(2)}.\label{eq:moment_estimators}
 \end{equation}
 
 \begin{proposition}
 If $\{X_t, t \in \mathbb{N}\}$ is an INARMA(1, 1) process, the moment estimators $\hat{\tau}, \hat{\beta}, \hat{\kappa}$ from equation \eqref{eq:moment_estimators} are consistent and asymptotically normal.\label{proposition:moments}
 \end{proposition}
 
-For import distributions other than the Poisson, solving equations \eqref{eq:mu_X}--\eqref{eq:rho_X} for the model parameters turns out to be extremely difficult. However, solving them numerically is straightforward, maiking moment-based estimation a feasible and quite fast option in practice.
+\noindent For import distributions other than the Poisson, solving equations \eqref{eq:mu_X}--\eqref{eq:rho_X} for the model parameters is somewhat tedious and boils down to solving the cubic equation
+\begin{equation}
+a\kappa^3 + b\kappa^2 + c\kappa + d = 0,\label{eq:kappa}
+\end{equation}
+where
+\begin{align*}
+a & = (1 - \xi)(\mu_X + \sigma^2_X) + 2\gamma_X(1)\\
+b & = - (1 - \xi)\{(2 + \xi)\sigma^2_X - \xi\mu_X\} -  2\times(2 + \xi)\times\gamma_X(1)\\
+c & = (1 - \xi^2)(1 + \xi)\sigma^2_X  + 3\times(1 + \xi)\times\gamma_X(1)\\
+d & = -(1 + \xi)\gamma_X(1)
+\end{align*}
+and $\xi = \gamma_X(2)/\gamma_X(1)$ as defined in equation \eqref{eq:define_xi}.
+\begin{lemma}
+Equation \eqref{eq:kappa} has exactly one real solution for $\kappa \in [0, 1]$ if $\mu_X, \sigma^2_X, \gamma_X(1)$ and $\xi = \gamma_X(2)/\gamma_X(1)$ are the moment properties of an INARMA(1, 1) model as given in Lemma \ref{lemma:moments_inarma_11}.
+\end{lemma}
+The unique solution from the unit interval does not seem to have a simple closed form, but can be computed numerically. Given $\kappa$, the other model parameters can then be computed via
+\begin{align*}
+\tau = \mu_X\times(1 - \kappa);\ \ \
+\beta = \frac{\xi - \kappa}{1 - \kappa};\ \ \
+\sigma^2_\tau & = (1 - \kappa) \times \frac{\sigma^2_\tau - \frac{\kappa\times(1 + \beta)}{1 + \xi} \times \mu_X}{1 - \frac{\kappa\times(1 + \beta)}{1 + \xi}}.
+\end{align*}
+The moment estimators are obtained by replacing $\mu_X, \sigma^2_X, \gamma_X(1), \xi$ by their empirical counterparts $\hat{\mu}_X,$ $\hat{\sigma}^2_X,$ $\hat{\gamma}_X(1),$ $\hat{\gamma}_X(2)/\hat{\gamma}_X(1)$. The dispersion parameter of the import distribution (e.g., $\theta$ in the Hermite or negative binomial distributions) can be obtained from $\hat{\tau}$ and $\hat{\sigma}^2_I$ via the respective mean-variance relationship.
+
+For the parameter estimates to fall into their allowed ranges\todo{This is only the case for NegBin and Hermite distributions; also, I have not proven that $\xi < \rho_X(1)$ is actually impossible.} it is necessary that $\hat{\sigma}^2_X \geq \hat{\mu}_X$ and $\hat{\xi} \geq \hat{\gamma}_X(1)$. Whenever this is not the case this is an indication that the INARMA model class may not be an appropriate model. For the purpose of the simulation studies in the next section, however, we set $\hat{\sigma}^2_X = \hat{\mu}_X$ and $\hat{\xi} = \hat{\gamma}_X(1)$ in such cases. As estimation moreover becomes numerically instable if $\hat{\gamma}$ and $\hat{\xi}$ are too close to 1, we moreover threshold them at 0.95.
+
+% tau <- mu*(1 - kappa)
+% beta <- (xi - kappa)/(1 - kappa)
+% phi <- 1 - beta
+
+% q <- (1 + beta)*kappa/(1 + xi)
+% sigma2_tau <- (1 - kappa)*(sigma2 - q*mu)/(1 - q)
+
+% c3 <- (1 - xi)*(mu_X + sigma2_X) + 2*gamma # positive
+% c2 <- (1 - xi)*(-(2 + xi)*sigma2_X - xi*mu_X) - 2*gamma*(2 + xi) # negative
+% c1 <- (1 - xi)*(1 + xi)*(sigma2_X)  + gamma*3*(1 + xi) # positive
+% c0 <- -gamma*(1 + xi) # negative
 
 
 \subsubsection{Simulation study}
@@ -678,39 +735,55 @@ To assess the behaviour of our estimators we specify the following three simulat
 
 
 \begin{enumerate}
-\item Case 1: $\tau = 1, \beta = 0.5, \kappa = 0.5$. In the Poisson case this implies $\mu_X = \sigma^2_X = 2, \rho_X(d) = 0.25 \times 0.75^{d - 1}$. In the negative binomial / Hermite cases we set $\psi = 0.5$, resulting in $\mu_X = 2; \sigma^2_X = 2.57; \rho_X(d) = 0.26\cdot 0.75^{d - 1}$
-\item Case 2: $\tau = 1, \beta = 0.2, \kappa = 0.6$. In the Poisson case this implies $\mu_X = \sigma^2_X = 2.5; \rho_X(d) = 0.48 \cdot 0.68^{d - 1}$. In the negative binomial / Hermite cases we set $\psi = 0.7$, resulting in $\mu_X = 2.5; \sigma^2_X = 3.5; \rho_X(d) = 0.5\cdot 0.68^{d - 1}$
-\item Case 3: $\tau = 1, \beta = 0.1, \kappa = 0.8$. In the Poisson case this implies $\mu_X = \sigma^2_X = 5; \rho_X(d) = 0.72 \times 0.82^{d - 1}$. In the negative binomial / Hermite cases we set $\psi = 0.9$, resulting in $\mu_X = 5; \sigma^2_X = 7.32; \rho_X(d) = 0.74\cdot 0.82^{d - 1}$.\end{enumerate}
+\item Scenario 1: $\tau = 1, \beta = 0.5, \kappa = 0.5$. In the Poisson case this implies $\mu_X = \sigma^2_X = 2, \rho_X(d) = 0.25 \times 0.75^{d - 1}$. In the negative binomial / Hermite cases we set $\theta = 0.5$, resulting in $\mu_X = 2; \sigma^2_X = 2.57; \rho_X(d) = 0.26\cdot 0.75^{d - 1}$
+\item Scenario 2: $\tau = 1, \beta = 0.2, \kappa = 0.6$. In the Poisson case this implies $\mu_X = \sigma^2_X = 2.5; \rho_X(d) = 0.48 \cdot 0.68^{d - 1}$. In the negative binomial / Hermite cases we set $\theta = 0.7$, resulting in $\mu_X = 2.5; \sigma^2_X = 3.5; \rho_X(d) = 0.5\cdot 0.68^{d - 1}$
+\item Scenario 3: $\tau = 1, \beta = 0.1, \kappa = 0.8$. In the Poisson case this implies $\mu_X = \sigma^2_X = 5; \rho_X(d) = 0.72 \times 0.82^{d - 1}$. In the negative binomial / Hermite cases we set $\theta = 0.9$, resulting in $\mu_X = 5; \sigma^2_X = 7.32; \rho_X(d) = 0.74\cdot 0.82^{d - 1}$.\end{enumerate}
 
-\noindent As we chose $\tau = 1$ in all settings we get the same limiting-stationary second-order properties for the same values of $\psi$ in the Hermite and the negative binomial versions,  Note however that this is not generally the case. We simulated 1000 time series for each scenario and different lengths $T \in \{250, 500, 1000\}$ of time series. The results for the three distributional assumptions can be found in Table \ref{tab:sim_hermite}.
+\noindent As we chose $\tau = 1$ in all settings we get the same limiting-stationary second-order properties for the same values of $\theta$ in the Hermite and the negative binomial versions,  Note however that this is not generally the case. We simulated 1000 time series for each scenario and different lengths $T \in \{250, 500, 1000\}$ of time series. The results for maximum-likelihood and moment-based estimation can be found in Tables \ref{tab:sim_ml} and \ref{tab:sim_moments}, respectively.
+
+\newpage
+
 
 \begin{table}[h!]
 \footnotesize
 \caption{Simulation results for the Poisson, Hermite and negative binomial settingsl, scenarios 1--3 with $T \in \{250, 500, 1000\}$ and 1000 iterations. In 3.0\% of all runs the point estimates and/or standard errors $\widehat{\text{se}}$ could not be evaluated due to numerical problems.}
+\label{tab:sim_ml}
 
 \center
 \medskip
-\label{tab:sim_hermite}
 \begin{tabular}{p{0.3cm} @{\hskip 0.7cm} p{0.45cm} p{0.45cm} p{0.45cm} p{0.45cm} @{\hskip 0.7cm} p{0.45cm} p{0.45cm} p{0.45cm} p{0.45cm} @{\hskip 0.7cm} p{0.45cm} p{0.45cm} p{0.45cm} p{0.45cm} @{\hskip 0.7cm} p{0.45cm} @{\hskip 0.45cm} p{0.45cm} p{0.45cm} p{0.65cm}}
+\hline\noalign{\bigskip}
+\multicolumn{17}{c}{Poisson}\\
+\hline\noalign{\smallskip}
+$T$ & \multicolumn{4}{c}{$\tau$} & \multicolumn{4}{c}{$\theta$} & \multicolumn{4}{c}{$\beta$} & \multicolumn{4}{c}{$\kappa$}\\
+ \noalign{\smallskip}\hline\noalign{\smallskip}
+& true & mean & se & mean & true & mean & se & mean & true & mean & se & mean & true & mean & se & mean \\
+& & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$\\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_pois_sc1.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_pois_sc2.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_pois_sc3.tex}
 \hline\noalign{\bigskip}
 \multicolumn{17}{c}{Hermite}\\
 \hline\noalign{\smallskip}
-$T$ & \multicolumn{4}{c}{$\tau$} & \multicolumn{4}{c}{$\psi$} & \multicolumn{4}{c}{$\phi$} & \multicolumn{4}{c}{$\kappa$}\\
+$T$ & \multicolumn{4}{c}{$\tau$} & \multicolumn{4}{c}{$\theta$} & \multicolumn{4}{c}{$\beta$} & \multicolumn{4}{c}{$\kappa$}\\
  \noalign{\smallskip}\hline\noalign{\smallskip}
-& true & mean & sd & mean & true & mean & sd & mean & true & mean & sd & mean & true & mean & sd & mean \\
+& true & mean & se & mean & true & mean & se & mean & true & mean & se & mean & true & mean & se & mean \\
 & & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$\\
 \noalign{\smallskip}\hline\noalign{\smallskip}
-\input{table/sim_hermite_sc1.tex}
+\input{table/sim_herm_sc1.tex}
 \noalign{\smallskip}\hline\noalign{\smallskip}
-\input{table/sim_hermite_sc2.tex}
+\input{table/sim_herm_sc2.tex}
 \noalign{\smallskip}\hline\noalign{\smallskip}
-\input{table/sim_hermite_sc3.tex}
+\input{table/sim_herm_sc3.tex}
 \noalign{\smallskip}\hline\noalign{\bigskip}
 \multicolumn{17}{c}{Negative binomial}\\
 \hline\noalign{\smallskip}
-$T$ & \multicolumn{4}{c}{$\tau$} & \multicolumn{4}{c}{$\psi$} & \multicolumn{4}{c}{$\phi$} & \multicolumn{4}{c}{$\kappa$}\\
+$T$ & \multicolumn{4}{c}{$\tau$} & \multicolumn{4}{c}{$\theta$} & \multicolumn{4}{c}{$\beta$} & \multicolumn{4}{c}{$\kappa$}\\
  \noalign{\smallskip}\hline\noalign{\smallskip}
-& true & mean & sd & mean & true & mean & sd & mean & true & mean & sd & mean & true & mean & sd & mean \\
+& true & mean & se & mean & true & mean & se & mean & true & mean & se & mean & true & mean & se & mean \\
 & & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$ & & & & of $\widehat{\text{se}}$\\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \input{table/sim_negbin_sc1.tex}
@@ -722,7 +795,61 @@ $T$ & \multicolumn{4}{c}{$\tau$} & \multicolumn{4}{c}{$\psi$} & \multicolumn{4}{
 \end{tabular}
 \end{table}
 
-Overall the fitting procedures work well for all three distributional assumptions and the three scenarios. For $T = 250$ there are some small-sample biases. These largely disappear for $T = 1000$. Little surprisingly, the variability of the estimates decreases in $T$. Overall the estimated standard errors (via the inverse Fisher information) are roughly unbiased, even though in some instances they underestimate the true variability. Confidence intervals and significance tests based on these standard errors may therefore be somewhat liberal. % \textbf{mention importance of trying several starting values as optimization sometimes gets stuck at very small $\psi$; is transformation mentioned anywhere?}
+\newpage
+
+
+\begin{table}[h!]
+\footnotesize
+\caption{Simulation results for the Poisson, Hermite and negative binomial settings, scenarios 1--3 with $T \in \{250, 500, 1000\}$ and 1000 iterations. In 3.0\% of all runs the point estimates and/or standard errors $\widehat{\text{se}}$ could not be evaluated due to numerical problems.}
+\label{tab:sim_moments}
+\center
+\medskip
+\begin{tabular}{p{0.3cm} @{\hskip 0.7cm} p{0.45cm} p{0.45cm} p{0.45cm} @{\hskip 0.7cm} p{0.45cm} p{0.45cm} p{0.45cm} @{\hskip 0.7cm} p{0.45cm} p{0.45cm} p{0.45cm} @{\hskip 0.7cm} p{0.45cm} p{0.45cm} p{0.45cm}}
+\hline\noalign{\bigskip}
+\multicolumn{13}{c}{Poisson}\\
+\hline\noalign{\smallskip}
+$T$ & \multicolumn{3}{c}{$\tau$} & \multicolumn{3}{c}{$\theta$} & \multicolumn{3}{c}{$\beta$} & \multicolumn{3}{c}{$\kappa$}\\
+ \noalign{\smallskip}\hline\noalign{\smallskip}
+& true & mean & se & true & mean & se & true & mean & se & true & mean & se \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_pois_sc1_moments.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_pois_sc2_moments.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_pois_sc3_moments.tex}
+\hline\noalign{\bigskip}
+\multicolumn{13}{c}{Hermite}\\
+\hline\noalign{\smallskip}
+$T$ & \multicolumn{3}{c}{$\tau$} & \multicolumn{3}{c}{$\theta$} & \multicolumn{3}{c}{$\beta$} & \multicolumn{3}{c}{$\kappa$}\\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+& true & mean & se & true & mean & se & true & mean & se & true & mean & se \\
+% \noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_herm_sc1_moments.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_herm_sc2_moments.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_herm_sc3_moments.tex}
+\noalign{\smallskip}\hline\noalign{\bigskip}
+\multicolumn{13}{c}{Negative binomial}\\
+\hline\noalign{\smallskip}
+$T$ & \multicolumn{3}{c}{$\tau$} & \multicolumn{3}{c}{$\theta$} & \multicolumn{3}{c}{$\beta$} & \multicolumn{3}{c}{$\kappa$}\\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+& true & mean & se & true & mean & se & true & mean & se & true & mean & se \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_negbin_sc1_moments.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_negbin_sc2_moments.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\input{table/sim_negbin_sc3_moments.tex}
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+\end{table}
+
+\newpage
+
+\noindent Overall both fitting procedures yield approximately unbiased estimates for $\tau, \beta$ and $\kappa$ in the examinded settings, with some small-sample biases which decrease with increasing sample size $T$. The dispersion parameters $\theta$ of the Hermite and negative binomial distribution are subject to some biases. Here it should be noted that for both distributional assumptions the estimates $\hat{\theta}$ become somewhat instable if $\hat{\tau}$ is small. We note that in the moment-based estimation, this problem would be considerably more pronounced if the upper threshold of 0.95 was not applied to $\hat{\gamma}_X(1)$ and $\hat{\gamma}_X(1)$.
+
+The maximum-likelihood estimators have considerably smaller standard errors than their moment-based counterparts. Little surprisingly, for both methods the standard errors decrease with increasing sample size. In the maximum likelihood scheme, the estimated standard errors (via the inverse Fisher information and Delta method) are mostly in good agreement with the obsrved standard errors, but in some instances underestimate the true variability. Confidence intervals and significance tests based on these standard errors may therefore be somewhat liberal. We note that in terms of computation times, the moment-based estimation is several orders of magnitue faster than the maximum likelihood approach. This difference would become even more pronounced in higher-count settings, in which likelihood evaluation may become prohibitively slow. % \textbf{mention importance of trying several starting values as optimization sometimes gets stuck at very small $\theta$; is transformation mentioned anywhere?}
 
 
 \section{Real-data application: disease surveillance in Germany}
@@ -739,6 +866,25 @@ Ideas:
 \end{itemize}
 
 
+
+
+
+
+\section*{Acknowledgements}
+
+I would like to thank Konstantinos Fokianos and Christian Wei{\ss} for helpful discussions.
+
+
+% \section*{References}
+{
+\footnotesize
+\bibliographystyle{plain}
+\bibliography{bib_ingarch.bib}
+}
+% \newpage
+
+
+\section{Supplementary material} % for \textit{A thinning-based representation of INGARCH models}}
 
 \appendix
 \section{Equivalence of the classical and thinning-based INGARCH formulations}
@@ -895,23 +1041,6 @@ meaning that we have to set $\lambda_0 =\tau + (1 - \beta) \times \eta$ for init
 
 % The proof follows the same steps as in Section \ref{subsec:derivation_poisson11}, but is somewhat lengthy due to the more complex recursive relationships. It has therefore been moved to the Supplementary Material.
 
-
-\section*{Acknowledgements}
-
-I would like to thank Konstantinos Fokianos and Christian Wei{\ss} for helpful discussions.
-
-
-% \section*{References}
-{
-\footnotesize
-\bibliographystyle{plain}
-\bibliography{bib_ingarch.bib}
-}
-% \newpage
-
-
-\section{Supplementary material} % for \textit{A thinning-based representation of INGARCH models}}
-
 \subsection{Demonstration of equivalence for the INGARCH($p, q$) model}
 
 We use an argument similar to the one from Section \ref{subsec:derivation_poisson11} to demonstrate that the classical formulation \eqref{eq:X_t_original}, \eqref{eq:lambda_t_pq} of the INGARCH($p, q$) model and the thinning-based version \eqref{eq:Xt_thinning_pq}--\eqref{eq:L_t_mult} are equivalent. Again we denote by $C_t^{(i)}, i = 1, 2, \dots$ the number of persons contaminated by infectives from time $t$ and becoming themselves infectious at $t + i$. Extending on the notation from the Poisson INGARCH(1, 1) case, we denote by $E^{(i)}_m, m = 1 - q, \dots, 0, i = 1, 2, \dots$ the number of individuals entering the exposed pool via the initialization at time $m$ and turning infectious at time $m + i$. Generalizing equation \eqref{eq:decomposition_Xt} we then have
@@ -983,20 +1112,20 @@ This is the form of a Poisson INGARCH($p, q$) model as defined in equation \eqre
 
 Setting $N_t = I_T + A_t$, the same arguments as in \eqref{subsec:derivation_poisson11} can be used to show that
 $$
-N_t \mid X_{t - 1}, \dots, X_0 \sim \text{Pois}(\lambda_t/\mu_\psi)
+N_t \mid X_{t - 1}, \dots, X_0 \sim \text{Pois}(\lambda_t/\psi)
 $$
 where the conditional expectation is given by
 \begin{align*}
-& \lambda_t/\mu_\psi = \mathbb{E}(I_t) \ \ + \ \ \sum_{i = 1}^t \mathbb{E}(C_{t - i}^{(i)}) \ \ + \ \ \mathbb{E}(E_0^{(t)})\\
+& \lambda_t/\psi = \mathbb{E}(I_t) \ \ + \ \ \sum_{i = 1}^t \mathbb{E}(C_{t - i}^{(i)}) \ \ + \ \ \mathbb{E}(E_0^{(t)})\\
 & \ \ \ \ \ \ \ \ = \tau \ \ + \ \ \sum_{i = 1}^t \beta^{i - 1}(1 - \beta)\kappa X_{t - i} \ \ + \ \ \beta^{t}(1 - \beta)\eta\\
-\Leftrightarrow \ \ & \lambda_t = \mu_\psi \tau \ \ + \ \ \mu_\psi \times \sum_{i = 1}^t \beta^{i - 1}(1 - \beta)\kappa X_{t - i} \ \ + \ \ \mu_\psi\beta^{t}(1 - \beta)\eta
+\Leftrightarrow \ \ & \lambda_t = \psi \tau \ \ + \ \ \psi \times \sum_{i = 1}^t \beta^{i - 1}(1 - \beta)\kappa X_{t - i} \ \ + \ \ \psi\beta^{t}(1 - \beta)\eta
 \end{align*}
 We can then re-write $\lambda_t$ as
 \begin{align*}
-\lambda_t & = \mu_\psi(1 - \beta)\tau + \mu_\psi(1 - \beta)\kappa X_{t - 1} + \beta \left[\mu_\psi\tau +   \mu_\psi \sum_{i = 2}^t \beta^{i - 1}(1 - \beta)\kappa X_{t - i}  \ \ + \ \ \mu_\psi\beta^{t - 1}(1 - \beta)\eta\right]\\
-& = \underbrace{\mu_\psi(1 - \beta)\tau}_{\nu} \ + \ \underbrace{\mu_\psi(1 - \beta)\kappa}_{\alpha} X_{t - 1} \ + \ \beta \lambda_{t - 1}
+\lambda_t & = \psi(1 - \beta)\tau + \psi(1 - \beta)\kappa X_{t - 1} + \beta \left[\psi\tau +   \psi \sum_{i = 2}^t \beta^{i - 1}(1 - \beta)\kappa X_{t - i}  \ \ + \ \ \psi\beta^{t - 1}(1 - \beta)\eta\right]\\
+& = \underbrace{\psi(1 - \beta)\tau}_{\nu} \ + \ \underbrace{\psi(1 - \beta)\kappa}_{\alpha} X_{t - 1} \ + \ \beta \lambda_{t - 1}
 \end{align*}
-for $t \geq 2$. Combined with the relationship $X_t = \psi *_G (I_t + A_t) = \psi *_G N_t$ this is the form a CP-INGARCH(1, 1) model as introduced in \eqref{eq:N_CP_original}--\eqref{eq:lambda_CP_original}. Concerning the initialization of the process, the same argument as in Section \ref{subsec:poisson11} implies that we have to set $\lambda_0 = \mu_\psi\times \left\{\tau + (1 - \beta) \times \eta\right\}$.
+for $t \geq 2$. Combined with the relationship $X_t = \psi * (I_t + A_t) = \psi * N_t$ this is the form a CP-INGARCH(1, 1) model as introduced in \eqref{eq:N_CP_original}--\eqref{eq:lambda_CP_original}. Concerning the initialization of the process, the same argument as in Section \ref{subsec:poisson11} implies that we have to set $\lambda_0 = \psi\times \left\{\tau + (1 - \beta) \times \eta\right\}$.
 
 
 \section{Derivation of limiting-stationary moments of the general model}
@@ -1005,7 +1134,7 @@ for $t \geq 2$. Combined with the relationship $X_t = \psi *_G (I_t + A_t) = \ps
 
 As demonstrated in \ref{subsec:embedded_galton_watson}, $\{E_t\}$ has a representation as a Galton-Watson branching process with immigration, see equation \ref{eq:galton_watson}. This also makes it a conditional linear autoregressive (CLAR) model of order 1 as studied by \cite{Grunwald2000}. Specifically, as
 $$
-\mathbb{E}(B_{k, t}) = \beta + (1 - \beta)\kappa\mu_\psi,
+\mathbb{E}(B_{k, t}) = \beta + (1 - \beta)\kappa\psi,
 $$
 compare equation \eqref{eq:Z_t_i}, and
 $$
@@ -1013,15 +1142,15 @@ $$
 $$
 we have
 $$
-\mathbb{E}(E_{t + 1} \ \mid \ E_t) = \nu\kappa + E_t \times \{\beta + (1 - \beta)\kappa\mu_\psi\}.
+\mathbb{E}(E_{t + 1} \ \mid \ E_t) = \nu\kappa + E_t \times \{\beta + (1 - \beta)\kappa\psi\}.
 $$
-This implies (\cite{Grunwald2000}, Proposition 1) that if $\kappa \mu_\psi < 1$
+This implies (\cite{Grunwald2000}, Proposition 1) that if $\kappa \psi < 1$
 $$
-\mu_E = \frac{\nu\kappa}{1 - \beta - (1 - \beta)\kappa\mu_\psi}.
+\mu_E = \frac{\nu\kappa}{1 - \beta - (1 - \beta)\kappa\psi}.
 $$
 For the observable process $\{X_t\}$ we can then compute
 \begin{equation}
-\mu_X = (1 - \beta)\mu_\psi\mu_E + \mu_\psi \nu = \frac{\nu\mu_\psi}{1 - \kappa\mu_\psi},\label{eq:CLAR}
+\mu_X = (1 - \beta)\psi\mu_E + \psi \nu = \frac{\nu\psi}{1 - \kappa\psi},\label{eq:CLAR}
 \end{equation}
 where the simplification in the last step results after some simple algebra.
 
@@ -1046,7 +1175,7 @@ We start by slightly re-writing equation \eqref{eq:Z_t_i} to
 R_{k, t - 1} & \sim \text{Bernouilli}(\beta)\\
 B_{k, t - 1} & = \begin{cases}
 1 & \text{if } R_{k, t - 1} = 1\\ % \ \ \ \ \ \ \  (\text{contribution via } L_{t - 1}) \\
-\kappa \star (\psi *_G 1) & \text{if } R_{k, t - 1} = 0. % \ \ (\text{ contribution via } \kappa \star (\psi *_G A_{t - 1})).
+\kappa \star (\psi * 1) & \text{if } R_{k, t - 1} = 0. % \ \ (\text{ contribution via } \kappa \star (\psi * A_{t - 1})).
 \label{eq:Z_t_i}
 \end{cases}
 \end{align} 
@@ -1057,80 +1186,80 @@ $$
 We treat the two summands separately, in a first step
 \begin{align*}
 \text{Var}\{\mathbb{E}(B_{k, t} \ \mid R_{k, t})\} & = \mathbb{E}\{(\mathbb{E}(B_{k, t} \ \mid R_{k, t})^2\} - \mathbb{E}\{(\mathbb{E}(B_{k, t} \ \mid R_{k, t})\}^2\\
-& = \beta + (1 - \beta)\kappa^2\mu_\psi^2 - \{\beta + (1 - \beta)\kappa\mu_\psi\}^2\\
+& = \beta + (1 - \beta)\kappa^2\psi^2 - \{\beta + (1 - \beta)\kappa\psi\}^2\\
 & [...]\\
-& = \beta(1 - \beta)(1 - \kappa\mu_\psi)^2
+& = \beta(1 - \beta)(1 - \kappa\psi)^2
 \end{align*}
 and in a second step
 \begin{align*}
-\mathbb{E}\{\text{Var}(B_{k, t} \ \mid R_{k, t})\} & = \beta \times 0 + (1 - \beta)\times \text{Var}(\kappa \diamond \psi *_G 1)\\
-& = (1 - \beta) \times (\sigma^2_\kappa\mu_\psi + \sigma^2_\psi\mu_\kappa^2).
+\mathbb{E}\{\text{Var}(B_{k, t} \ \mid R_{k, t})\} & = \beta \times 0 + (1 - \beta)\times \text{Var}(\kappa \diamond \psi * 1)\\
+& = (1 - \beta) \times (\sigma^2_\kappa\psi + \sigma^2_\psi\mu_\kappa^2).
 \end{align*}
 Here, we used relationship \eqref{eq:variance_rss} in the second step. Bringing the two summands back together we then obtain
 \begin{align*}
-\text{Var}(B_{k, t}) & = \beta(1 - \beta)(1 - \kappa\mu_\psi)^2 + (1 - \beta) \times \{\sigma^2_\kappa\mu_\psi + \sigma^2_\psi\mu_\kappa^2\}\\
-& = (1 - \beta) \times \{\beta (1 - \kappa\mu_\psi)^2 + \sigma^2_\kappa\mu_\psi + \sigma^2_\psi\mu_\kappa^2\}.
+\text{Var}(B_{k, t}) & = \beta(1 - \beta)(1 - \kappa\psi)^2 + (1 - \beta) \times \{\sigma^2_\kappa\psi + \sigma^2_\psi\mu_\kappa^2\}\\
+& = (1 - \beta) \times \{\beta (1 - \kappa\psi)^2 + \sigma^2_\kappa\psi + \sigma^2_\psi\mu_\kappa^2\}.
 \end{align*}
 
 Using relationship \eqref{eq:variance_rss} twice, we obtain that
 
 \begin{align*}
-\text{Var}(I^*_t) & = \text{Var}(\kappa \diamond \psi *_G I_{t - 1})\\
-& = \sigma^2_\kappa \mathbb{E}(\psi *_G I_{t - 1}) + \text{Var}(\psi *_G I_{t - 1}) \times \kappa^2\\
-& = \sigma^2_\kappa\mu_\psi \mu_I + (\sigma^2_\psi\mu_I + \sigma^2_I\mu_\psi^2)\times\kappa^2
+\text{Var}(I^*_t) & = \text{Var}(\kappa \diamond \psi * I_{t - 1})\\
+& = \sigma^2_\kappa \mathbb{E}(\psi * I_{t - 1}) + \text{Var}(\psi * I_{t - 1}) \times \kappa^2\\
+& = \sigma^2_\kappa\psi \mu_I + (\sigma^2_\psi\mu_I + \sigma^2_\tau\psi^2)\times\kappa^2
 \end{align*}
 
 
 Returning to the Galton-Watson / CLAR(1) representation \eqref{eq:galton_watson} of $\{E_t\}$ we can now note that
 \begin{align*}
 \text{Var}(E_{t + 1} \ \mid \ E_{t}) & = \text{Var}(I^*_t) + E_t \times \text{Var}(B_{k, t})\\
-& = \sigma^2_\kappa \nu + \sigma^2_\nu\kappa^2 + E_t \times (1 - \beta) \times \{\beta (1 - \kappa\mu_\psi)^2 + \sigma^2_\kappa\mu_\psi + \sigma^2_\psi\mu_\kappa^2\}.
+& = \sigma^2_\kappa \nu + \sigma^2_\nu\kappa^2 + E_t \times (1 - \beta) \times \{\beta (1 - \kappa\psi)^2 + \sigma^2_\kappa\psi + \sigma^2_\psi\mu_\kappa^2\}.
 \end{align*}
 
-Using Proposition 2 from \cite{Grunwald2000} we then conclude that if $\kappa \mu_\psi < 1$
+Using Proposition 2 from \cite{Grunwald2000} we then conclude that if $\kappa \psi < 1$
 $$
-\sigma^2_E = \frac{\sigma^2_\kappa\mu_\psi \mu_I + (\sigma^2_\psi\mu_I + \sigma^2_I\mu_\psi^2)\times\kappa^2 + \mu_E \times (1 - \beta) \times \{\beta (1 - \kappa\mu_\psi)^2 + \sigma^2_\kappa\mu_\psi + \sigma^2_\psi\kappa^2\}}{1 - \beta - (1 - \beta)\kappa\mu_\psi}.
+\sigma^2_E = \frac{\sigma^2_\kappa\psi \mu_I + (\sigma^2_\psi\mu_I + \sigma^2_\tau\psi^2)\times\kappa^2 + \mu_E \times (1 - \beta) \times \{\beta (1 - \kappa\psi)^2 + \sigma^2_\kappa\psi + \sigma^2_\psi\kappa^2\}}{1 - \beta - (1 - \beta)\kappa\psi}.
 $$
 
 Now we turn to the variance of $\{X_t\}$, which can be obtained as
 \begin{align*}
-\text{Var}(X_t) & = \text{Var}\{\psi *_G (1 - \beta) \circ E_t\} + \text{Var}(\psi *_G I_t).
+\text{Var}(X_t) & = \text{Var}\{\psi * (1 - \beta) \circ E_t\} + \text{Var}(\psi * I_t).
 \end{align*}
 Considering again the two summands separately we obtain
 \begin{align*}
-\text{Var}\{\psi *_G (1 - \beta) \circ E_t\} & = \text{Var}\{(1 - \beta) \circ E_t\}\mu_\psi + \sigma^2_\psi\mathbb{E}\{(1 - \beta) \circ E_t\}\\
-& = \{\beta(1 - \beta)\mu_E + \sigma^2_E(1 - \beta)^2\}\mu_\psi + \sigma^2_\psi(1- \beta)\mu_E\\
-& = (1 - \beta)\mu_E \sigma^2_\psi + \mu_\psi^2(1 - \beta)\{\beta\mu_E + (1 - \beta)\sigma^2_E\}
+\text{Var}\{\psi * (1 - \beta) \circ E_t\} & = \text{Var}\{(1 - \beta) \circ E_t\}\psi + \sigma^2_\psi\mathbb{E}\{(1 - \beta) \circ E_t\}\\
+& = \{\beta(1 - \beta)\mu_E + \sigma^2_E(1 - \beta)^2\}\psi + \sigma^2_\psi(1- \beta)\mu_E\\
+& = (1 - \beta)\mu_E \sigma^2_\psi + \psi^2(1 - \beta)\{\beta\mu_E + (1 - \beta)\sigma^2_E\}
 \end{align*}
 and
 \begin{align*}
-\text{Var}(\psi *_G I_t) & = \sigma^2_\psi\mu_I + \sigma^2_I\mu_\psi^2,
+\text{Var}(\psi * I_t) & = \sigma^2_\psi\mu_I + \sigma^2_\tau\psi^2,
 \end{align*}
 which in result gives us
 $$
-\text{Var}(X_t) = (1 - \beta)\mu_E \sigma^2_\psi + \mu_\psi^2(1 - \beta)\{\beta\mu_E + (1 - \beta)\sigma^2_E\} + \sigma^2_\psi\nu + \sigma^2_I\mu_\psi^2.
+\text{Var}(X_t) = (1 - \beta)\mu_E \sigma^2_\psi + \psi^2(1 - \beta)\{\beta\mu_E + (1 - \beta)\sigma^2_E\} + \sigma^2_\psi\nu + \sigma^2_\tau\psi^2.
 $$
 
 \subsection{Autocovariances}
 
 From the CLAR(1) representation \eqref{eq:CLAR} of $\{E_t\}$ it follows that (\cite{Grunwald2000}, Proposition 4)
 $$
-\gamma_E(d) = \{\beta + (1 - \beta)\kappa\mu_\psi\}^d \times \sigma^2_E.
+\gamma_E(d) = \{\beta + (1 - \beta)\kappa\psi\}^d \times \sigma^2_E.
 $$
 For the autocovariance structure of $\{X_t\}$ consider
 \begin{align*}
 \text{Cov}(X_t, E_{t + 1}) & = \text{Cov}(X_t, L_t + \kappa \diamond X_t)\\
 & = \text{Cov}(X_t, L_t) + \text{Cov}(X_t, \kappa \diamond X_t)\\
-& = \text{Cov}(\psi *_G A_t + \psi *_G I_t, L_t) + \text{Cov}(X_t, \kappa \diamond X_t)\\
-& = \text{Cov}(\psi *_G A_t, L_t) + \underbrace{\text{Cov}(\psi *_G I_t, L_t)}_{= \ 0} + \text{Cov}(X_t, \kappa \diamond X_t).
+& = \text{Cov}(\psi * A_t + \psi * I_t, L_t) + \text{Cov}(X_t, \kappa \diamond X_t)\\
+& = \text{Cov}(\psi * A_t, L_t) + \underbrace{\text{Cov}(\psi * I_t, L_t)}_{= \ 0} + \text{Cov}(X_t, \kappa \diamond X_t).
 \end{align*}
 Considering the two non-zero summands separately, we get
 \begin{align*}
-\text{Cov}(\psi *_G A_t, L_t) & = \mathbb{E}\{\text{Cov}(\psi *_G A_t, L_t \ \mid \ E_t)\} + \text{Cov}\{\mathbb{E}(\psi *_G A_t \ \mid \ E_t), \mathbb{E}(L_t \ \mid \ E_t)\}\\
-& = \mu_\psi \mathbb{E}\{\underbrace{\text{Cov}(A_t, L_t \ \mid \ E_t)}_{\text{note that } A_t + L_t = E_t}\} \ + \ \text{Cov}((1 - \beta)\mu_\psi E_t, \beta E_t)\\
-& = \mu_\psi \mathbb{E}\{\text{Cov}(E_t - L_t, L_t \ \mid \ E_t)\} \ + \ (1 - \beta)\mu_\psi \text{Cov}\{(1 - \beta)\mu_\psi E_t, \beta E_t\}\\
-& = \mu_\psi \beta(1 - \beta)\mu_E \ + \ (1 - \beta)\mu_\psi\beta \sigma^2_E\\
-& = \beta(1 - \beta)\mu_\psi(\sigma^2_E - \mu_E)
+\text{Cov}(\psi * A_t, L_t) & = \mathbb{E}\{\text{Cov}(\psi * A_t, L_t \ \mid \ E_t)\} + \text{Cov}\{\mathbb{E}(\psi * A_t \ \mid \ E_t), \mathbb{E}(L_t \ \mid \ E_t)\}\\
+& = \psi \mathbb{E}\{\underbrace{\text{Cov}(A_t, L_t \ \mid \ E_t)}_{\text{note that } A_t + L_t = E_t}\} \ + \ \text{Cov}((1 - \beta)\psi E_t, \beta E_t)\\
+& = \psi \mathbb{E}\{\text{Cov}(E_t - L_t, L_t \ \mid \ E_t)\} \ + \ (1 - \beta)\psi \text{Cov}\{(1 - \beta)\psi E_t, \beta E_t\}\\
+& = \psi \beta(1 - \beta)\mu_E \ + \ (1 - \beta)\psi\beta \sigma^2_E\\
+& = \beta(1 - \beta)\psi(\sigma^2_E - \mu_E)
 \end{align*}
 \eqref{eq:multiplication_independence}
 and
@@ -1140,21 +1269,21 @@ and
 \end{align*}
 Putting these back together results in
 $$
-\text{Cov}(X_t, E_{t + 1}) = \mu_\psi\beta(1 - \beta)(\sigma^2_E - \mu_E) + \kappa\sigma^2_X
+\text{Cov}(X_t, E_{t + 1}) = \psi\beta(1 - \beta)(\sigma^2_E - \mu_E) + \kappa\sigma^2_X
 $$
 For $i = 2, 3, \dots$ we can now consider
 \begin{align*}
 \text{Cov}(X_t, E_{t + i}) & = \underbrace{\mathbb{E}\{\text{Cov}(X_t, E_{t + i} \ \mid \ X_t, E_{t + i - 1})\}}_{= \ 0} \ + \ \text{Cov}\{\mathbb{E}(X_t \ \mid \ X_t, E_{t + i - 1}), \mathbb{E}(E_{t + i} \ \mid \ X_t, E_{t + i - 1})\}\\
-& = \text{Cov}[X_t, \{\beta + (1 - \beta)\kappa\mu_\psi\} E_{t + i - 1}\}]\\
-& = \{\beta + (1 - \beta)\kappa\mu_\psi\}\times\text{Cov}(X_t, E_{t + i - 1})\\
-& = \{\beta + (1 - \beta)\kappa\mu_\psi\}^{d - 1}\times\text{Cov}(X_t, E_{t + 1}).
+& = \text{Cov}[X_t, \{\beta + (1 - \beta)\kappa\psi\} E_{t + i - 1}\}]\\
+& = \{\beta + (1 - \beta)\kappa\psi\}\times\text{Cov}(X_t, E_{t + i - 1})\\
+& = \{\beta + (1 - \beta)\kappa\psi\}^{d - 1}\times\text{Cov}(X_t, E_{t + 1}).
 \end{align*}
 Finally, we note that for $i = 2, 3, \dots$\todo{not quite correct!}
 \begin{align*}
 \text{Cov}(X_t, X_{t + i}) & = \underbrace{\mathbb{E}\{\text{Cov}(X_t, X_{t + i} \ \mid \ X_t, E_{t + i})\}}_{= \ 0} \ + \ \text{Cov}\{\mathbb{E}(X_t \ \mid \ X_t, E_{t + i}), \mathbb{E}(X_{t + i} \ \mid \ X_t, E_{t + i})\}\\
-& = \text{Cov}[X_t, (1 - \beta) E_{t + i - 1} + \nu\kappa\mu_\psi\}]\\
+& = \text{Cov}[X_t, (1 - \beta) E_{t + i - 1} + \nu\kappa\psi\}]\\
 & = \text{Cov}[X_t, (1 - \beta) E_{t + i - 1}\}]\\
-& = (1 - \beta)\mu_\psi\times \{\beta + (1 - \beta)\kappa\mu_\psi\}^{d - 1} \times \{\mu_\psi\beta(1 - \beta)(\sigma^2_E - \mu_E) + \kappa\sigma^2_X\}
+& = (1 - \beta)\psi\times \{\beta + (1 - \beta)\kappa\psi\}^{d - 1} \times \{\psi\beta(1 - \beta)(\sigma^2_E - \mu_E) + \kappa\sigma^2_X\}
 \end{align*}
 
 
@@ -1190,5 +1319,109 @@ $$
 $$
 and ultimately $(\hat{\tau}, \hat{\beta}, \hat{\kappa})$ are likewise asymptotically normaly distributed. Consistency of the estimator follows using Slutsky's theorem.
 
+\section*{Derviation for Lemma \ref{lemma:moments_inarma_11}}
 
+While these properties could in principle be obtained form the more general formulae \eqref{}--\eqref{}, it seems more instructive and not much more difficult to derive them from scratch. We start by noting a few well-known properties of the binomial thinning operator.
+
+\begin{lemma}
+\label{lemma:properties_thinning}
+For the binomial thinning operator $\circ$ and an arbitrary integer-valued random variable $A$, the following hold:
+\begin{align*}
+\mathbb{E}(\alpha \circ A) & = \alpha \times \mathbb{E}(A)\\
+\textnormal{Var}(\alpha \circ A) & = \alpha(1 - \alpha)\mathbb{E}(A) + \alpha^2 \textnormal{Var}(A)
+\end{align*}
+Moreover, it the thinning $\beta \circ B$ is performed independently of $A$ then
+$$
+\textnormal{Cov}(A, \beta \circ B) = \beta\textnormal{Cov}(A, B).
+$$
+\end{lemma}
+The proofs are straightforward and omitted here.
+
+We then turn to the process $\{E_t\}$, which as stated in Remark \ref{remark:inarma11} can be represented as an INAR(1) process with
+$$
+E_t = \underbrace{\xi}_{\{\beta + (1 - \beta)\kappa\}} \circ E_{t - 1} + \underbrace{I^*_t}_{\kappa \circ I_{t - 1}}.
+$$
+Using Lemma \ref{lemma:properties_thinning} we obtain
+$$
+\mathbb{E}(I^*_t) = \kappa \tau, \ \ \ \text{Var}(I^*_t) = \kappa(1 - \kappa)\tau + \kappa^2 \sigma^2_\tau.
+$$
+Well-known properties of the INAR(1) process then imply that
+\begin{align*}
+\mu_E & = \frac{\kappa\tau}{1 - \xi}\\
+\sigma^2_E & = \frac{\text{Var}(I^*_t) + \xi \times \mathbb{E}(I^*_t)}{1 - \xi^2} = \frac{\kappa^2\sigma^2_\tau + \kappa(1 - \kappa + \xi)\tau}{1 - \xi^2} = \frac{\kappa^2\sigma^2_\tau + \kappa(1 - \beta\kappa + \beta)\tau}{1 - \xi^2}\\
+\rho_E(d) & = \xi^d.
+\end{align*}
+We can then turn back to the moments of $\{X_t\}$, where after some simple algebra we obtain
+$$
+\mu_X = (1 - \beta)\mu_E + \nu = ... = \frac{\nu}{1 - \kappa}.
+$$
+For the variance we use Lemma \ref{lemma:properties_thinning} to note that
+\begin{align*}
+\sigma^2_X & = (1 - \beta)^2 \sigma^2_E + \beta(1 - \beta)\mu_E + \sigma^2_\tau.
+\end{align*}
+After some simple re-ordering of terms this leads to
+\begin{align}
+\sigma^2_X & = \frac{(1 - \beta^2 - 2\beta\kappa + 2\beta^2\kappa)\times \sigma^2_\tau + (1 - \beta^2)\kappa\tau}{1 - \xi^2}\label{eq:sigma2_X_intermediate}
+\end{align}
+Splitting this term at the summation in the numerator, we get
+\begin{align*}
+\frac{(1 - \beta^2)\kappa\tau}{1 - \xi^2} = \frac{(1 - \beta)(1 + \beta)\kappa\tau}{(1 - \xi)(1 + \xi)} = \frac{(1 - \beta)(1 + \beta)\kappa\tau}{(1 - \beta)(1 - \kappa)(1 + \xi)} = \frac{(1 + \beta)\kappa}{1 + \xi} \times \frac{\tau}{1 - \kappa}
+\end{align*}
+and
+\begin{align*}
+\frac{(1 - \beta^2 - 2\beta\kappa + 2\beta^2\kappa)\times \sigma^2_\tau}{1 - \xi^2} & = \frac{(1 - \beta^2 - 2\beta\kappa + 2\beta^2\kappa)(1 - \kappa)}{1 - \xi^2} \times \frac{\sigma^2_\tau}{1 - \kappa}\\
+& = \left(1 - \frac{1 - \xi^2 - (1 - \beta^2 - 2\beta\kappa + 2\beta^2\kappa)(1 - \kappa)}{(1 - \xi)(1 + \xi)}\right) \times \frac{\sigma^2_\tau}{1 - \kappa}\\
+& = \ \ \ \ \dots \ \ \ \text{[multiplying out and re-ordering terms]}\\
+& = \left(1 - \frac{\kappa - \kappa^2 - \kappa\beta^2 + \beta^2\kappa^2}{1 - \xi^2}\right) \times \frac{\sigma^2_\tau}{1 - \kappa}\\
+& = \left(1 - \frac{(1 - \beta^2)\kappa(1 - \kappa)}{(1 - \beta)(1 - \kappa)(1 + \xi)}\right) \times \frac{\sigma^2_\tau}{1 - \kappa}\\
+& = \left(1 - \frac{(1 + \beta)\kappa}{1 + \xi}\right) \times \frac{\sigma^2_\tau}{1 - \kappa}.
+\end{align*}
+Plugging these back into \eqref{eq:sigma2_X_intermediate} we then get
+\begin{align}
+\sigma^2_X & = \frac{(1 + \beta)\kappa}{1 + \xi} \times \frac{\tau}{1 - \kappa} \ + \ \left(1 - \frac{(1 + \beta)\kappa}{1 + \xi}\right) \times \frac{\sigma^2_\tau}{1 - \kappa}.
+\end{align}
+
+To obtain the autocovariance function we first consider
+\begin{align}
+\text{Cov}(X_t, E_{t + 1}) & = \text{Cov}(X_t, E_t - A_t + \kappa \circ X_t) = \text{Cov}(X_t, E_t) - \text{Cov}(X_t, A_t) + \text{Cov}(X_t, \kappa\circ X_t)\nonumber\\
+& = \text{Cov}(\{1 - \beta\} \circ E_t + I_t, E_t) - \text{Cov}(A_t + I_t, A_t) + \text{Cov}(X_t, \kappa\circ X_t) \nonumber\\
+& = \text{Cov}(\{1 - \beta\} \circ E_t, E_t) - \text{Var}(A_t) + \text{Cov}(X_t, \kappa\circ X_t) \nonumber \\
+& = (1 - \beta) \sigma^2_E - \beta(1 - \beta)\mu_E - (1 - \beta)^2\sigma^2_E + \kappa\sigma^2_X = \beta(1 - \beta)(\sigma^2_E - \mu_E) + \kappa\sigma^2_X.\label{eq:acov1_intermediate}
+\end{align}
+In a next step we then note that
+\begin{align*}
+\text{Cov}(X_t, X_{t + 1}) & = \text{Cov}(X_t, A_{t + 1} + I_{t + 1}) = \text{Cov}(X_t, (1 - \beta) \circ E_{t + 1} + I_{t + 1})\\
+& = \text{Cov}(X_t, (1 - \beta) \circ E_{t + 1}) + \text{Cov}(X_t, I_{t + 1}) = (1 - \beta) \times \text{Cov}(X_t, E_{t + 1}) + 0\\
+& = \beta(1 - \beta)^2(\sigma^2_E - \mu_E) + \kappa(1 - \beta)\sigma^2_X\\
+& = \beta(1 - \beta)^2\left(
+\frac{\kappa^2\sigma^2_\tau + \kappa(1 - \beta\kappa + \beta)\tau}{1 - \xi^2} - \frac{\kappa\tau}{1 - \xi}
+\right) + \kappa(1 - \beta)\sigma^2_X\\
+& = \beta(1 - \beta)^2\left(
+\frac{\kappa^2\sigma^2_\tau + \kappa(1 - \beta\kappa + \beta)\tau - (1 + \xi)\kappa\tau}{1 - \xi^2}
+\right) + \kappa(1 - \beta)\sigma^2_X\\
+& = \beta(1 - \beta)^2\left(
+\frac{\kappa^2\sigma^2_\tau + \kappa\overbrace{\{1 - \beta\kappa + \beta - 1 - \beta - (1 - \beta)\kappa\}}^{\text{this reduces to }-\kappa}\tau}{1 - \xi^2}
+\right) + \kappa(1 - \beta)\sigma^2_X\\
+& = \beta(1 - \beta)^2\left(
+\frac{\kappa^2\sigma^2_\tau - \kappa^2\tau}{(1 - \xi)(1 + \xi)}
+\right) + \kappa(1 - \beta)\sigma^2_X\\
+& = \kappa(1 - \beta)\left(\sigma^2_X + 
+\frac{\beta(1 - \beta)\kappa(\sigma^2_\tau - \tau)}{(1 - \beta)(1 - \kappa)(1 + \xi)}
+\right)\\
+& = \kappa(1 - \beta)\left(\sigma^2_X + 
+\frac{\beta\kappa(\sigma^2_\tau - \tau)}{(1 - \kappa)(1 + \xi)}
+\right)\\
+\end{align*}
+\textbf{Still need to bring into final form shown in manuscript! Needed to obtain limits $\sigma^2_\tau >> \tau$ and possibly $\sigma^2_\tau << \tau$.}
+%\todo{Here needs to be the step to $\text{Cov}(X_t, X_{t + 1})$}
+%
+%As $S_{t + d + 1} = \xi \circ S_{t + d} + \kappa \circ I_{t + d}$ where $\xi \circ S_{t + d} \perp X_t \mid S_{t + d}$ and $I_{t + d} \perp X_t$ we moreover get
+%$$
+%\text{Cov}(X_t, S_{t + d + 1}) = \xi \text{Cov}(X_t, S_{t + d})
+%$$
+%for $d = 1, 2, \dots$. Following the same argument we get
+%$$
+%\text{Cov}(X_t, X_{t + d + 1}) = \xi\text{Cov}(X_t, X_{t + d}).
+%$$
+%The autocorrelation function given in \eqref{eq:rho_X} is then obtained by combining equations \eqref{eq:acov1_intermediate} and \eqref{eq:varX_intermediate}, with some subsequent re-ordering of terms. 
 \end{document}
