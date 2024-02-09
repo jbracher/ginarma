@@ -1,5 +1,7 @@
-s <- 1
-lgt <- 250
+# choose simulation scenario and length of simulated time series
+# this is usually done in a file calling this one, thus commented out.
+# s <- 1
+# lgt <- 250
 
 # scp johannes@130.60.71.234:/home/johannes/Documents/underreporting/General_INARMA/R/Hermite/Simulation_Estimation_Hermite.R
 # scp johannes@89.206.115.90:/home/johannes/Documents/underreporting/General_INARMA/inarma_1.0.tar.gz inarma_1.0.tar.gz

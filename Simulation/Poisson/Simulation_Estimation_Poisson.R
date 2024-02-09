@@ -1,6 +1,7 @@
 # choose simulation scenario and length of simulated time series
-s <- 1
-lgt <- 250
+# this is usually done in a file calling this one, thus commented out.
+# s <- 1
+# lgt <- 250
 
 # scp johannes@130.60.71.234:/home/johannes/Documents/underreporting/General_INARMA/R/Poisson/Simulation_Estimation_Poisson.R Simulation_Estimation_Poisson.R
 # scp johannes@130.60.71.234:/home/johannes/Documents/underreporting/General_INARMA/inarma_1.0.tar.gz inarma_1.0.tar.gz
