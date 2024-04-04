@@ -29,7 +29,6 @@ layout_matr <- matrix(c(1, 1, 4, 4,
                         2, 3, 5, 6), byrow = TRUE, nrow = 2)
 
 layout(layout_matr)
-par(mar = c(2, 4, 3, 1), las = 1)
 
 ylims_ts <- list(measles = c(0, 15), mumps = c(0, 15))
 ylims_tab <- list(measles = c(0, 120), mumps = c(0, 120))
@@ -41,6 +40,8 @@ for(i in seq_along(names_diseases)){
   disease <- names_diseases[i]
   data_temp <- get(disease)
   data_temp$time <- data_temp$year + data_temp$week/52
+  
+  par(mar = c(1, 4, 3, 1), las = 1)
   plot(data_temp$time, data_temp$value, type = "l", xlab = "", ylab = "cases",
        main = names_units_to_print[i],
        axes = FALSE, ylim = ylims_ts[[disease]])
@@ -49,6 +50,7 @@ for(i in seq_along(names_diseases)){
   axis(2)
   box()
 
+  par(mar = c(4, 4, 3, 1), las = 1)
   plot(table(data_temp$value), xlab = "cases", ylab = "frequency",
        xlim = xlims_tab[[disease]], ylim = ylims_tab[[disease]], axes = FALSE)
   axis(2)
@@ -256,7 +258,7 @@ for(tab in c("tab_inar", "tab_inarch", "tab_inarma", "tab_ingarch")){
 
 # INAR:
 # initialize table:
-tab_inar_epi <- data.frame(model = c("inar", "hinar", "nbinar"),
+tab_inar_epi <- tab_se_inar_epi <- data.frame(model = c("inar", "hinar", "nbinar"),
                            immig_measles = NA, R_measles = NA, GT_measles = NA, CS_measles = NA, AIC_measles = NA,
                            immig_mumps = NA, R_mumps = NA,  GT_mumps = NA, CS_mumps = NA, AIC_mumps = NA)
 # fill table:
@@ -265,7 +267,11 @@ for(i in 1:3){
 
   fit_temp <- fits_measles[[mod]]
   tab_inar_epi[i, "R_measles"] <- fit_temp$coefficients["kappa"]
+  tab_se_inar_epi[i, "R_measles"] <- fit_temp$se["kappa"]
+  
   tab_inar_epi[i, "immig_measles"] <- fit_temp$coefficients["tau"]
+  tab_se_inar_epi[i, "immig_measles"] <- fit_temp$se["tau"]
+  
   # generation time is 1 by construction:
   tab_inar_epi[i, "GT_measles"] <- 1
   # cluster size is 1 by construction:
@@ -274,7 +280,10 @@ for(i in 1:3){
 
   fit_temp <- fits_mumps[[mod]]
   tab_inar_epi[i, "R_mumps"] <- fit_temp$coefficients["kappa"]
+  tab_se_inar_epi[i, "R_mumps"] <- fit_temp$se["kappa"]
+  
   tab_inar_epi[i, "immig_mumps"] <- fit_temp$coefficients["tau"]
+  tab_se_inar_epi[i, "immig_mumps"] <- fit_temp$["tau"]
   # generation time is 1 by construction:
   tab_inar_epi[i, "GT_mumps"] <- 1
   # cluster size is 1 by construction:
@@ -389,7 +398,7 @@ for(tab in c("tab_inar_epi", "tab_inarch_epi", "tab_inarma_epi", "tab_ingarch_ep
 
 
 #####################################
-###### diagnostic plot
+###### diagnostic plot: residual ACF
 
 # define colours:
 library(RColorBrewer)
@@ -574,4 +583,44 @@ order_models_legend <- c("inarch", "hinarch", "nbinarch",
 legend("right", col = cols_inarch[order_models_legend],
        legend = c("Poisson INARCH", "Hermite INARCH", "NegBin INARCH",
                   "Poisson INGARCH", "Hermite INGARCH", "NegBin INGARCH"), lwd = 2, bty = "n")
+dev.off()
+
+
+#####################################
+###### diagnostic plot: fits
+
+pdf("Plots/fits_measles_inar.pdf", width = 8, height = 4.5)
+par(mar = c(4, 4, 2, 1), mfrow = c(2, 3), las = 1)
+plot(fits_measles$inar, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Poisson INAR", line = 1)
+plot(fits_measles$hinar, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Hermite INAR", line = 1)
+plot(fits_measles$nbinar, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Negative binomial INAR", line = 1)
+
+plot(fits_measles$inarma, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Poisson INARMA", line = 1)
+plot(fits_measles$hinarma, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Hermite INARMA", line = 1)
+plot(fits_measles$nbinarma, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Negative binomial INARMA", line = 1)
+dev.off()
+
+
+
+pdf("Plots/fits_mumps_inar.pdf", width = 8, height = 4.5)
+par(mar = c(4, 4, 2, 1), mfrow = c(2, 3), las = 1)
+plot(fits_mumps$inar, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Poisson INAR", line = 1)
+plot(fits_mumps$hinar, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Hermite INAR", line = 1)
+plot(fits_mumps$nbinar, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Negative binomial INAR", line = 1)
+
+plot(fits_mumps$inarma, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Poisson INARMA", line = 1)
+plot(fits_mumps$hinarma, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Hermite INARMA", line = 1)
+plot(fits_mumps$nbinarma, type = "fit", interval_level = 0.9, legend = FALSE)
+title("Negative binomial INARMA", line = 1)
 dev.off()
