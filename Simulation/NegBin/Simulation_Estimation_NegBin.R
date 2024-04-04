@@ -3,12 +3,8 @@
 # s <- 1
 # lgt <- 250
 
-# scp johannes@130.60.71.234:/home/johannes/Documents/underreporting/General_INARMA/R/NegBin/Simulation_Estimation_NegBin.R Simulation_Estimation_NegBin.R
-# scp johannes@130.60.71.234:/home/johannes/Documents/underreporting/General_INARMA/inarma_1.0.tar.gz inarma_1.0.tar.gz
-
 continue <- FALSE # should existing results be read (to take up after error)
 
-# setwd("/home/johannes/Documents/Projects/ingarch/Simulation/NegBin")
 library(inarma)
 
 # define true values for the three scenarios:
@@ -21,8 +17,6 @@ vals_lgt <- c(250, 500, 1000) # lengths of simulated time series
 n_sim <- 1000 # number of simulation runs
 
 # run simulation:
-# for(lgt in vals_lgt){ # loop over lengths of time series
-#   for(s in 1:3){ # loop over scenarios
 print(paste("Started scenario", s))
 
 # grab true parameter values:
@@ -112,5 +106,3 @@ for(i in inds_to_run){
                                   "_", kappa, "_", lgt, ".csv"))
   }
 }
-#   }
-# }

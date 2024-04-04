@@ -1,6 +1,4 @@
-setwd("/home/johannes/Documents/Projects/ingarch/Simulation/NegBin")
 
-# define true values for the three scenarios:
 # define true values for the three scenarios:
 vals_tau <- c(1, 1, 1)
 vals_psi <- c(0.5, 0.7, 0.9)

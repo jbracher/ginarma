@@ -3,12 +3,8 @@
 # s <- 1
 # lgt <- 250
 
-# scp johannes@130.60.71.234:/home/johannes/Documents/underreporting/General_INARMA/R/Hermite/Simulation_Estimation_Hermite.R
-# scp johannes@89.206.115.90:/home/johannes/Documents/underreporting/General_INARMA/inarma_1.0.tar.gz inarma_1.0.tar.gz
-
 continue <- FALSE # should existing results be read (to take up after error)
 
-# setwd("/home/johannes/Documents/underreporting/General_INARMA/R/Hermite")
 library(inarma)
 
 # define true values for the three scenarios:
@@ -19,9 +15,6 @@ vals_kappa <- c(0.5, 0.6, 0.8)
 
 vals_lgt <- c(250, 500, 1000) # lengths of simulated time series
 n_sim <- 1000 # number of simulation runs
-
-
-
 
 # run simulation:
 print(paste("Started scenario", s))

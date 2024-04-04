@@ -1,4 +1,3 @@
-# setwd("/home/johannes/Documents/Projects/general_inarma/R/Poisson")
 
 s <- 2
 lgt <- 250

@@ -1,6 +1,4 @@
-setwd("/home/johannes/Documents/Projects/ingarch/Simulation/Poisson")
 
-# define true values for the three scenarios:
 # define true values for the three scenarios:
 vals_tau <- c(1, 1, 1)
 vals_psi <- c(NA, NA, NA)

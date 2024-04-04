@@ -1,4 +1,3 @@
-# setwd("/home/johannes/Documents/Projects/ingarch/Simulation/Hermite")
 
 s <- 3
 lgt <- 1000
