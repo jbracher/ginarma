@@ -31,13 +31,14 @@ sop
 # initialize matrix to store results:
 # get existing results if desired (if simulation somehow failed halfway)
 if(continue){
-  estim <- read.csv(file = paste0("Results/means_", tau, "_", beta, "_",
+  estim <- read.csv(file = paste0("Results/pois_estim_", tau, "_", beta, "_",
                                   kappa, "_", lgt, ".csv"))[, c("tau", "beta", "kappa", "mean_E1")]
-  ses <- read.csv(file = paste0("Results/ses_", tau1, "_", phi, "_",
+  ses <- read.csv(file = paste0("Results/pois_ses_", tau, "_", beta, "_",
                                 kappa, "_", lgt, ".csv"))[, c("tau", "beta", "kappa", "mean_E1")]
   estim_moments <- read.csv(file = paste0("Results/pois_estim_moments_", tau, "_", beta, "_",
                                           kappa, "_", lgt, ".csv"))[, c("tau", "beta", "kappa")]
-  sim_data <- matrix(NA, ncol = lgt, nrow = n_sim)
+  sim_data <- read.csv(file = paste0("Results/pois_sim_", tau, "_", beta, "_",
+                                     kappa, "_", lgt, ".csv"))
 }else{
   estim <- ses <- matrix(NA, nrow = n_sim, ncol = 4,
                          dimnames = list(NULL, c("tau", "beta", "kappa", "mean_E1")))

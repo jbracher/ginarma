@@ -1,4 +1,3 @@
-# setwd("/home/johannes/Documents/Projects/ingarch/Simulation/Poisson")
 
 s <- 2
 lgt <- 1000
