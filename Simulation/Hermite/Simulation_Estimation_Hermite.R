@@ -30,16 +30,17 @@ sop <- sop_inarma(tau = tau, psi = psi, beta = beta, kappa = kappa, family = "Ne
 sop
 
 
-# initializ matrix to store results:
+# initialize matrix to store results:
 # get existing results if desired (if simulation somehow failed halfway)
 if(continue){
-  estim <- read.csv(file = paste0("Results/he_estim_", tau1, "_", tau2, "_", beta, "_",
+  estim <- read.csv(file = paste0("Results/herm_estim_", tau, "_", psi, "_", beta, "_",
                                   kappa, "_", lgt, ".csv"))[, c("tau", "beta", "kappa", "psi", "mean_E1")]
-  estim_moments <- read.csv(file = paste0("Results/he_estim_moments_", tau, "_", psi, "_", beta, "_",
+  estim_moments <- read.csv(file = paste0("Results/herm_estim_moments_", tau, "_", psi, "_", beta, "_",
                                           kappa, "_", lgt, ".csv"))[, c("tau", "beta", "kappa", "psi")]
-  ses <- read.csv(file = paste0("Results/he_ses_", tau1, "_", tau2, "_", beta, "_",
+  ses <- read.csv(file = paste0("Results/herm_ses_", tau, "_", psi, "_", beta, "_",
                                 kappa, "_", lgt, ".csv"))[, c("tau", "beta", "kappa", "psi", "mean_E1")]
-  sim_data <- matrix(NA, ncol = lgt, nrow = n_sim)
+  sim_data <- read.csv(file = paste0("Results/herm_sim_", tau, "_", psi, "_", beta, "_",
+                                     kappa, "_", lgt, ".csv"))
 }else{
   estim <- ses <- matrix(NA, nrow = n_sim, ncol = 5,
                          dimnames = list(NULL, c("tau", "beta", "kappa", "psi", "mean_E1")))
@@ -66,20 +67,6 @@ for(i in inds_to_run){
   fit_temp <- NULL
   try({
     fit_temp <- fit_inarma(sim_temp, family = "Hermite", return_se = TRUE)
-    # very small values of overdispersion parameter indicate convergence issues.
-    # Re-run with different starting values
-    for(k in 1:4){
-      if(fit_temp$coefficients_raw["logit_psi"] < -4){
-        fit_temp_temp <- fit_inarma(sim_temp, family = "Hermite", return_se = TRUE,
-                                    start = c("tau.Intercept" = c(0, 0.5, 1, 1.5)[k],
-                                              "logit_phi" = c(0.3, 0.5, 0.7, 0.3)[k],
-                                              "logit_kappa" = c(0.5, 0.6, 0.7, 0.4)[k],
-                                              "logit_psi" = c(0, -1, 1, 0.5)[k]))
-        if(fit_temp_temp$loglikelihood > fit_temp$loglikelihood){
-          fit_temp <- fit_temp_temp
-        }
-      }
-    }
   })
 
   if(!is.null(fit_temp)){
@@ -94,15 +81,15 @@ for(i in inds_to_run){
   estim_moments[i, ] <- fit_temp_moments$coefficients # store parameters
   
   if(i%%10 == 0 | i < 5){
-    # store (commented out in order not to overwrite results):
+    # store (comment out in order not to overwrite results):
     print(paste("Storing scenario", s, "after", i, "iterations..."))
-    write.csv(sim_data, file = paste0("Results/he_sim_", tau, "_", psi, "_", beta,
+    write.csv(sim_data, file = paste0("Results/herm_sim_", tau, "_", psi, "_", beta,
                                       "_", kappa, "_", lgt, ".csv"))
-    write.csv(estim, file = paste0("Results/he_estim_", tau, "_", psi, "_", beta,
+    write.csv(estim, file = paste0("Results/herm_estim_", tau, "_", psi, "_", beta,
                                   "_", kappa, "_", lgt, ".csv"))
-    write.csv(ses, file = paste0("Results/he_ses_", tau, "_", psi, "_", beta,
+    write.csv(ses, file = paste0("Results/herm_ses_", tau, "_", psi, "_", beta,
                                  "_", kappa, "_", lgt, ".csv"))
-    write.csv(estim_moments, file = paste0("Results/he_estim_moments_", tau, "_", psi, "_", beta,
+    write.csv(estim_moments, file = paste0("Results/herm_estim_moments_", tau, "_", psi, "_", beta,
                                            "_", kappa, "_", lgt, ".csv"))
   }
 }
