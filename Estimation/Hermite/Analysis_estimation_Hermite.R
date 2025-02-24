@@ -1,15 +1,13 @@
 library(xtable)
 
-## Bugs with column names
-
 # define true values for the three scenarios:
 vals_tau <- c(1, 1, 1)
 vals_psi <- c(0.5, 0.7, 0.9)
 vals_beta <- c(0.5, 0.2, 0.1)
 vals_kappa <- c(0.5, 0.6, 0.8)
 
-vals_lgt <- c(250, 500, 1000) # lengths of simulated time series
-n_sim <- 1000 # number of simulation runs
+vals_lgt <- c(250, 500, 1000)  # lengths of simulated time series
+n_sim <- 1000  # number of simulation runs
 
 
 # summarize results:
@@ -41,38 +39,39 @@ for(s in 1:3){ # loop over scenarios
   for(lgt in c(250, 500, 1000)){
 
     # get parameter estimates:
-    pars <- read.csv(file = paste0("Results/herm_estim_", tau, "_", psi, "_", beta, "_",
-                                   kappa, "_", lgt, ".csv"))[, c("tau", "psi", "beta", "kappa")]
+    res <- read.csv(
+      file = paste0("Estimation/Hermite/Results/Estim_MLE_s", s, "_", lgt, "_herm.csv")
+    )[, c("tau", "psi", "beta", "kappa", "tau_se", "psi_se", "beta_se", "kappa_se", "convergence")]
+
+    pars <- res[, c("tau", "psi", "beta", "kappa")]
+    ses <- res[, c("tau_se", "psi_se", "beta_se", "kappa_se")]
 
     n_available_temp <- max(which(!is.na(pars[, 1])))
     pars <- pars[1:n_available_temp, ]
     n_available[as.character(lgt), s] <- n_available_temp
 
     # fill in means and standard deviations:
-    scenario_temp[as.character(lgt), "mean_tau"] <- mean(pars[, "tau"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "mean_psi"] <- mean(pars[, "psi"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "mean_beta"] <- mean(pars[, "beta"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "mean_kappa"] <- mean(pars[, "kappa"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "mean_tau"] <- mean(pars[res$convergence == 0, "tau"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "mean_psi"] <- mean(pars[res$convergence == 0, "psi"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "mean_beta"] <- mean(pars[res$convergence == 0, "beta"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "mean_kappa"] <- mean(pars[res$convergence == 0, "kappa"], na.rm = TRUE)
 
-    scenario_temp[as.character(lgt), "se_tau"] <- sd(pars[, "tau"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "se_psi"] <- sd(pars[, "psi"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "se_beta"] <- sd(pars[, "beta"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "se_kappa"] <- sd(pars[, "kappa"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "se_tau"] <- sd(pars[res$convergence == 0, "tau"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "se_psi"] <- sd(pars[res$convergence == 0, "psi"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "se_beta"] <- sd(pars[res$convergence == 0, "beta"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "se_kappa"] <- sd(pars[res$convergence == 0, "kappa"], na.rm = TRUE)
 
     # get estimated standard errors:
-    ses <- read.csv(file = paste0("Results/herm_ses_", tau, "_", psi, "_", beta, "_",
-                                  kappa, "_", lgt, ".csv"))[1:n_available_temp, c("tau", "psi", "beta", "kappa")]
-    
-    ses[ses > 30] <- NA # set numerically instable ses to NA
+
+    ses[ses > 30] <- NA  # set numerically instable ses to NA
+    ses[res$convergence != 0, ] <- NA  # set numerically instable ses to NA
     scenario_temp[as.character(lgt), c("est_se_tau", "est_se_psi", "est_se_beta", "est_se_kappa")] <-
       apply(ses, 2, mean, na.rm = TRUE)
 
     # how many times was se estimation not possible or obviously instable?
     removed_est_se_temp[as.character(lgt), ] <- colSums(is.na(ses))
-
     # get moment estimates:
-    pars_moment <- read.csv(file = paste0("Results/herm_estim_moments_", tau, "_", psi, "_", beta, "_",
-                                          kappa, "_", lgt, ".csv"))[, c("tau", "psi", "beta", "kappa")]
+    pars_moment <- read.csv(file = paste0("Estimation/Hermite/Results/Estim_moments_s", s, "_", lgt, "_herm.csv"))[, c("tau", "psi", "beta", "kappa")]
 
     scenario_temp[as.character(lgt), "mean_moment_tau"] <- mean(pars_moment[, "tau"], na.rm = TRUE)
     scenario_temp[as.character(lgt), "mean_moment_psi"] <- mean(pars_moment[, "psi"], na.rm = TRUE)
@@ -98,9 +97,12 @@ for(s in 1:3){
                                          scientific = FALSE)),
                      nrow = 3)
   colnames(to_print) <- colnames(results_sim[[s]])
-  
+
   to_print[, 5] <- vals_lgt
   to_print[2:3, 1:4] <- ""
+
+  # replace NA values:
+  to_print[grepl("NA", to_print)] <- "-"
 
   # re-order columns for table on ML estimate:
   to_print_ml <- to_print[, c("T",
@@ -109,25 +111,12 @@ for(s in 1:3){
                               "beta", "mean_beta", "se_beta", "est_se_beta",
                               "kappa", "mean_kappa", "se_kappa", "est_se_kappa")]
 
-  write(
-    print(xtable(to_print_ml), only.contents = TRUE,
-          include.rownames = FALSE, include.colnames = FALSE,
-          hline.after = NULL),
-    file = paste0("Tables/sim_herm_sc", s, ".tex")
-  )
-
-  # re-order columns for table on moment estimate:
-  to_print_moment <- to_print[, c("T",
-                                  "tau", "mean_moment_tau", "se_moment_tau",
-                                  "psi", "mean_moment_psi", "se_moment_psi",
-                                  "beta", "mean_moment_beta", "se_moment_beta",
-                                  "kappa", "mean_moment_kappa", "se_moment_kappa")]
 
   write(
     print(xtable(to_print_ml), only.contents = TRUE,
           include.rownames = FALSE, include.colnames = FALSE,
           hline.after = NULL),
-    file = paste0("Tables/sim_herm_sc", s, "_moments.tex")
+    file = paste0("Estimation/Hermite/Tables/sim_herm_sc", s, ".tex")
   )
 
   # re-order columns for table on moment estimate:
@@ -141,6 +130,7 @@ for(s in 1:3){
     print(xtable(to_print_moment), only.contents = TRUE,
           include.rownames = FALSE, include.colnames = FALSE,
           hline.after = NULL),
-    file = paste0("Tables/sim_herm_sc", s, "_moments.tex")
+    file = paste0("Estimation/Hermite/Tables/sim_herm_sc", s, "_moments.tex")
   )
+
 }

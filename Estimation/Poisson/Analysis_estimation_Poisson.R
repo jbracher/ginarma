@@ -39,35 +39,37 @@ for(s in 1:3){ # loop over scenarios
   for(lgt in c(250, 500, 1000)){
 
     # get parameter estimates:
-    pars <- read.csv(file = paste0("Results/pois_estim_", tau, "_", beta, "_",
-                                   kappa, "_", lgt, ".csv"))[, c("tau", "beta", "kappa")]
+    res <- read.csv(
+      file = paste0("LR_test/Results/INARMA_fits_INARMA_holds_s", s, "_", lgt, ".csv")
+    )[, c("tau", "beta", "kappa", "tau_se", "beta_se", "kappa_se", "convergence")]
+
+    pars <- res[, c("tau", "beta", "kappa")]
+    ses <- res[, c("tau_se", "beta_se", "kappa_se")]
 
     n_available_temp <- max(which(!is.na(pars[, 1])))
     pars <- pars[1:n_available_temp, ]
     n_available[as.character(lgt), s] <- n_available_temp
 
     # fill in means and standard deviations:
-    scenario_temp[as.character(lgt), "mean_tau"] <- mean(pars[, "tau"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "mean_beta"] <- mean(pars[, "beta"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "mean_kappa"] <- mean(pars[, "kappa"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "mean_tau"] <- mean(pars[res$convergence == 0, "tau"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "mean_beta"] <- mean(pars[res$convergence == 0, "beta"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "mean_kappa"] <- mean(pars[res$convergence == 0, "kappa"], na.rm = TRUE)
 
-    scenario_temp[as.character(lgt), "se_tau"] <- sd(pars[, "tau"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "se_beta"] <- sd(pars[, "beta"], na.rm = TRUE)
-    scenario_temp[as.character(lgt), "se_kappa"] <- sd(pars[, "kappa"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "se_tau"] <- sd(pars[res$convergence == 0, "tau"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "se_beta"] <- sd(pars[res$convergence == 0, "beta"], na.rm = TRUE)
+    scenario_temp[as.character(lgt), "se_kappa"] <- sd(pars[res$convergence == 0, "kappa"], na.rm = TRUE)
 
     # get estimated standard errors:
-    ses <- read.csv(file = paste0("Results/pois_ses_", tau, "_", beta, "_",
-                                  kappa, "_", lgt, ".csv"))[1:n_available_temp, c("tau", "beta", "kappa")]
-    ses[ses > 30] <- NA # set numerically instable ses to NA
+
+    ses[ses > 30] <- NA  # set numerically instable ses to NA
+    ses[res$convergence != 0, ] <- NA  # set numerically instable ses to NA
     scenario_temp[as.character(lgt), c("est_se_tau", "est_se_beta", "est_se_kappa")] <-
       apply(ses, 2, mean, na.rm = TRUE)
 
     # how many times was se estimation not possible or obviously instable?
     removed_est_se_temp[as.character(lgt), ] <- colSums(is.na(ses))
-
     # get moment estimates:
-    pars_moment <- read.csv(file = paste0("Results/pois_estim_moments_", tau, "_", beta, "_",
-                                          kappa, "_", lgt, ".csv"))[, c("tau", "beta", "kappa")]
+    pars_moment <- read.csv(file = paste0("Estimation/Poisson/Results/Estim_moments_s", s, "_", lgt, "_pois.csv"))[, c("tau", "beta", "kappa")]
 
     scenario_temp[as.character(lgt), "mean_moment_tau"] <- mean(pars_moment[, "tau"], na.rm = TRUE)
     scenario_temp[as.character(lgt), "mean_moment_beta"] <- mean(pars_moment[, "beta"], na.rm = TRUE)
@@ -110,7 +112,7 @@ for(s in 1:3){
     print(xtable(to_print_ml), only.contents = TRUE,
           include.rownames = FALSE, include.colnames = FALSE,
           hline.after = NULL),
-    file = paste0("Tables/sim_pois_sc", s, ".tex")
+    file = paste0("Estimation/Poisson/Tables/sim_pois_sc", s, ".tex")
   )
 
   # re-order columns for table on moment estimate:
@@ -124,7 +126,7 @@ for(s in 1:3){
     print(xtable(to_print_moment), only.contents = TRUE,
           include.rownames = FALSE, include.colnames = FALSE,
           hline.after = NULL),
-    file = paste0("Tables/sim_pois_sc", s, "_moments.tex")
+    file = paste0("Estimation/Poisson/Tables/sim_pois_sc", s, "_moments.tex")
   )
 
 }
